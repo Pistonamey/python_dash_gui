@@ -13,6 +13,62 @@ import numpy as np  # Make sure to import numpy
 # plotting the graph in  
 # tkinter window 
 
+# Classes
+# Approach taken for classes is to have a class for each gauge or component included in the digital dashoard
+class Speedometer:
+    def __init__(self, max_speed):
+        self.max_speed = max_speed
+        self.current_speed = 0
+
+    def update_speed(self, new_speed):
+        self.current_speed = min(new_speed, self.max_speed)
+
+    def display_speed(self):
+        print(f"Current Speed: {self.current_speed} km/h")
+
+class BatteryGauge:
+    def __init__(self, max_capacity):
+        self.max_capacity = max_capacity
+        self.current_battery = 0
+
+    def update_fuel(self, battery_used):
+        self.current_battery = max(0, self.current_battery - battery_used)
+
+    def display_fuel_level(self):
+        print(f"Fuel Level: {self.current_battery}/{self.max_capacity} liters")
+
+# Current Temperature in Celsius
+# This shall be interchangeable between farenheit and celsius in the future
+class EngineTemperatureGauge:
+    def __init__(self, max_temperature):
+        self.max_temperature = max_temperature
+        self.current_temperature = 0
+
+    def update_temperature(self, new_temperature):
+        self.current_temperature = min(new_temperature, self.max_temperature)
+
+    def display_temperature(self):
+        print(f"Engine Temperature: {self.current_temperature} °C")
+
+# Trip Computer that calculates and analyzes data for current and previous trips
+class TripComputer:
+    def __init__(self):
+        self.trip_duration = 0
+        self.distance_since_reset = 0
+
+    def update_trip_duration(self, duration):
+        self.trip_duration += duration
+
+    def update_distance_since_reset(self, distance):
+        self.distance_since_reset += distance
+
+    def display_trip_info(self):
+        print(f"Trip Duration: {self.trip_duration} minutes")
+        print(f"Distance Since Reset: {self.distance_since_reset} km")
+
+
+
+
 plots_created = False
 
 def plot():
