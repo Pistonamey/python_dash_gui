@@ -8,11 +8,11 @@ Rectangle {
      width: 1024
      height: 600
      color: "#000000"
-     
+
      CircularGauge {
-          property real gauge_value: 40.0
+          //property real gauge_value: 40.0 // NOTICE: Apparently we can't have duplicate names between both the pyqt and qml. So I commented this declaration.
           anchors.centerIn: parent
-          value: gauge_value
+          value: gauge_value    // Note: Since I commented out the declaration, it uses the "gauge_value" from the pyqt.
           maximumValue: 160.0  // Largest Value
           minimumValue: 0.0       // Smallest Value
           style: CircularGaugeStyle {
@@ -95,7 +95,7 @@ Rectangle {
           radius: bar_meter_radius
           color: border_colors
 
-          
+
           anchors.left: parent.left
           anchors.leftMargin: 20
           anchors.bottom: parent.bottom
@@ -117,7 +117,7 @@ Rectangle {
                Rectangle {
 
                     id: valueBar
-                    width: parent.width * (mainValue/maxValue)
+                    width: parent.width * (temperature_meter.mainValue/temperature_meter.maxValue)
                     height: parent.height
                     radius: parent.radius
                     clip: true
@@ -142,12 +142,13 @@ Rectangle {
 
     Text {  // Text for mainValue or numbers
         id: textValue
-        text: mainValue
+        text: temperature_meter.mainValue
         font.pixelSize: label_size
         color: label_color
 
         anchors.bottom: mainBar.top
         anchors.right: mainBar.right
+
 
         Text {  // Text for displaying unitValue or units
             id: textUnit
