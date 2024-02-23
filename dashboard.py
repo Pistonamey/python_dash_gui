@@ -1,5 +1,6 @@
 import sys
 import time
+import random
 from PyQt5.QtCore import QObject, QUrl, Qt, pyqtProperty, QThread, QTimer
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtQml import QQmlApplicationEngine, qmlRegisterType
@@ -80,8 +81,10 @@ class BarMeter(QObject):
           self.mainValueChanged.emit()
 
 def change_val():
-     temperature_meter.mainValue = 40
-     speedometer.currSpeed = 120.0
+     random_float = random.uniform(0, 160)
+     random_int = random.randint(0, 300)
+     temperature_meter.mainValue = random_int
+     speedometer.currSpeed = random_float
 
 
 
@@ -110,8 +113,10 @@ if __name__ == "__main__":
      view.show()
 
      # After one second, values are changed via change_val function
-     timer.timeout.connect(change_val)
-     timer.start(1000)
+     for i in range(10):
+          timer.timeout.connect(change_val)
+          timer.start(1000)
+     
 
 
      sys.exit(app.exec_())
