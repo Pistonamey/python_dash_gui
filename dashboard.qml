@@ -10,9 +10,9 @@ Rectangle {
      color: "#000000"
 
      CircularGauge {
-          //property real gauge_value: 40.0 // NOTICE: Apparently we can't have duplicate names between both the pyqt and qml. So I commented this declaration.
+          //property real gauge_value: 40.0
           anchors.centerIn: parent
-          value: speedometer.currSpeed    // Note: Since I commented out the declaration, it uses the "gauge_value" from the pyqt.
+          value: speedometer.currSpeed
           maximumValue: speedometer.maxSpeed  // Largest Value
           minimumValue: speedometer.minSpeed       // Smallest Value
           style: CircularGaugeStyle {
@@ -166,38 +166,38 @@ Rectangle {
 
     }
 
-     Item {
-     id: root
+    Item {
+        id: root
 
-     // Default size can be overridden as needed
-     width: 200
-     height: 50
+        // Default size can be overridden as needed
+        width: 200
+        height: 50
 
-     // Customizable properties for the label
-     property string label: "Default Label"
-     property int fontSize: 20
-     property string color: "white"
-     property color borderColor: "#FFFFFF" // Default border color
-     property int borderWidth: 2 // Default border width
-     property int borderRadius: 5 // Default border radius for rounded corners
+        // Customizable properties for the label
+        property string label: "Default Label"
+        property int fontSize: 20
+        property string color: "white"
+        property color borderColor: "#FFFFFF" // Default border color
+        property int borderWidth: 2 // Default border width
+        property int borderRadius: 5 // Default border radius for rounded corners
 
-     // Border Rectangle
-     Rectangle {
-          id: borderRect
-          anchors.fill: parent // Make the rectangle fill the parent Item
-          border.color: root.borderColor
-          border.width: root.borderWidth
-          radius: root.borderRadius // Adjust for rounded corners
-          color: "transparent" // Background color of the rectangle, set to transparent to only show the border
+        // Border Rectangle
+        Rectangle {
+            id: borderRect
+            anchors.fill: parent // Make the rectangle fill the parent Item
+            border.color: root.borderColor
+            border.width: root.borderWidth
+            radius: root.borderRadius // Adjust for rounded corners
+            color: "transparent" // Background color of the rectangle, set to transparent to only show the border
 
-          // Text item for the label
-          Text {
-               anchors.centerIn: parent
-               text: root.label
-               font.pixelSize: root.fontSize
-               color: root.color
-          }
-     }
-}
+            // Text item for the label
+            Text {
+                anchors.centerIn: parent
+                text: root.label
+                font.pixelSize: root.fontSize
+                color: root.color
+            }
+        }
+    }
 
 }

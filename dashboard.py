@@ -97,9 +97,7 @@ if __name__ == "__main__":
      temperature_meter = BarMeter()
      speedometer = Speedometer()
 
-     # Set the temperature meter as an object for the qml to refer to. Only needs to be done once for each object.
-     # So in this case, qml can refer to "temperature_meter" and uses it's class like normal
-     # Set context properties within qml and set it to the objects from before
+     # Sets the  object for the qml to refer to. Only needs to be done once for each object.
      engine.rootContext().setContextProperty("speedometer", speedometer)
      engine.rootContext().setContextProperty("temperature_meter", temperature_meter)
 
