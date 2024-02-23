@@ -1,10 +1,12 @@
+#!/usr/bin/env python3
 import math
 import can
 import threading
 from time import sleep
 
 def int_to_bytes(val: int):
-    return val.to_bytes(math.ceil(math.log2(val)/8), 'big')
+    length = max(1, math.ceil(math.log2(val)/8))
+    return val.to_bytes(length, 'big')
 
 def battery():
     try:
@@ -21,10 +23,17 @@ def battery():
                     is_extended_id=False
                 )
             )
+            
             sleep(dt)
-            count += dt
-            level = 80 - count*10/60
+            count += dt            
+            level = int(80 - count*10/60)
+            
+            if level <= 0:
+            	level = 80
+            	count = 0
+            	
     except KeyboardInterrupt:
+        bus.shutdown()
         return
 
 def speed():
@@ -46,6 +55,7 @@ def speed():
                 level = 100
             level = level - 1
     except KeyboardInterrupt:
+        bus.shutdown()
         return
 
 
@@ -68,6 +78,7 @@ def engineTemperature():
             level = level - 1
             sleep(1)
     except KeyboardInterrupt:
+        bus.shutdown()
         return
 
 def tripComputer():
@@ -89,6 +100,7 @@ def tripComputer():
             level = level - 1
             sleep(10)
     except KeyboardInterrupt:
+        bus.shutdown()
         return
     
 def accelerometer():
@@ -110,6 +122,7 @@ def accelerometer():
             level = level - 1
             sleep(0.001)
     except KeyboardInterrupt:
+        bus.shutdown()
         return
 
 def tirePressure():
@@ -131,6 +144,7 @@ def tirePressure():
             level = level - 1
             sleep(20)
     except KeyboardInterrupt:
+        bus.shutdown()
         return
 
 if __name__ == '__main__':
