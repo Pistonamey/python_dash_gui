@@ -1,3 +1,4 @@
+import "."
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
@@ -8,6 +9,11 @@ Rectangle {
      width: 1024
      height: 600
      color: "#000000"
+
+    
+
+
+    
 
      CircularGauge {
           //property real gauge_value: 40.0 // NOTICE: Apparently we can't have duplicate names between both the pyqt and qml. So I commented this declaration.
@@ -61,6 +67,60 @@ Rectangle {
                }
           }
      }
+
+     Labels {
+    id: averageSpeedLabel
+    label: "Average Speed: 30 mph" 
+    fontSize: 18
+    color: "white"
+    borderColor: "#FF0000" // Example border color
+    borderWidth: 3 // Example border width
+    borderRadius: 10 // Example border radius for rounded corners
+    anchors.top: parent.top
+    anchors.topMargin: 20
+    anchors.horizontalCenter: parent.horizontalCenter
+}
+
+Labels {
+    id: consumption
+    label: "Consumption: 0 M/L" 
+    fontSize: 18
+    color: "white"
+    borderColor: "#FF0000" // Example border color
+    borderWidth: 3 // Example border width
+    borderRadius: 10 // Example border radius for rounded corners
+    anchors.top: averageSpeedLabel.bottom // Anchor to the bottom of the first label
+    anchors.topMargin: 10 // Adjust this margin to control spacing between the labels
+    anchors.horizontalCenter: parent.horizontalCenter
+}
+
+Labels {
+    id: driveable
+    label: "Driveable: 0 M/L" 
+    fontSize: 18
+    color: "white"
+    borderColor: "#FF0000" // Example border color
+    borderWidth: 3 // Example border width
+    borderRadius: 10 // Example border radius for rounded corners
+    anchors.left: consumption.right // Position to the right of the consumption label
+    anchors.leftMargin: 20 // Add some space between the labels
+    anchors.verticalCenter: consumption.verticalCenter // Align vertically with consumption
+}
+
+Labels {
+    id: odpartial
+    label: "Od. Partial: 0 m" 
+    fontSize: 18
+    color: "white"
+    borderColor: "#FF0000" // Example border color
+    borderWidth: 3 // Example border width
+    borderRadius: 10 // Example border radius for rounded corners
+    anchors.right: consumption.left // Position to the right of the consumption label
+    anchors.rightMargin: 20 // Add some space between the labels
+    anchors.verticalCenter: consumption.verticalCenter // Align vertically with consumption
+}
+
+
 
      // Customize the size and radius of the bar_meter:
      property int bar_meter_width: 480     // Width of the entire bar meter
