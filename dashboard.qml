@@ -134,7 +134,9 @@ Rectangle {
         font.pixelSize: label_size
 
         anchors.bottom: mainBar.top
-        anchors.left: mainBar.left
+        //anchors.left: mainBar.left
+        x: 30
+
 
         color: label_color
 
@@ -147,7 +149,8 @@ Rectangle {
         color: label_color
 
         anchors.bottom: mainBar.top
-        anchors.right: mainBar.right
+        //anchors.right: mainBar.right
+        x: bar_meter_width - 30
 
 
         Text {  // Text for displaying unitValue or units
