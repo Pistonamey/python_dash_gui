@@ -8,7 +8,7 @@ from PyQt5 import QtCore, QtGui
 from PyQt5.QtQuick import QQuickView
 
 class Speedometer(QObject):
-     speedChanged = QtCore.pyqtSignal()
+     speedChanged = QtCore.pyqtSignal()      # This actually doesn't do anything since qml doesn't have a function. But just keep it in case.
 
      def __init__(self, parent=None):
           super(Speedometer, self).__init__(parent)
