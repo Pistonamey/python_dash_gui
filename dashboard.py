@@ -83,8 +83,11 @@ class BarMeter(QObject):
 def change_val():
      random_float = random.uniform(0, 160)
      random_int = random.randint(0, 300)
+     random_battery = random.randint(0, 100)
      temperature_meter.mainValue = random_int
      speedometer.currSpeed = random_float
+     battery_capacity.mainValue = random_battery
+
 
 
 
@@ -98,17 +101,22 @@ if __name__ == "__main__":
      timer = QTimer()
      # Create classes for each component
      temperature_meter = BarMeter()
+     battery_capacity = BarMeter()
      speedometer = Speedometer()
 
      # Sets the  object for the qml to refer to. Only needs to be done once for each object.
      engine.rootContext().setContextProperty("speedometer", speedometer)
      engine.rootContext().setContextProperty("temperature_meter", temperature_meter)
+     engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
+
 
      # Set initial values
      speedometer.setAllValues(0.0, 160.0, 0.0)
      speedometer.currSpeed = 60.0
      temperature_meter.setAllValues(0.0, 300.0, 0.0)
      temperature_meter.mainValue = 270.0
+     battery_capacity.setAllValues(0.0, 100.0, 0.0)
+     battery_capacity.mainValue = 50.0
      view.update()
      view.show()
 

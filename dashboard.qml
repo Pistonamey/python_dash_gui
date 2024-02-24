@@ -10,8 +10,13 @@ Rectangle {
      height: 600
      color: "#000000"
 
-
-
+    Text {
+        text: Math.floor(speedometer.currSpeed) // Display the current value
+        font.pixelSize: outerRadius * 0.15 // Adjust the font size as needed
+        color: "white" // Choose the color of the text
+        anchors.horizontalCenter: parent.horizontalCenter // Center horizontally
+        y: 225 // Adjust the vertical position
+    }
 
 
 
@@ -24,7 +29,6 @@ Rectangle {
           style: CircularGaugeStyle {
                id: style
                tickmarkStepSize: 10.0 // Tick Marks
-
                tickmark: Rectangle {
                     visible: styleData.value < 8000 || styleData.value % 1000 == 0
                     implicitWidth: outerRadius * 0.02
@@ -130,8 +134,8 @@ Rectangle {
         property string unitValue: "°F"                // Units for the value ex: mph, mi
 
         id: mainBar
-        width: 480          // Width of the entire bar meter
-        height: 30          // Height of the entire bar meter
+        width: 400          // Width of the entire bar meter
+        height: 20          // Height of the entire bar meter
 
         radius: 15          // Radius of the entire bar meter. Does affect inner bars.
         color: "black"      // Border Colors
@@ -195,6 +199,91 @@ Rectangle {
         Text {  // Text for displaying unitValue or units
             id: textUnit
             text: "°F"
+            font.pixelSize: 15
+            color: "white"
+
+            anchors.left: parent.right
+            anchors.bottom: parent.bottom
+
+        }
+
+    }
+
+    // Main Bar: Border housing the whole bar containing the value
+    Rectangle {
+        
+        // Customize the text labels how ever you like here:
+        property double mainValue: 50.0                // Current Value. Anything will do.
+        property double maxValue: 100.0                 // Max value possible ex: max mph
+        property double minValue: 0.0                   // Min value possible ex: mph=0
+        property string unitValue: "%"                // Units for the value ex: mph, mi
+
+        id: batteryMainBar
+        width: 400          // Width of the entire bar meter
+        height: 20          // Height of the entire bar meter
+
+        radius: 15          // Radius of the entire bar meter. Does affect inner bars.
+        color: "black"      // Border Colors
+
+
+        anchors.right: parent.right
+        anchors.rightMargin: 20
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 20
+
+        clip: true
+
+        // Empty Bar: Housing the value bar
+        Rectangle {
+            id: batteryEmptyBar
+            width: parent.width - 6
+            height: parent.height - 6
+            radius: parent.radius
+
+            anchors.centerIn: parent
+            anchors.bottom: parent.bottom
+
+            // Value Bar: Displaying the current value
+            Rectangle {
+
+                id: batteryValueBar
+                width: parent.width * (battery_capacity.mainValue/battery_capacity.maxValue)
+                height: parent.height
+                radius: parent.radius
+                clip: true
+                color: "red"
+                anchors.left: parent.left
+            }
+        }
+
+    }
+
+    Text {  // Text labeling what the bar is about ex: temp, mph
+        id: batteryTextLabel
+        text: "Battery Capacity"
+        font.pixelSize: 15
+
+        anchors.bottom: batteryMainBar.top
+        anchors.left: batteryMainBar.left
+        anchors.leftMargin: 10
+
+        color: "white"
+    }
+
+    Text {  // Text for mainValue or numbers
+        id: batteryTextValue
+        text: battery_capacity.mainValue
+        font.pixelSize: 15
+        color: "white"
+
+        anchors.bottom: batteryMainBar.top
+        anchors.right: batteryMainBar.right
+        anchors.rightMargin: 25
+
+
+        Text {  // Text for displaying unitValue or units
+            id: batteryTextUnit
+            text: "%"
             font.pixelSize: 15
             color: "white"
 
