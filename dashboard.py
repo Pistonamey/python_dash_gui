@@ -90,10 +90,7 @@ def change_val():
 
 
 
-
-
 if __name__ == "__main__":
-
      app = QApplication(sys.argv)
      view = QQuickView()
      view.setSource(QUrl('dashboard.qml'))
@@ -123,8 +120,7 @@ if __name__ == "__main__":
      # After one second, values are changed via change_val function
      for i in range(10):
           timer.timeout.connect(change_val)
-          timer.start(1000)
-     
+          timer.start(1000)     
 
 
      sys.exit(app.exec_())
