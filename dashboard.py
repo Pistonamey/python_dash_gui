@@ -64,11 +64,6 @@ class BarMeter(QObject):
      def maxValue(self):
           return self._maxSpeed
 
-     @mainValue.setter
-     def mainValue(self, value):
-          self._mainValue = value
-          self.mainValueChanged.emit()
-
      @pyqtProperty(float)
      def minValue(self):
           return self._minSpeed
@@ -120,8 +115,7 @@ if __name__ == "__main__":
      # After one second, values are changed via change_val function
      for i in range(10):
           timer.timeout.connect(change_val)
-          timer.start(1000)     
+          timer.start(1000)
 
 
      sys.exit(app.exec_())
-
