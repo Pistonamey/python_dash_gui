@@ -39,7 +39,7 @@ Rectangle {
     // Other information of the bar_meter
     id: bar_meter
     width: bar_meter_width
-    height: bar_meter_height + main_text_size + 5   //You may need to adjust
+    height: bar_meter_height + main_text_size + 5       // Adjust if needed
     radius: bar_meter_radius
     x: 0
     y: 0

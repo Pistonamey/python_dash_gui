@@ -133,12 +133,12 @@ Rectangle {
         label_name: "Temperature"
         unitValue: "°F"
 
+        color: "transparent"    // Only changes the background color with the labels
+
         anchors.left: parent.left
         anchors.leftMargin: 20
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
-
-        color: "transparent"    // Only changes the background color with the labels
 
     }
 
@@ -148,15 +148,16 @@ Rectangle {
         mainValue: battery_capacity.mainValue
         maxValue: battery_capacity.maxSpeed
 
+
         label_name: "Battery Capacity"
         unitValue: "%"
+
+        color: "transparent"    // Only changes the background color with the labels
 
         anchors.right: parent.right
         anchors.rightMargin: 20
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
-
-        color: "transparent"    // Only changes the background color with the labels
 
     }
     
