@@ -5,7 +5,7 @@ import threading
 from time import sleep
 
 def int_to_bytes(val: int):
-    length = max(1, math.ceil(math.log2(val)/8))
+    length = max(1, math.ceil(math.log2(max(val, 1))/8))
     return val.to_bytes(length, 'big')
 
 def battery():
@@ -29,8 +29,8 @@ def battery():
             level = int(80 - count*10/60)
             
             if level <= 0:
-            	level = 80
-            	count = 0
+                level = 80
+                count = 0
             	
     except KeyboardInterrupt:
         bus.shutdown()
@@ -41,6 +41,7 @@ def speed():
         bus = can.Bus(interface='socketcan', channel='vcan0', bitrate=50000)
 
         level = 100
+        forward = False
 
         while True:
             bus.send(
@@ -50,10 +51,14 @@ def speed():
                     is_extended_id=False
                 )
             )
+
+            if forward: level = level + 1
+            else: level = level - 1
+
+            if level == 100 or level == 1:
+                forward = not forward
+
             sleep(.01)
-            if level == 1:
-                level = 100
-            level = level - 1
     except KeyboardInterrupt:
         bus.shutdown()
         return
@@ -63,7 +68,8 @@ def engineTemperature():
     try:
         bus = can.Bus(interface='socketcan', channel='vcan0', bitrate=50000)
 
-        level = 200
+        level = 170
+        forward = True
 
         while True:
             bus.send(
@@ -73,9 +79,15 @@ def engineTemperature():
                     is_extended_id=False
                 )
             )
-            if level == 1:
-                level = 200
-            level = level - 1
+
+            if forward:
+                level = level + 1
+            else:
+                level = level - 1
+
+            if level == 190 or level == 170:
+                forward = not forward
+
             sleep(1)
     except KeyboardInterrupt:
         bus.shutdown()
@@ -86,6 +98,7 @@ def tripComputer():
         bus = can.Bus(interface='socketcan', channel='vcan0', bitrate=50000)
 
         level = 50
+        forward = False
 
         while True:
             bus.send(
@@ -95,9 +108,13 @@ def tripComputer():
                     is_extended_id=False
                 )
             )
-            if level == 1:
-                level = 50
-            level = level - 1
+
+            if forward: level = level + 1
+            else: level = level - 1
+
+            if level == 1 or level == 50:
+                forward = not forward
+
             sleep(10)
     except KeyboardInterrupt:
         bus.shutdown()
@@ -108,6 +125,7 @@ def accelerometer():
         bus = can.Bus(interface='socketcan', channel='vcan0', bitrate=50000)
 
         level = 200
+        forward = False
 
         while True:
             bus.send(
@@ -117,9 +135,12 @@ def accelerometer():
                     is_extended_id=False
                 )
             )
-            if level == 1:
-                level = 200
-            level = level - 1
+            if forward: level = level + 1
+            else: level = level - 1
+
+            if level == 200 or level == 0:
+                forward = not forward
+
             sleep(0.001)
     except KeyboardInterrupt:
         bus.shutdown()
@@ -130,6 +151,7 @@ def tirePressure():
         bus = can.Bus(interface='socketcan', channel='vcan0', bitrate=50000)
 
         level = 100
+        forward = False
 
         while True:
             bus.send(
@@ -139,9 +161,11 @@ def tirePressure():
                     is_extended_id=False
                 )
             )
-            if level == 1:
-                level = 100
-            level = level - 1
+            if forward: level = level + 1
+            else: level = level - 1
+
+            if level == 100 or level == 0:
+                forward = not forward
             sleep(20)
     except KeyboardInterrupt:
         bus.shutdown()

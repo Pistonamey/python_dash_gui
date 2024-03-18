@@ -187,176 +187,42 @@ Rectangle {
         anchors.verticalCenter: consumption.verticalCenter // Align vertically with consumption
     }
 
+    BarMeter {
+        id: temperatureBar
 
-    // Main Bar: Border housing the whole bar containing the value
-    Rectangle {
-        // Customize the text labels how ever you like here:
-        property double mainValue: 100.0                // Current Value. Anything will do.
-        property double maxValue: 300.0                 // Max value possible ex: max mph
-        property double minValue: 0.0                   // Min value possible ex: mph=0
-        property string unitValue: "°F"                // Units for the value ex: mph, mi
+        mainValue: temperature_meter.mainValue
+        maxValue: temperature_meter.maxSpeed
 
-        id: mainBar
-        width: 400          // Width of the entire bar meter
-        height: 20          // Height of the entire bar meter
+        label_name: "Temperature"
+        unitValue: "°F"
 
-        radius: 15          // Radius of the entire bar meter. Does affect inner bars.
-        color: "black"      // Border Colors
-
+        color: "transparent"    // Only changes the background color with the labels
 
         anchors.left: parent.left
         anchors.leftMargin: 20
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
 
-        clip: true
-
-        // Empty Bar: Housing the value bar
-        Rectangle {
-            id: emptyBar
-            width: parent.width - 6
-            height: parent.height - 6
-            radius: parent.radius
-
-            anchors.centerIn: parent
-            anchors.bottom: parent.bottom
-
-            // Value Bar: Displaying the current value
-            Rectangle {
-
-                id: valueBar
-                width: parent.width * (temperature_meter.mainValue/temperature_meter.maxValue)
-                height: parent.height
-                radius: parent.radius
-                clip: true
-                color: "red"
-                anchors.left: parent.left
-            }
-        }
-
     }
 
-    Text {  // Text labeling what the bar is about ex: temp, mph
-        id: textLabel
-        text: "Temperature"
-        font.pixelSize: 15
+    BarMeter {
+        id: batteryBar
 
-        anchors.bottom: mainBar.top
-        anchors.left: mainBar.left
-        anchors.leftMargin: 10
-
-        color: "white"
-    }
-
-    Text {  // Text for mainValue or numbers
-        id: textValue
-        text: temperature_meter.mainValue
-        font.pixelSize: 15
-        color: "white"
-
-        anchors.bottom: mainBar.top
-        anchors.right: mainBar.right
-        anchors.rightMargin: 25
+        mainValue: battery_capacity.mainValue
+        maxValue: battery_capacity.maxSpeed
 
 
-        Text {  // Text for displaying unitValue or units
-            id: textUnit
-            text: "°F"
-            font.pixelSize: 15
-            color: "white"
+        label_name: "Battery Capacity"
+        unitValue: "%"
 
-            anchors.left: parent.right
-            anchors.bottom: parent.bottom
-
-        }
-
-    }
-
-    // Main Bar: Border housing the whole bar containing the value
-    Rectangle {
-        
-        // Customize the text labels how ever you like here:
-        property double mainValue: 50.0                // Current Value. Anything will do.
-        property double maxValue: 100.0                 // Max value possible ex: max mph
-        property double minValue: 0.0                   // Min value possible ex: mph=0
-        property string unitValue: "%"                // Units for the value ex: mph, mi
-
-        id: batteryMainBar
-        width: 400          // Width of the entire bar meter
-        height: 20          // Height of the entire bar meter
-
-        radius: 15          // Radius of the entire bar meter. Does affect inner bars.
-        color: "black"      // Border Colors
-
+        color: "transparent"    // Only changes the background color with the labels
 
         anchors.right: parent.right
         anchors.rightMargin: 20
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
 
-        clip: true
-
-        // Empty Bar: Housing the value bar
-        Rectangle {
-            id: batteryEmptyBar
-            width: parent.width - 6
-            height: parent.height - 6
-            radius: parent.radius
-
-            anchors.centerIn: parent
-            anchors.bottom: parent.bottom
-
-            // Value Bar: Displaying the current value
-            Rectangle {
-
-                id: batteryValueBar
-                width: parent.width * (battery_capacity.mainValue/battery_capacity.maxValue)
-                height: parent.height
-                radius: parent.radius
-                clip: true
-                color: "red"
-                anchors.left: parent.left
-            }
-        }
-
     }
-
-    Text {  // Text labeling what the bar is about ex: temp, mph
-        id: batteryTextLabel
-        text: "Battery Capacity"
-        font.pixelSize: 15
-
-        anchors.bottom: batteryMainBar.top
-        anchors.left: batteryMainBar.left
-        anchors.leftMargin: 10
-
-        color: "white"
-    }
-
-    Text {  // Text for mainValue or numbers
-        id: batteryTextValue
-        text: battery_capacity.mainValue
-        font.pixelSize: 15
-        color: "white"
-
-        anchors.bottom: batteryMainBar.top
-        anchors.right: batteryMainBar.right
-        anchors.rightMargin: 25
-
-
-        Text {  // Text for displaying unitValue or units
-            id: batteryTextUnit
-            text: "%"
-            font.pixelSize: 15
-            color: "white"
-
-            anchors.left: parent.right
-            anchors.bottom: parent.bottom
-
-        }
-
-    }
-
     
 
     // Function to get text representation of car state
