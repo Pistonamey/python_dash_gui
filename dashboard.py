@@ -40,6 +40,39 @@ class Speedometer(QObject):
           self._minSpeed = minSpeed
           self.speedChanged.emit()
 
+class RPM_meter(QObject):
+     RPMChanged = QtCore.pyqtSignal()      # This actually doesn't do anything since qml doesn't have a function. But just keep it in case.
+
+     def __init__(self, parent=None):
+          super(RPM_meter, self).__init__(parent)
+          self._maxRPM = 10.0
+          self._minRPM = 0.0
+          self._currRPM = 0.0
+
+     @pyqtProperty(float, notify=RPMChanged)
+     def currRPM(self):
+          return self._currRPM
+
+     @currRPM.setter
+     def currRPM(self, value):
+          self._currRPM = value
+          self.RPMChanged.emit()
+
+     @pyqtProperty(float)
+     def maxRPM(self):
+          return self._maxRPM
+
+     @pyqtProperty(float)
+     def minRPM(self):
+          return self._minRPM
+
+     @QtCore.pyqtSlot(float, float, float)
+     def setAllValues(self, currRPM, maxRPM, minRPM):
+          self._currRPM = currRPM
+          self._maxRPM = maxRPM
+          self._minRPM = minRPM
+          self.RPMChanged.emit()
+
 
 class BarMeter(QObject):
      mainValueChanged = QtCore.pyqtSignal()
@@ -82,11 +115,13 @@ class BarMeter(QObject):
 
 def change_val():
      random_float = random.uniform(0, 160)
+     random_rpm = random.uniform(0, 10)
      random_int = random.randint(0, 300)
      random_battery = random.randint(0, 100)
      temperature_meter.mainValue = random_int
      speedometer.currSpeed = random_float
      battery_capacity.mainValue = random_battery
+     rpmmeter.currRPM = random_rpm
 
 
 
@@ -103,11 +138,14 @@ if __name__ == "__main__":
      temperature_meter = BarMeter()
      battery_capacity = BarMeter()
      speedometer = Speedometer()
+     rpmmeter = RPM_meter()
 
      # Sets the  object for the qml to refer to. Only needs to be done once for each object.
      engine.rootContext().setContextProperty("speedometer", speedometer)
      engine.rootContext().setContextProperty("temperature_meter", temperature_meter)
      engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
+     engine.rootContext().setContextProperty("RPM_Meter", rpmmeter)
+
 
 
      # Set initial values
@@ -117,6 +155,7 @@ if __name__ == "__main__":
      temperature_meter.mainValue = 270.0
      battery_capacity.setAllValues(0.0, 100.0, 0.0)
      battery_capacity.mainValue = 50.0
+     rpmmeter.setAllValues(0.0, 10.0, 0.0)
      view.update()
      view.show()
 

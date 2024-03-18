@@ -10,25 +10,23 @@ Rectangle {
      height: 600
      color: "#000000"
 
-    Text {
-        text: Math.floor(speedometer.currSpeed) // Display the current value
-        font.pixelSize: outerRadius * 0.15 // Adjust the font size as needed
-        color: "white" // Choose the color of the text
-        anchors.horizontalCenter: parent.horizontalCenter // Center horizontally
-        y: 225 // Adjust the vertical position
+     // Define an enumeration for the car states
+    enum CarState {
+        Drive,
+        Reverse,
+        Neutral,
+        Parked
     }
 
-
-
-     CircularGauge {
-          //property real gauge_value: 40.0
-          anchors.centerIn: parent
-          value: speedometer.currSpeed
-          maximumValue: speedometer.maxSpeed  // Largest Value
-          minimumValue: speedometer.minSpeed       // Smallest Value
-          style: CircularGaugeStyle {
-               id: style
-               tickmarkStepSize: 10.0 // Tick Marks
+    // Circular Gauge for Speedometer
+    CircularGauge {
+        width: 325
+        height: 325
+        value: speedometer.currSpeed
+        maximumValue: speedometer.maxSpeed
+        minimumValue: speedometer.minSpeed
+        style: CircularGaugeStyle {
+            tickmarkStepSize: 10.0 // Tick Marks
                tickmark: Rectangle {
                     visible: styleData.value < 8000 || styleData.value % 1000 == 0
                     implicitWidth: outerRadius * 0.02
@@ -69,8 +67,73 @@ Rectangle {
                          anchors.centerIn: parent
                     }
                }
-          }
-     }
+        }
+        anchors {
+            top: parent.top
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            leftMargin: 20
+        }
+    }
+
+    // Circular Gauge for RPM Meter
+    CircularGauge {
+        width: 325
+        height: 325
+        // Add properties and bindings for RPM values
+        value: RPM_Meter.currRPM
+        maximumValue: RPM_Meter.maxRPM
+        minimumValue: RPM_Meter.minRPM
+        style: CircularGaugeStyle {
+            tickmarkStepSize: 1.0 // Tick Marks
+               tickmark: Rectangle {
+                    visible: styleData.value < 8000 || styleData.value % 1000 == 0
+                    implicitWidth: outerRadius * 0.02
+                    antialiasing: true
+                    implicitHeight: outerRadius * 0.06
+                    color: styleData.value >= 8000 ? "#ff0000" : "#ff0000"
+               }
+
+               minorTickmark: Rectangle {
+                    visible: styleData.value < 8000
+                    implicitWidth: outerRadius * 0.01
+                    antialiasing: true
+                    implicitHeight: outerRadius * 0.03
+                    color: "#ff0000"
+               }
+
+               tickmarkLabel:  Text {
+                    font.pixelSize: Math.max(6, outerRadius * 0.1)
+                    text: styleData.value
+                    color: styleData.value >= 8000 ? "#ff0000" : "#ff0000"
+                    antialiasing: true
+               }
+
+               needle: Rectangle {
+                    y: outerRadius * 0.15
+                    implicitWidth: outerRadius * 0.03
+                    implicitHeight: outerRadius * 1.1
+                    antialiasing: true
+                    color: "#ff0000"
+               }
+
+               foreground: Item {
+                    Rectangle {
+                         width: outerRadius * 0.2
+                         height: width
+                         radius: width / 2
+                         color: "#b2b2b2"
+                         anchors.centerIn: parent
+                    }
+               }
+        }
+        anchors {
+            top: parent.top
+            verticalCenter: parent.verticalCenter
+            right: parent.right
+            rightMargin: 20
+        }
+    }
 
     Labels {
         id: averageSpeedLabel
@@ -295,5 +358,15 @@ Rectangle {
     }
 
     
+
+    // Function to get text representation of car state
+    function getStateText(state) {
+        switch(state) {
+            case CarState.Drive: return "Drive";
+            case CarState.Reverse: return "Reverse";
+            case CarState.Neutral: return "Neutral";
+            case CarState.Parked: return "Parked";
+        }
+    }
 
 }
