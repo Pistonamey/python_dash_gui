@@ -4,11 +4,12 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
 import QtQuick.Extras.Private 1.0
+import QtGraphicalEffects 1.0
 
 Rectangle {
-     width: 1024
-     height: 600
-     color: "#000000"
+    width: 1024
+    height: 600
+    color: "#000000"
 
      // Define an enumeration for the car states
     enum CarState {
@@ -190,10 +191,12 @@ Rectangle {
     BarMeter {
         id: temperatureBar
 
-        mainValue: temperature_meter.mainValue
-        maxValue: temperature_meter.maxSpeed
+        mainValue: temperature.currValue
+        maxValue: temperature.maxSpeed
 
-        label_name: "Temperature"
+
+
+        label_name: "<b>Temperature</b>"
         unitValue: "°F"
 
         color: "transparent"    // Only changes the background color with the labels
@@ -208,11 +211,11 @@ Rectangle {
     BarMeter {
         id: batteryBar
 
-        mainValue: battery_capacity.mainValue
+        mainValue: battery_capacity.currValue
         maxValue: battery_capacity.maxSpeed
 
 
-        label_name: "Battery Capacity"
+        label_name: "<b>Battery Capacity</b>"
         unitValue: "%"
 
         color: "transparent"    // Only changes the background color with the labels
@@ -234,5 +237,6 @@ Rectangle {
             case CarState.Parked: return "Parked";
         }
     }
+
 
 }

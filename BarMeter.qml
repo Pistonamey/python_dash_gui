@@ -41,6 +41,7 @@ Rectangle {
     width: bar_meter_width
     height: bar_meter_height + main_text_size + 5       // Adjust if needed
     radius: bar_meter_radius
+
     x: 0
     y: 0
     color: "#2E2E2E"                                   // Change this to "transparent" when you put this on the GUI
@@ -120,5 +121,7 @@ Rectangle {
         }
 
     }
+
+
 
 }
