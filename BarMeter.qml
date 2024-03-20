@@ -86,7 +86,16 @@ Rectangle {
                 anchors.left: parent
 
                 color: value_bar_color
+
+
             }
+        }
+
+        layer.enabled: true
+        layer.effect: Glow {
+            radius: 8
+            samples: 64
+            color: "black"
         }
 
     }
