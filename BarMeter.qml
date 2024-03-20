@@ -47,6 +47,9 @@ Rectangle {
     y: 0
     color: "#2E2E2E"                                   // Change this to "transparent" when you put this on the GUI
 
+
+
+
     // Main Bar: Border housing the whole bar containing the value
     Rectangle {
         id: mainBar
@@ -92,12 +95,45 @@ Rectangle {
         id: textLabel
         text: label_name
         font.pixelSize: label_size
+        //font.bold: true
 
         anchors.bottom: mainBar.top
         anchors.left: mainBar.left
         anchors.leftMargin: 10
 
         color: label_color
+
+
+        layer.enabled: true
+        layer.effect: DropShadow {
+            horizontalOffset: 2
+            verticalOffset: 2
+            radius: 5
+            samples: 64
+            color: "gray"
+        }
+
+    }
+
+    Text {  // Text for displaying unitValue or units
+        id: textUnit
+        text: unitValue
+        font.pixelSize: unit_text_size
+        color: unit_text_color
+
+
+        layer.enabled: true
+        layer.effect: DropShadow {
+            horizontalOffset: 2
+            verticalOffset: 2
+            radius: 5
+            samples: 64
+            color: "gray"
+        }
+
+        anchors.bottom: mainBar.top
+        anchors.right: mainBar.right
+        anchors.rightMargin: 10
 
     }
 
@@ -109,23 +145,18 @@ Rectangle {
 
         font.bold: true
 
-        anchors.bottom: mainBar.top
-        anchors.right: mainBar.right
-        anchors.rightMargin: 25
+        anchors.right: textUnit.left
+        anchors.bottom: textUnit.bottom
 
-        Text {  // Text for displaying unitValue or units
-            id: textUnit
-            text: unitValue
-            font.pixelSize: unit_text_size
-            color: unit_text_color
-
-
-
-            anchors.left: parent.right
-            anchors.bottom: parent.bottom
-
-
+        layer.enabled: true
+        layer.effect: DropShadow {
+            horizontalOffset: 2
+            verticalOffset: 2
+            radius: 5
+            samples: 64
+            color: "#b50000"
         }
+
 
     }
 

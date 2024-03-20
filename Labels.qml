@@ -1,4 +1,6 @@
 import QtQuick 2.0
+import QtQuick.Controls 1.4
+import QtGraphicalEffects 1.0
 
 Item {
     id: root
@@ -38,6 +40,15 @@ Item {
             font.pixelSize: root.fontSize
             //font.bold: true
             color: root.color
+
+            layer.enabled: true
+            layer.effect: DropShadow {
+                horizontalOffset: 2
+                verticalOffset: 2
+                radius: 5
+                samples: 64
+                color: "gray"
+            }
         }
 
         Text {
@@ -47,6 +58,15 @@ Item {
             font.pixelSize: root.fontSize
             font.bold: true
             color: root.color
+
+            layer.enabled: true
+            layer.effect: DropShadow {
+                horizontalOffset: 2
+                verticalOffset: 2
+                radius: 5
+                samples: 64
+                color: "#b50000"
+            }
         }
 
         Text {
@@ -55,7 +75,20 @@ Item {
             text: unit
             font.pixelSize: root.fontSize
             color: root.color
+
+            layer.enabled: true
+            layer.effect: DropShadow {
+                horizontalOffset: 2
+                verticalOffset: 2
+                radius: 5
+                samples: 64
+                color: "gray"
+            }
+
         }
 
+
+
     }
+
 }

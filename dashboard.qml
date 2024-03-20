@@ -11,7 +11,7 @@ Rectangle {
     height: 600
     color: "#000000"
 
-     // Define an enumeration for the car states
+    // Define an enumeration for the car states
     enum CarState {
         Drive,
         Reverse,
@@ -75,6 +75,8 @@ Rectangle {
             left: parent.left
             leftMargin: 20
         }
+
+
     }
 
     // Circular Gauge for RPM Meter
@@ -138,7 +140,7 @@ Rectangle {
 
     Labels {
         id: averageSpeedLabel
-        label: "Average Speed:"
+        label: "Average Speed"
         currValue: avg_speed.currValue
         unit: "mph"
         fontSize: 18
@@ -153,7 +155,7 @@ Rectangle {
 
     Labels {
         id: consumptionLabel
-        label: "Consumption:"
+        label: "Consumption"
         currValue: consumption.currValue
         unit: "M/L"
         fontSize: 18
@@ -168,7 +170,7 @@ Rectangle {
 
     Labels {
         id: driveableLabel
-        label: "Driveable:"
+        label: "Driveable"
         currValue: driveable.currValue
         unit: "M/L"
         fontSize: 18
@@ -183,7 +185,7 @@ Rectangle {
 
     Labels {
         id: odpartialLabel
-        label: "Od. Partial:"
+        label: "Od. Partial"
         currValue: od_partial.currValue
         unit: "m"
         fontSize: 18
@@ -204,7 +206,7 @@ Rectangle {
 
 
 
-        label_name: "<b>Temperature</b>"
+        label_name: "Temperature"
         unitValue: "°F"
 
         color: "transparent"    // Only changes the background color with the labels
@@ -223,7 +225,7 @@ Rectangle {
         maxValue: battery_capacity.maxSpeed
 
 
-        label_name: "<b>Battery Capacity</b>"
+        label_name: "Battery Capacity"
         unitValue: "%"
 
         color: "transparent"    // Only changes the background color with the labels

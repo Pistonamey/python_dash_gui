@@ -102,6 +102,10 @@ class BarMeter(QObject):
     def minValue(self):
         return self._minSpeed
 
+    def setCurrValue(self, value):
+        self._currValue = value
+        self.currValueChanged.emit()
+
     @QtCore.pyqtSlot(float, float, float)
     def setAllValues(self, currValue, maxValue, minValue):
         self._currValue = currValue
@@ -136,6 +140,7 @@ def change_val():
     random_float = random.uniform(0, 160)
     random_rpm = random.uniform(0, 10)
     random_int = random.randint(0, 300)
+
     random_battery = random.randint(0, 100)
     temperature.currValue = random_int
     speedometer.currSpeed = random_float
