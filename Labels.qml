@@ -52,7 +52,7 @@ Item {
         Text {
             anchors.top: titleText.bottom
             anchors.right: titleText.right
-            text: "unit"
+            text: unit
             font.pixelSize: root.fontSize
             color: root.color
         }

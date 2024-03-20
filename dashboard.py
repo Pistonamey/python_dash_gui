@@ -142,6 +142,11 @@ def change_val():
     battery_capacity.currValue = random_battery
     rpmmeter.currRPM = random_rpm
 
+    avg_speed.currValue = random_int
+    od_partial.currValue = random_int
+    consumption.currValue = random_int
+    driveable.currValue = random_int
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -154,12 +159,20 @@ if __name__ == "__main__":
     battery_capacity = BarMeter()
     speedometer = Speedometer()
     rpmmeter = RPM_meter()
+    avg_speed = Labels()
+    od_partial  = Labels()
+    consumption = Labels()
+    driveable = Labels()
 
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
     engine.rootContext().setContextProperty("speedometer", speedometer)
     engine.rootContext().setContextProperty("temperature", temperature)
     engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
     engine.rootContext().setContextProperty("RPM_Meter", rpmmeter)
+    engine.rootContext().setContextProperty("avg_speed", avg_speed)
+    engine.rootContext().setContextProperty("od_partial", od_partial)
+    engine.rootContext().setContextProperty("consumption", consumption)
+    engine.rootContext().setContextProperty("driveable", driveable)
 
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)
@@ -169,6 +182,12 @@ if __name__ == "__main__":
     battery_capacity.setAllValues(0.0, 100.0, 0.0)
     battery_capacity.currValue = 50.0
     rpmmeter.setAllValues(0.0, 10.0, 0.0)
+    avg_speed.setAllValues(0.0)
+    od_partial.setAllValues(0.0)
+    consumption.setAllValues(0.0)
+    driveable.setAllValues(0.0)
+
+
     view.update()
     view.show()
 

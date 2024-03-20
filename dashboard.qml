@@ -138,7 +138,9 @@ Rectangle {
 
     Labels {
         id: averageSpeedLabel
-        label: "Average Speed:" //30 mph
+        label: "Average Speed:"
+        currValue: avg_speed.currValue
+        unit: "mph"
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
@@ -150,8 +152,10 @@ Rectangle {
     }
 
     Labels {
-        id: consumption
-        label: "Consumption:"//0 M/L
+        id: consumptionLabel
+        label: "Consumption:"
+        currValue: consumption.currValue
+        unit: "M/L"
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
@@ -163,29 +167,33 @@ Rectangle {
     }
 
     Labels {
-        id: driveable
-        label: "Driveable:" // M/L
+        id: driveableLabel
+        label: "Driveable:"
+        currValue: driveable.currValue
+        unit: "M/L"
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
         borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
-        anchors.left: consumption.right // Position to the right of the consumption label
+        anchors.left: consumptionLabel.right // Position to the right of the consumption label
         anchors.leftMargin: 20 // Add some space between the labels
-        anchors.verticalCenter: consumption.verticalCenter // Align vertically with consumption
+        anchors.verticalCenter: consumptionLabel.verticalCenter // Align vertically with consumption
     }
 
     Labels {
-        id: odpartial
-        label: "Od. Partial:" // 0 m
+        id: odpartialLabel
+        label: "Od. Partial:"
+        currValue: od_partial.currValue
+        unit: "m"
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
         borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
-        anchors.right: consumption.left // Position to the right of the consumption label
+        anchors.right: consumptionLabel.left // Position to the right of the consumption label
         anchors.rightMargin: 20 // Add some space between the labels
-        anchors.verticalCenter: consumption.verticalCenter // Align vertically with consumption
+        anchors.verticalCenter: consumptionLabel.verticalCenter // Align vertically with consumption
     }
 
     BarMeter {
