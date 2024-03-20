@@ -4,6 +4,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
 import QtQuick.Extras.Private 1.0
+import QtGraphicalEffects 1.0
 
 // Holds all the bar meter and all text labels
 Rectangle {
@@ -106,6 +107,8 @@ Rectangle {
         font.pixelSize: main_text_size
         color: label_color
 
+        font.bold: true
+
         anchors.bottom: mainBar.top
         anchors.right: mainBar.right
         anchors.rightMargin: 25
@@ -116,8 +119,12 @@ Rectangle {
             font.pixelSize: unit_text_size
             color: unit_text_color
 
+
+
             anchors.left: parent.right
             anchors.bottom: parent.bottom
+
+
         }
 
     }

@@ -138,11 +138,11 @@ Rectangle {
 
     Labels {
         id: averageSpeedLabel
-        label: "Average Speed: 30 mph"
+        label: "Average Speed:" //30 mph
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
-        borderWidth: 3 // Example border width
+        borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
         anchors.top: parent.top
         anchors.topMargin: 20
@@ -151,11 +151,11 @@ Rectangle {
 
     Labels {
         id: consumption
-        label: "Consumption: 0 M/L"
+        label: "Consumption:"//0 M/L
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
-        borderWidth: 3 // Example border width
+        borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
         anchors.top: averageSpeedLabel.bottom // Anchor to the bottom of the first label
         anchors.topMargin: 10 // Adjust this margin to control spacing between the labels
@@ -164,11 +164,11 @@ Rectangle {
 
     Labels {
         id: driveable
-        label: "Driveable: 0 M/L"
+        label: "Driveable:" // M/L
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
-        borderWidth: 3 // Example border width
+        borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
         anchors.left: consumption.right // Position to the right of the consumption label
         anchors.leftMargin: 20 // Add some space between the labels
@@ -177,11 +177,11 @@ Rectangle {
 
     Labels {
         id: odpartial
-        label: "Od. Partial: 0 m"
+        label: "Od. Partial:" // 0 m
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
-        borderWidth: 3 // Example border width
+        borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
         anchors.right: consumption.left // Position to the right of the consumption label
         anchors.rightMargin: 20 // Add some space between the labels

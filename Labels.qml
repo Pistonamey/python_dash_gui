@@ -4,11 +4,14 @@ Item {
     id: root
 
     // Default size can be overridden as needed
-    width: 200
+    width: 170
     height: 50
 
     // Customizable properties for the label
     property string label: "Default Label"
+    property int currValue: 0
+    property string unit: "unit"
+
     property int fontSize: 20
     property string color: "white"
     property color borderColor: "#FFFFFF" // Default border color
@@ -18,6 +21,8 @@ Item {
     // Border Rectangle
     Rectangle {
         id: borderRect
+        width: root.width
+        height: root.height
         anchors.fill: parent // Make the rectangle fill the parent Item
         border.color: root.borderColor
         border.width: root.borderWidth
@@ -26,10 +31,31 @@ Item {
 
         // Text item for the label
         Text {
-            anchors.centerIn: parent
+            id: titleText
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent
             text: root.label
+            font.pixelSize: root.fontSize
+            //font.bold: true
+            color: root.color
+        }
+
+        Text {
+            anchors.top: titleText.bottom
+            anchors.left: titleText.left
+            text: currValue
+            font.pixelSize: root.fontSize
+            font.bold: true
+            color: root.color
+        }
+
+        Text {
+            anchors.top: titleText.bottom
+            anchors.right: titleText.right
+            text: "unit"
             font.pixelSize: root.fontSize
             color: root.color
         }
+
     }
 }
