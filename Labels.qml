@@ -29,7 +29,7 @@ Item {
         border.color: root.borderColor
         border.width: root.borderWidth
         radius: root.borderRadius // Adjust for rounded corners
-        color: "transparent" // Background color of the rectangle, set to transparent to only show the border
+        color: "black" // Background color of the rectangle, set to transparent to only show the border
 
         // Text item for the label
         Text {
@@ -50,7 +50,7 @@ Item {
                 color: "gray"
             }
         }
-
+        // Text item for the value
         Text {
             anchors.top: titleText.bottom
             anchors.left: titleText.left
@@ -68,7 +68,7 @@ Item {
                 color: "#b50000"
             }
         }
-
+        // Text item for the units
         Text {
             anchors.top: titleText.bottom
             anchors.right: titleText.right
@@ -85,6 +85,14 @@ Item {
                 color: "gray"
             }
 
+        }
+        layer.enabled: true
+        layer.effect: DropShadow {
+            horizontalOffset: 2
+            verticalOffset: 2
+            radius: 5
+            samples: 64
+            color: "#7d0101"
         }
 
 
