@@ -14,13 +14,13 @@ Rectangle {
 
 
     Rectangle {
-        width: 330
-        height: 330
+        width: 340
+        height: 340
         anchors.centerIn: parent
         radius: 250
 
-        color: "transparent"
-        border.width: 2
+        color: "black"
+        border.width: 5
         border.color: "red"
 
         // Circular Gauge for Speedometer
@@ -52,6 +52,7 @@ Rectangle {
                         font.pixelSize: Math.max(6, outerRadius * 0.1)
                         text: styleData.value
                         color: styleData.value >= 8000 ? "#ff0000" : "#ff0000"
+                        //font.bold: true
                         antialiasing: true
                    }
 
@@ -59,6 +60,7 @@ Rectangle {
                         y: outerRadius * 0.15
                         implicitWidth: outerRadius * 0.03
                         implicitHeight: outerRadius * 1.1
+                        radius: 10
                         antialiasing: true
                         color: "#ff0000"
                    }
@@ -68,7 +70,7 @@ Rectangle {
                              width: outerRadius * 0.2
                              height: width
                              radius: width / 2
-                             color: "#b2b2b2"
+                             color: "white"
                              anchors.centerIn: parent
                         }
                    }
@@ -79,6 +81,106 @@ Rectangle {
             }
 
         }
+
+        // Circular Gauge for Speedometer
+        CircularGauge {
+            width: 200
+            height: 200
+            //value: speedometer.currSpeed
+            maximumValue: 260
+            minimumValue: 0
+            style: CircularGaugeStyle {
+                tickmarkStepSize: 20.0 // Tick Marks
+                   tickmark: Rectangle {
+                        visible: styleData.value < 8000 || styleData.value % 1000 == 0
+                        implicitWidth: outerRadius * 0.02
+                        antialiasing: true
+                        implicitHeight: outerRadius * 0.06
+                        color: "darkred"
+                   }
+
+                   minorTickmark: Rectangle {
+                        visible: styleData.value < 8000
+                        implicitWidth: outerRadius * 0.01
+                        antialiasing: true
+                        implicitHeight: outerRadius * 0.03
+                        color: "darkred"
+                   }
+
+                   tickmarkLabel:  Text {
+                        font.pixelSize: Math.max(6, outerRadius * 0.1)
+                        text: styleData.value
+                        color: "darkred"
+                        //font.bold: true
+                        antialiasing: true
+                   }
+
+                   needle: Rectangle {
+                        y: outerRadius * 0.15
+                        implicitWidth: outerRadius * 0.03
+                        implicitHeight: outerRadius * 1.1
+                        radius: 20
+                        antialiasing: true
+                        color: "transparent"
+                   }
+
+                   foreground: Item {
+                        Rectangle {
+                             width: outerRadius * 0.2
+                             height: width
+                             radius: width / 2
+                             color: "transparent"
+                             anchors.centerIn: parent
+                        }
+                   }
+
+            }
+
+            anchors {
+                centerIn: parent
+            }
+
+        }
+
+        Rectangle {
+            width: 100
+            height: 50
+            color: "transparent"
+
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 20
+
+            Text {
+                text: Math.round(speedometer.currSpeed)
+                color: "white"
+                font.pixelSize: 24
+
+                anchors.centerIn: parent
+                Text {
+                    text: "mph"
+                    color: "white"
+                    font.pixelSize: 12
+                    anchors.top: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
+
+
+        }
+
+        layer.enabled: true
+        layer.effect: Glow {
+            radius: 32
+            samples: 64
+            color: "darkred"
+        }
+
+
+
+
+
+
     }
 
 

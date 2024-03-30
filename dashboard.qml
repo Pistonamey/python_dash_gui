@@ -1,10 +1,11 @@
 import "."
-import QtQuick 2.0
+import QtQuick 2
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Extras 1.4
 import QtQuick.Extras.Private 1.0
 import QtGraphicalEffects 1.0
+import QtQuick.Shapes 1.15
 
 Rectangle {
     width: 1024
@@ -19,7 +20,22 @@ Rectangle {
         Parked
     }
 
+    CenterScreenWidget {
+        anchors {
+            centerIn: parent
+        }
+    }
+
     SpeedometerGauge {
+        anchors {
+            top: parent.top
+            right: parent.right
+            rightMargin: 32
+            bottom: parent.bottom
+        }
+    }
+
+    RPMGauge {
         anchors {
             top: parent.top
             left: parent.left
@@ -28,14 +44,7 @@ Rectangle {
         }
     }
 
-    RPMGauge {
-        anchors {
-            top: parent.top
-            right: parent.right
-            rightMargin: 32
-            bottom: parent.bottom
-        }
-    }
+
 
 
     Labels {
@@ -49,7 +58,7 @@ Rectangle {
         borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
         anchors.top: parent.top
-        anchors.topMargin: 20
+        anchors.topMargin: 10
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
@@ -147,7 +156,6 @@ Rectangle {
             case CarState.Parked: return "Parked";
         }
     }
-
 
 
 }

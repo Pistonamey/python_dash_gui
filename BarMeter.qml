@@ -72,6 +72,10 @@ Rectangle {
             anchors.centerIn: parent
 
             color: empty_bar_color
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "white" }
+                GradientStop { position: 0.33; color: "white" }
+            }
 
             // Value Bar: Displaying the current value
             Rectangle {
@@ -87,16 +91,24 @@ Rectangle {
 
                 color: value_bar_color
 
+                gradient: Gradient {
+                    GradientStop { position: 0.0; color: "red" }
+                    GradientStop { position: 0.33; color: "red" }
+                    GradientStop { position: 1.0; color: "red" }
+                }
+
+                layer.enabled: true
+                layer.effect: Glow {
+                    radius: 8
+                    samples: 64
+                    color: "transparent"
+                }
+
 
             }
         }
 
-        layer.enabled: true
-        layer.effect: Glow {
-            radius: 8
-            samples: 64
-            color: "black"
-        }
+
 
     }
 
@@ -119,7 +131,7 @@ Rectangle {
             verticalOffset: 2
             radius: 5
             samples: 64
-            color: "gray"
+            color: "transparent"
         }
 
     }
@@ -135,7 +147,7 @@ Rectangle {
         layer.effect: DropShadow {
             horizontalOffset: 2
             verticalOffset: 2
-            radius: 5
+            radius: 0
             samples: 64
             color: "gray"
         }
@@ -161,7 +173,7 @@ Rectangle {
         layer.effect: DropShadow {
             horizontalOffset: 2
             verticalOffset: 2
-            radius: 5
+            radius: 0
             samples: 64
             color: "#b50000"
         }

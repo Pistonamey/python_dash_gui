@@ -45,9 +45,9 @@ Item {
             layer.effect: DropShadow {
                 horizontalOffset: 2
                 verticalOffset: 2
-                radius: 5
+                radius: 0
                 samples: 64
-                color: "gray"
+                color: "transparent"
             }
         }
         // Text item for the value
@@ -63,7 +63,7 @@ Item {
             layer.effect: DropShadow {
                 horizontalOffset: 2
                 verticalOffset: 2
-                radius: 5
+                radius: 0
                 samples: 64
                 color: "#b50000"
             }
@@ -80,7 +80,7 @@ Item {
             layer.effect: DropShadow {
                 horizontalOffset: 2
                 verticalOffset: 2
-                radius: 5
+                radius: 0
                 samples: 64
                 color: "gray"
             }
@@ -90,7 +90,7 @@ Item {
         layer.effect: DropShadow {
             horizontalOffset: 2
             verticalOffset: 2
-            radius: 5
+            radius: 0
             samples: 64
             color: "#7d0101"
         }

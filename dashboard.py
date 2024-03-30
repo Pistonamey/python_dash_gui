@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtQuick import QQuickView
+import datetime
 
 
 class Speedometer(QObject):
@@ -135,6 +136,32 @@ class Labels(QObject):
         self._currValue = currValue
         self.currValueChanged.emit()
 
+class CenterScreenWidget(QObject):
+    currTimeChanged = QtCore.pyqtSignal()
+    def __init__(self, parent=None):
+        super(CenterScreenWidget, self).__init__(parent)
+        self._currTime = datetime.datetime.now().strftime("%I:%M %p")
+        self._currDate = datetime.datetime.now().strftime("%m/%d/%Y")
+
+    @pyqtProperty(str, notify=currTimeChanged)
+    def currTime(self):
+        return self._currTime
+
+    @currTime.setter
+    def currTime(self, value):
+        self._currTime = value
+        self.currTimeChanged.emit()
+
+    @pyqtProperty(str, notify=currTimeChanged)
+    def currDate(self):
+        return self._currDate
+
+    @currDate.setter
+    def currDate(self, value):
+        self._currDate = value
+        self.currTimeChanged.emit()
+
+
 
 def change_val():
     random_float = random.uniform(0, 160)
@@ -152,6 +179,9 @@ def change_val():
     consumption.currValue = random_int
     driveable.currValue = random_int
 
+    centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
+    centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -165,9 +195,10 @@ if __name__ == "__main__":
     speedometer = Speedometer()
     rpmmeter = RPM_meter()
     avg_speed = Labels()
-    od_partial  = Labels()
+    od_partial = Labels()
     consumption = Labels()
     driveable = Labels()
+    centerScreen = CenterScreenWidget()
 
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
     engine.rootContext().setContextProperty("speedometer", speedometer)
@@ -178,6 +209,7 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("od_partial", od_partial)
     engine.rootContext().setContextProperty("consumption", consumption)
     engine.rootContext().setContextProperty("driveable", driveable)
+    engine.rootContext().setContextProperty("centerScreen", centerScreen)
 
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)
@@ -191,6 +223,9 @@ if __name__ == "__main__":
     od_partial.setAllValues(0.0)
     consumption.setAllValues(0.0)
     driveable.setAllValues(0.0)
+
+
+
 
 
     view.update()

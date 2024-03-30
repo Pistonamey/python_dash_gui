@@ -14,13 +14,13 @@ Rectangle {
 
 
     Rectangle {
-        width: 330
-        height: 330
+        width: 340
+        height: 340
         anchors.centerIn: parent
         radius: 250
 
-        color: "transparent"
-        border.width: 2
+        color: "black"
+        border.width: 5
         border.color: "red"
 
         // Circular Gauge for RPM Meter
@@ -60,6 +60,7 @@ Rectangle {
                         y: outerRadius * 0.15
                         implicitWidth: outerRadius * 0.03
                         implicitHeight: outerRadius * 1.1
+                        radius: 10
                         antialiasing: true
                         color: "#ff0000"
                    }
@@ -69,7 +70,7 @@ Rectangle {
                              width: outerRadius * 0.2
                              height: width
                              radius: width / 2
-                             color: "#b2b2b2"
+                             color: "white"
                              anchors.centerIn: parent
                         }
                    }
@@ -78,6 +79,41 @@ Rectangle {
                 centerIn: parent
             }
         }
+
+        Rectangle {
+            width: 100
+            height: 50
+            color: "transparent"
+
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottomMargin: 20
+
+            Text {
+                text: Math.round(RPM_Meter.currRPM)
+                color: "white"
+                font.pixelSize: 24
+
+                anchors.centerIn: parent
+                Text {
+                    text: "rpm"
+                    color: "white"
+                    font.pixelSize: 12
+                    anchors.top: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
+                }
+            }
+
+
+        }
+
+        layer.enabled: true
+        layer.effect: Glow {
+            radius: 32
+            samples: 64
+            color: "darkred"
+        }
+
     }
 
 
