@@ -6,16 +6,22 @@ import QtQuick.Extras 1.4
 import QtQuick.Extras.Private 1.0
 import QtGraphicalEffects 1.0
 
+// Transparent Rectangle that holds everything
 Rectangle {
-    id: speedometer_gauge
-    width: 325
-    height: 325
+    property int widget_width: 325
+    property int widget_height: 325
+
+    property string widget_color: "red"
+
+    width: widget_width
+    height: widget_height
+
     color: "transparent"
 
-
+    // Outer Ring Border
     Rectangle {
-        width: 340
-        height: 340
+        width: widget_width + 15
+        height: widget_height + 15
         anchors.centerIn: parent
         radius: 250
 
@@ -25,8 +31,8 @@ Rectangle {
 
         // Circular Gauge for RPM Meter
         CircularGauge {
-            width: 325
-            height: 325
+            width: widget_width
+            height: widget_height
             // Add properties and bindings for RPM values
             value: RPM_Meter.currRPM
             maximumValue: RPM_Meter.maxRPM
@@ -38,7 +44,7 @@ Rectangle {
                         implicitWidth: outerRadius * 0.02
                         antialiasing: true
                         implicitHeight: outerRadius * 0.06
-                        color: styleData.value >= 8000 ? "#ff0000" : "#ff0000"
+                        color: styleData.value >= 8000 ? widget_color : widget_color
                    }
 
                    minorTickmark: Rectangle {
@@ -46,13 +52,13 @@ Rectangle {
                         implicitWidth: outerRadius * 0.01
                         antialiasing: true
                         implicitHeight: outerRadius * 0.03
-                        color: "#ff0000"
+                        color: widget_color
                    }
 
                    tickmarkLabel:  Text {
                         font.pixelSize: Math.max(6, outerRadius * 0.1)
                         text: styleData.value
-                        color: styleData.value >= 8000 ? "#ff0000" : "#ff0000"
+                        color: styleData.value >= 8000 ? widget_color : widget_color
                         antialiasing: true
                    }
 
@@ -62,7 +68,7 @@ Rectangle {
                         implicitHeight: outerRadius * 1.1
                         radius: 10
                         antialiasing: true
-                        color: "#ff0000"
+                        color: widget_color
                    }
 
                    foreground: Item {
@@ -80,6 +86,7 @@ Rectangle {
             }
         }
 
+        // Value label for RPM
         Rectangle {
             width: 100
             height: 50
@@ -107,6 +114,7 @@ Rectangle {
 
         }
 
+        // Glow Effect
         layer.enabled: true
         layer.effect: Glow {
             radius: 32

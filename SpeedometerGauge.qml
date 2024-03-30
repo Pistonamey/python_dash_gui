@@ -6,30 +6,39 @@ import QtQuick.Extras 1.4
 import QtQuick.Extras.Private 1.0
 import QtGraphicalEffects 1.0
 
+// Transparent Rectangle that holds everything
 Rectangle {
-    id: speedometer_gauge
-    width: 325
-    height: 325
+    property int widget_width: 325
+    property int widget_height: 325
+
+    property string widget_color: "red"
+
+    width: widget_height
+    height: widget_height
+
     color: "transparent"
 
-
+    // Outer Ring Border
     Rectangle {
-        width: 340
-        height: 340
-        anchors.centerIn: parent
+        width: widget_width + 15 // Customizable
+        height: widget_height + 15 // Customizable
         radius: 250
 
         color: "black"
         border.width: 5
-        border.color: "red"
+        border.color: widget_color // Customizable
+
+        anchors.centerIn: parent
 
         // Circular Gauge for Speedometer
         CircularGauge {
-            width: 325
-            height: 325
+            width: widget_width
+            height: widget_height
+
             value: speedometer.currSpeed
             maximumValue: speedometer.maxSpeed
             minimumValue: speedometer.minSpeed
+
             style: CircularGaugeStyle {
                 tickmarkStepSize: 10.0 // Tick Marks
                    tickmark: Rectangle {
@@ -37,7 +46,7 @@ Rectangle {
                         implicitWidth: outerRadius * 0.02
                         antialiasing: true
                         implicitHeight: outerRadius * 0.06
-                        color: styleData.value >= 8000 ? "#ff0000" : "#ff0000"
+                        color: styleData.value >= 8000 ? widget_color : widget_color
                    }
 
                    minorTickmark: Rectangle {
@@ -51,7 +60,7 @@ Rectangle {
                    tickmarkLabel:  Text {
                         font.pixelSize: Math.max(6, outerRadius * 0.1)
                         text: styleData.value
-                        color: styleData.value >= 8000 ? "#ff0000" : "#ff0000"
+                        color: styleData.value >= 8000 ? widget_color : widget_color
                         //font.bold: true
                         antialiasing: true
                    }
@@ -74,6 +83,7 @@ Rectangle {
                              anchors.centerIn: parent
                         }
                    }
+
             }
 
             anchors {
@@ -82,10 +92,10 @@ Rectangle {
 
         }
 
-        // Circular Gauge for Speedometer
+        // Inter-Circular Gauge for Speedometer in km
         CircularGauge {
-            width: 200
-            height: 200
+            width: widget_width - 125
+            height: widget_height - 125
             //value: speedometer.currSpeed
             maximumValue: 260
             minimumValue: 0
@@ -142,6 +152,7 @@ Rectangle {
 
         }
 
+        // Value label for Speedometer
         Rectangle {
             width: 100
             height: 50
@@ -169,16 +180,13 @@ Rectangle {
 
         }
 
+        // Glow effect
         layer.enabled: true
         layer.effect: Glow {
             radius: 32
             samples: 64
             color: "darkred"
         }
-
-
-
-
 
 
     }
