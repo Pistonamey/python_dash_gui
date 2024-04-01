@@ -8,8 +8,8 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     id: center_screen_widget
-    width: 325
-    height: 325
+    width: 600
+    height: 340
     color: "black"
 
     //border.width: 2
@@ -24,8 +24,8 @@ Rectangle {
     }*/
 
     Rectangle {
-        width: parent.width
-        height: 40
+        width: parent.width - 300
+        height: 35
         color: "white"
 
         gradient: Gradient {
@@ -40,6 +40,7 @@ Rectangle {
 
         anchors {
             top: parent.top
+            horizontalCenter: parent.horizontalCenter
         }
 
         Text {

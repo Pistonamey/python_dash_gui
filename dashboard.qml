@@ -19,6 +19,14 @@ Rectangle {
         Parked
     }
 
+    /*Left_arrow {
+        x: 50
+        y: 50
+        anchors {
+            top: parent.top
+        }
+    }*/
+
     CenterScreenWidget {
         anchors {
             centerIn: parent
@@ -57,7 +65,7 @@ Rectangle {
         borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
         anchors.top: parent.top
-        anchors.topMargin: 10
+        anchors.topMargin: 30
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
@@ -71,9 +79,9 @@ Rectangle {
         borderColor: "#FF0000" // Example border color
         borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
-        anchors.top: averageSpeedLabel.bottom // Anchor to the bottom of the first label
-        anchors.topMargin: 10 // Adjust this margin to control spacing between the labels
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: averageSpeedLabel.right // Anchor to the bottom of the first label
+        anchors.leftMargin: 10 // Adjust this margin to control spacing between the labels
+        anchors.verticalCenter: averageSpeedLabel.verticalCenter
     }
 
     Labels {
@@ -87,7 +95,7 @@ Rectangle {
         borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
         anchors.left: consumptionLabel.right // Position to the right of the consumption label
-        anchors.leftMargin: 20 // Add some space between the labels
+        anchors.leftMargin: 10 // Add some space between the labels
         anchors.verticalCenter: consumptionLabel.verticalCenter // Align vertically with consumption
     }
 
@@ -101,9 +109,24 @@ Rectangle {
         borderColor: "#FF0000" // Example border color
         borderWidth: 2 // Example border width
         borderRadius: 10 // Example border radius for rounded corners
-        anchors.right: consumptionLabel.left // Position to the right of the consumption label
-        anchors.rightMargin: 20 // Add some space between the labels
+        anchors.right: averageSpeedLabel.left // Position to the right of the consumption label
+        anchors.rightMargin: 10 // Add some space between the labels
         anchors.verticalCenter: consumptionLabel.verticalCenter // Align vertically with consumption
+    }
+
+    Labels {
+        id: place_holder
+        label: "Place holder"
+        currValue: 0
+        unit: "?"
+        fontSize: 18
+        color: "white"
+        borderColor: "#FF0000" // Example border color
+        borderWidth: 2 // Example border width
+        borderRadius: 10 // Example border radius for rounded corners
+        anchors.right: odpartialLabel.left // Position to the right of the consumption label
+        anchors.rightMargin: 10 // Add some space between the labels
+        anchors.verticalCenter: odpartialLabel.verticalCenter // Align vertically with consumption
     }
 
     BarMeter {
