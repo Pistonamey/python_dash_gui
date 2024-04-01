@@ -16,20 +16,20 @@ Item {
 
     property int fontSize: 20
     property string color: "white"
-    property color borderColor: "#FFFFFF" // Default border color
-    property int borderWidth: 2 // Default border width
-    property int borderRadius: 5 // Default border radius for rounded corners
+    property color borderColor: "#FFFFFF"   // Default border color
+    property int borderWidth: 2             // Default border width
+    property int borderRadius: 5            // Default border radius for rounded corners
 
     // Border Rectangle
     Rectangle {
         id: borderRect
         width: root.width
         height: root.height
-        anchors.fill: parent // Make the rectangle fill the parent Item
+        anchors.fill: parent            // Make the rectangle fill the parent Item
         border.color: root.borderColor
         border.width: root.borderWidth
-        radius: root.borderRadius // Adjust for rounded corners
-        color: "black" // Background color of the rectangle, set to transparent to only show the border
+        radius: root.borderRadius       // Adjust for rounded corners
+        color: "black"                  // Background color of the rectangle, set to transparent to only show the border
 
         // Text item for the label
         Text {
@@ -50,6 +50,7 @@ Item {
                 color: "transparent"
             }
         }
+
         // Text item for the value
         Text {
             anchors.top: titleText.bottom
@@ -68,6 +69,7 @@ Item {
                 color: "#b50000"
             }
         }
+
         // Text item for the units
         Text {
             anchors.top: titleText.bottom
@@ -86,6 +88,8 @@ Item {
             }
 
         }
+
+        // Widget Shadow
         layer.enabled: true
         layer.effect: DropShadow {
             horizontalOffset: 2

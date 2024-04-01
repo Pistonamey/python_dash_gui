@@ -39,6 +39,10 @@ Rectangle {
             maximumValue: speedometer.maxSpeed
             minimumValue: speedometer.minSpeed
 
+            anchors {
+                centerIn: parent
+            }
+
             style: CircularGaugeStyle {
                 tickmarkStepSize: 10.0 // Tick Marks
                    tickmark: Rectangle {
@@ -84,10 +88,6 @@ Rectangle {
                         }
                    }
 
-            }
-
-            anchors {
-                centerIn: parent
             }
 
         }
