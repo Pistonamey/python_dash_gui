@@ -135,8 +135,6 @@ Rectangle {
         mainValue: temperature.currValue
         maxValue: temperature.maxSpeed
 
-
-
         label_name: "Temperature"
         unitValue: "°F"
 
@@ -154,7 +152,6 @@ Rectangle {
 
         mainValue: battery_capacity.currValue
         maxValue: battery_capacity.maxSpeed
-
 
         label_name: "Battery Capacity"
         unitValue: "%"

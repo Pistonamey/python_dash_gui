@@ -108,8 +108,6 @@ Rectangle {
             }
         }
 
-
-
     }
 
     Text {  // Text labeling what the bar is about ex: temp, mph

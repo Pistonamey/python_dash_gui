@@ -8,10 +8,17 @@ import QtGraphicalEffects 1.0
 
 // Transparent Rectangle that holds everything
 Rectangle {
+    // Size of the widget
     property int widget_width: 325
     property int widget_height: 325
 
+    // Color of the Speedometer
     property string widget_color: "red"
+    property string widget_glowColor: "darkred"
+
+    // Color of the Needle
+    property string widget_needleColor: "red"
+
 
     width: widget_width
     height: widget_height
@@ -27,63 +34,68 @@ Rectangle {
 
         color: "black"
         border.width: 5
-        border.color: "red"
+        border.color: widget_color
 
         // Circular Gauge for RPM Meter
         CircularGauge {
             width: widget_width
             height: widget_height
+
             // Add properties and bindings for RPM values
             value: RPM_Meter.currRPM
             maximumValue: RPM_Meter.maxRPM
             minimumValue: RPM_Meter.minRPM
-            style: CircularGaugeStyle {
-                tickmarkStepSize: 1.0 // Tick Marks
-                   tickmark: Rectangle {
-                        visible: styleData.value < 8000 || styleData.value % 1000 == 0
-                        implicitWidth: outerRadius * 0.02
-                        antialiasing: true
-                        implicitHeight: outerRadius * 0.06
-                        color: styleData.value >= 8000 ? widget_color : widget_color
-                   }
 
-                   minorTickmark: Rectangle {
-                        visible: styleData.value < 8000
-                        implicitWidth: outerRadius * 0.01
-                        antialiasing: true
-                        implicitHeight: outerRadius * 0.03
-                        color: widget_color
-                   }
-
-                   tickmarkLabel:  Text {
-                        font.pixelSize: Math.max(6, outerRadius * 0.1)
-                        text: styleData.value
-                        color: styleData.value >= 8000 ? widget_color : widget_color
-                        antialiasing: true
-                   }
-
-                   needle: Rectangle {
-                        y: outerRadius * 0.15
-                        implicitWidth: outerRadius * 0.03
-                        implicitHeight: outerRadius * 1.1
-                        radius: 10
-                        antialiasing: true
-                        color: widget_color
-                   }
-
-                   foreground: Item {
-                        Rectangle {
-                             width: outerRadius * 0.2
-                             height: width
-                             radius: width / 2
-                             color: "white"
-                             anchors.centerIn: parent
-                        }
-                   }
-            }
             anchors {
                 centerIn: parent
             }
+
+            style: CircularGaugeStyle {
+                tickmarkStepSize: 1.0 // Tick Marks
+                tickmark: Rectangle {
+                    visible: styleData.value < 8000 || styleData.value % 1000 == 0
+                    implicitWidth: outerRadius * 0.02
+                    antialiasing: true
+                    implicitHeight: outerRadius * 0.06
+                    color: styleData.value >= 8000 ? widget_color : widget_color
+                }
+
+                minorTickmark: Rectangle {
+                    visible: styleData.value < 8000
+                    implicitWidth: outerRadius * 0.01
+                    antialiasing: true
+                    implicitHeight: outerRadius * 0.03
+                    color: widget_color
+                }
+
+                tickmarkLabel:  Text {
+                    font.pixelSize: Math.max(6, outerRadius * 0.1)
+                    text: styleData.value
+                    color: styleData.value >= 8000 ? widget_color : widget_color
+                    antialiasing: true
+                }
+
+                needle: Rectangle {
+                    y: outerRadius * 0.15
+                    implicitWidth: outerRadius * 0.03
+                    implicitHeight: outerRadius * 1.1
+                    radius: 10
+                    antialiasing: true
+                    color: widget_needleColor
+                }
+
+                foreground: Item {
+                    Rectangle {
+                         width: outerRadius * 0.2
+                         height: width
+                         radius: width / 2
+                         color: "white"
+                         anchors.centerIn: parent
+                    }
+                }
+
+            }
+
         }
 
         // Value label for RPM
@@ -119,7 +131,7 @@ Rectangle {
         layer.effect: Glow {
             radius: 32
             samples: 64
-            color: "darkred"
+            color: widget_glowColor
         }
 
     }

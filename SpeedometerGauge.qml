@@ -8,12 +8,18 @@ import QtGraphicalEffects 1.0
 
 // Transparent Rectangle that holds everything
 Rectangle {
+    // Size of the widget
     property int widget_width: 325
     property int widget_height: 325
 
+    // Color of the Speedometer
     property string widget_color: "red"
+    property string widget_glowColor: "darkred"
 
-    width: widget_height
+    // Color of the Needle
+    property string widget_needleColor: "red"
+
+    width: widget_width
     height: widget_height
 
     color: "transparent"
@@ -45,48 +51,48 @@ Rectangle {
 
             style: CircularGaugeStyle {
                 tickmarkStepSize: 10.0 // Tick Marks
-                   tickmark: Rectangle {
-                        visible: styleData.value < 8000 || styleData.value % 1000 == 0
-                        implicitWidth: outerRadius * 0.02
-                        antialiasing: true
-                        implicitHeight: outerRadius * 0.06
-                        color: styleData.value >= 8000 ? widget_color : widget_color
-                   }
+                tickmark: Rectangle {
+                    visible: styleData.value < 8000 || styleData.value % 1000 == 0
+                    implicitWidth: outerRadius * 0.02
+                    antialiasing: true
+                    implicitHeight: outerRadius * 0.06
+                    color: styleData.value >= 8000 ? widget_color : widget_color
+                }
 
-                   minorTickmark: Rectangle {
-                        visible: styleData.value < 8000
-                        implicitWidth: outerRadius * 0.01
-                        antialiasing: true
-                        implicitHeight: outerRadius * 0.03
-                        color: "#ff0000"
-                   }
+                minorTickmark: Rectangle {
+                    visible: styleData.value < 8000
+                    implicitWidth: outerRadius * 0.01
+                    antialiasing: true
+                    implicitHeight: outerRadius * 0.03
+                    color: widget_color
+                }
 
-                   tickmarkLabel:  Text {
-                        font.pixelSize: Math.max(6, outerRadius * 0.1)
-                        text: styleData.value
-                        color: styleData.value >= 8000 ? widget_color : widget_color
-                        //font.bold: true
-                        antialiasing: true
-                   }
+                tickmarkLabel:  Text {
+                    font.pixelSize: Math.max(6, outerRadius * 0.1)
+                    text: styleData.value
+                    color: styleData.value >= 8000 ? widget_color : widget_color
+                    //font.bold: true
+                    antialiasing: true
+                }
 
-                   needle: Rectangle {
-                        y: outerRadius * 0.15
-                        implicitWidth: outerRadius * 0.03
-                        implicitHeight: outerRadius * 1.1
-                        radius: 10
-                        antialiasing: true
-                        color: "#ff0000"
-                   }
+                needle: Rectangle {
+                    y: outerRadius * 0.15
+                    implicitWidth: outerRadius * 0.03
+                    implicitHeight: outerRadius * 1.1
+                    radius: 10
+                    antialiasing: true
+                    color: "#ff0000"
+                }
 
-                   foreground: Item {
-                        Rectangle {
-                             width: outerRadius * 0.2
-                             height: width
-                             radius: width / 2
-                             color: "white"
-                             anchors.centerIn: parent
-                        }
-                   }
+                foreground: Item {
+                    Rectangle {
+                         width: outerRadius * 0.2
+                         height: width
+                         radius: width / 2
+                         color: "white"
+                         anchors.centerIn: parent
+                    }
+                }
 
             }
 
@@ -101,48 +107,48 @@ Rectangle {
             minimumValue: 0
             style: CircularGaugeStyle {
                 tickmarkStepSize: 20.0 // Tick Marks
-                   tickmark: Rectangle {
-                        visible: styleData.value < 8000 || styleData.value % 1000 == 0
-                        implicitWidth: outerRadius * 0.02
-                        antialiasing: true
-                        implicitHeight: outerRadius * 0.06
-                        color: "darkred"
-                   }
+                tickmark: Rectangle {
+                    visible: styleData.value < 8000 || styleData.value % 1000 == 0
+                    implicitWidth: outerRadius * 0.02
+                    antialiasing: true
+                    implicitHeight: outerRadius * 0.06
+                    color: "darkred"
+                }
 
-                   minorTickmark: Rectangle {
-                        visible: styleData.value < 8000
-                        implicitWidth: outerRadius * 0.01
-                        antialiasing: true
-                        implicitHeight: outerRadius * 0.03
-                        color: "darkred"
-                   }
+                minorTickmark: Rectangle {
+                    visible: styleData.value < 8000
+                    implicitWidth: outerRadius * 0.01
+                    antialiasing: true
+                    implicitHeight: outerRadius * 0.03
+                    color: "darkred"
+                }
 
-                   tickmarkLabel:  Text {
-                        font.pixelSize: Math.max(6, outerRadius * 0.1)
-                        text: styleData.value
-                        color: "darkred"
-                        //font.bold: true
-                        antialiasing: true
-                   }
+                tickmarkLabel:  Text {
+                    font.pixelSize: Math.max(6, outerRadius * 0.1)
+                    text: styleData.value
+                    color: "darkred"
+                    //font.bold: true
+                    antialiasing: true
+                }
 
-                   needle: Rectangle {
-                        y: outerRadius * 0.15
-                        implicitWidth: outerRadius * 0.03
-                        implicitHeight: outerRadius * 1.1
-                        radius: 20
-                        antialiasing: true
-                        color: "transparent"
-                   }
+                needle: Rectangle {
+                    y: outerRadius * 0.15
+                    implicitWidth: outerRadius * 0.03
+                    implicitHeight: outerRadius * 1.1
+                    radius: 20
+                    antialiasing: true
+                    color: widget_needleColor
+                }
 
-                   foreground: Item {
-                        Rectangle {
-                             width: outerRadius * 0.2
-                             height: width
-                             radius: width / 2
-                             color: "transparent"
-                             anchors.centerIn: parent
-                        }
-                   }
+                foreground: Item {
+                    Rectangle {
+                         width: outerRadius * 0.2
+                         height: width
+                         radius: width / 2
+                         color: "transparent"
+                         anchors.centerIn: parent
+                    }
+                }
 
             }
 
@@ -185,7 +191,7 @@ Rectangle {
         layer.effect: Glow {
             radius: 32
             samples: 64
-            color: "darkred"
+            color: widget_glowColor
         }
 
 
