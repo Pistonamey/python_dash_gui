@@ -143,11 +143,11 @@ Rectangle {
 
         layer.enabled: true
         layer.effect: DropShadow {
-            horizontalOffset: 2
-            verticalOffset: 2
+            horizontalOffset: 1
+            verticalOffset: 1
             radius: 0
             samples: 64
-            color: "gray"
+            color: "red"
         }
 
         anchors.bottom: mainBar.top
@@ -169,8 +169,8 @@ Rectangle {
 
         layer.enabled: true
         layer.effect: DropShadow {
-            horizontalOffset: 2
-            verticalOffset: 2
+            horizontalOffset: 1
+            verticalOffset: 1
             radius: 0
             samples: 64
             color: "#b50000"

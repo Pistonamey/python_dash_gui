@@ -137,7 +137,7 @@ Rectangle {
                     implicitHeight: outerRadius * 1.1
                     radius: 20
                     antialiasing: true
-                    color: widget_needleColor
+                    color: "transparent"
                 }
 
                 foreground: Item {
