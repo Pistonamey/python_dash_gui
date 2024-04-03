@@ -116,9 +116,9 @@ Rectangle {
 
     Labels {
         id: place_holder
-        label: "Place holder"
+        label: "Miles Driven"
         currValue: 0
-        unit: "?"
+        unit: "m"
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
