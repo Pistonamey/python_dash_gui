@@ -15,3 +15,5 @@ print(response.value.to("mph")) # user-friendly unit conversions
 ports = obd.scan_serial()      # return list of valid USB or RF ports
 print(ports)                    # ['/dev/ttyUSB0', '/dev/ttyUSB1']
 connection = obd.OBD(ports[0]) # connect to the first port in the list
+
+obd.logger.setLevel(obd.logging.DEBUG)
