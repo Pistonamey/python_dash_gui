@@ -33,6 +33,24 @@ Rectangle {
         }
     }
 
+    Button {
+        id: switchButton
+        property string color: "black" // Text color
+        Rectangle {
+            property string color: "red" // Button background color
+            border.color: "white" // Button border color
+            border.width: 2 // Button border width
+            radius: 10 // Rounded corners
+        }
+        width: 40 // Adjust the width of the button
+        height: 40 // Adjust the height of the button
+        
+        onClicked: {
+            console.log("Button clicked")
+            // Add any actions you want the button to perform here
+        }
+    }
+
     SpeedometerGauge {
         anchors {
             top: parent.top

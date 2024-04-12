@@ -7,6 +7,7 @@ from PyQt5.QtQml import QQmlApplicationEngine, qmlRegisterType
 from PyQt5 import QtCore, QtGui
 from PyQt5.QtQuick import QQuickView
 import datetime
+import time
 
 
 class Speedometer(QObject):
@@ -161,7 +162,18 @@ class CenterScreenWidget(QObject):
         self._currDate = value
         self.currTimeChanged.emit()
 
-
+# Class that handles user interactions
+class dashboardManager(QObject):
+    @QtCore.pyqtSlot()
+    def switch_dashboard(self):
+        if view.source().toString() == "dashboard.qml":
+            view.setSource(QUrl('dashboard2.qml'))
+            view.update()
+            view.show()
+        else:
+            view.setSource(QUrl('dashboard.qml'))
+            view.update()
+            view.show()
 
 def change_val():
     random_float = random.uniform(0, 160)
@@ -183,6 +195,29 @@ def change_val():
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
 
+
+def to60(speedometer):
+
+    if speedometer.__currSpeed != 0:
+        print("Please be at a stop\n")
+        return
+    
+    start_time = time.time()
+    print("Ready to time 0-60\n")
+
+    while speedometer.__currSpeed < 60:
+        time.sleep(0.01)
+
+    end_time = time.time()
+
+    elapsed_time = end_time - start_time
+    
+    print("0-60: " + elapsed_time)
+    return elapsed_time
+
+
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     view = QQuickView()
@@ -190,6 +225,7 @@ if __name__ == "__main__":
     engine = view.engine()
     timer = QTimer()
     # Create classes for each component
+    manager = dashboardManager()
     temperature = BarMeter()
     battery_capacity = BarMeter()
     speedometer = Speedometer()
@@ -201,6 +237,7 @@ if __name__ == "__main__":
     centerScreen = CenterScreenWidget()
 
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
+    engine.rootContext().setContextProperty("manager", manager)
     engine.rootContext().setContextProperty("speedometer", speedometer)
     engine.rootContext().setContextProperty("temperature", temperature)
     engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
