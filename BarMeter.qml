@@ -6,7 +6,7 @@ import QtQuick.Extras 1.4
 import QtQuick.Extras.Private 1.0
 import QtGraphicalEffects 1.0
 
-// Holds all the bar meter and all text labels
+// Holds all the bar meter and all text labels.
 Rectangle {
 
     // Customize the size and radius of the bar_meter:
