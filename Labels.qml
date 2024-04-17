@@ -7,7 +7,7 @@ Item {
 
     // Default size can be overridden as needed
     width: 170
-    height: 50
+    height: 55
 
     // Customizable properties for the label
     property string label: "Default Label"
@@ -35,10 +35,11 @@ Item {
         Text {
             id: titleText
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent
+            anchors.top: parent.top
+            anchors.topMargin: 5
             text: root.label
             font.pixelSize: root.fontSize
-            //font.bold: true
+            font.bold: true
             color: root.color
 
             layer.enabled: true
@@ -92,8 +93,8 @@ Item {
         // Widget Shadow
         layer.enabled: true
         layer.effect: DropShadow {
-            horizontalOffset: 2
-            verticalOffset: 2
+            horizontalOffset: 3
+            verticalOffset: 3
             radius: 0
             samples: 64
             color: "#7d0101"

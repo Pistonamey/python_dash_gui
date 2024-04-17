@@ -7,6 +7,7 @@ import QtQuick.Extras.Private 1.0
 import QtGraphicalEffects 1.0
 
 Rectangle {
+    id: dashboardGUI
     width: 1024
     height: 600
     color: "#000000"
@@ -33,23 +34,6 @@ Rectangle {
         }
     }
 
-    Button {
-        id: switchButton
-        property string color: "black" // Text color
-        Rectangle {
-            property string color: "red" // Button background color
-            border.color: "white" // Button border color
-            border.width: 2 // Button border width
-            radius: 10 // Rounded corners
-        }
-        width: 40 // Adjust the width of the button
-        height: 40 // Adjust the height of the button
-        
-        onClicked: {
-            console.log("Button clicked")
-            // Add any actions you want the button to perform here
-        }
-    }
 
     SpeedometerGauge {
         anchors {
@@ -133,9 +117,9 @@ Rectangle {
     }
 
     Labels {
-        id: place_holder
+        id: milesDrivenLabel
         label: "Miles Driven"
-        currValue: 0
+        currValue: miles_driven.currValue
         unit: "m"
         fontSize: 18
         color: "white"
@@ -192,6 +176,35 @@ Rectangle {
             case CarState.Neutral: return "Neutral";
             case CarState.Parked: return "Parked";
         }
+    }
+
+    Button {
+        id: switchButton
+        property string color: "black" // Text color
+        Rectangle {
+            property string color: "red" // Button background color
+            border.color: "white" // Button border color
+            border.width: 2 // Button border width
+            radius: 10 // Rounded corners
+        }
+
+        width: 40 // Adjust the width of the button
+        height: 40 // Adjust the height of the button
+
+        MouseArea {
+            anchors.fill: parent
+                onClicked: {
+                console.log("Button clicked")
+                // Add any actions you want the button to perform here
+                ld.source = "Second_row.qml"
+            }
+        }
+
+        Loader{
+            id: ld
+            anchors.centerIn: dashboardGUI
+        }
+
     }
 
 

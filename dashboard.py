@@ -190,6 +190,7 @@ def change_val():
     od_partial.currValue = random_int
     consumption.currValue = random_int
     driveable.currValue = random_int
+    miles_driven.currValue = random_int
 
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
@@ -230,6 +231,7 @@ if __name__ == "__main__":
     battery_capacity = BarMeter()
     speedometer = Speedometer()
     rpmmeter = RPM_meter()
+    miles_driven = Labels()
     avg_speed = Labels()
     od_partial = Labels()
     consumption = Labels()
@@ -242,6 +244,7 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("temperature", temperature)
     engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
     engine.rootContext().setContextProperty("RPM_Meter", rpmmeter)
+    engine.rootContext().setContextProperty("miles_driven", miles_driven)
     engine.rootContext().setContextProperty("avg_speed", avg_speed)
     engine.rootContext().setContextProperty("od_partial", od_partial)
     engine.rootContext().setContextProperty("consumption", consumption)
@@ -256,12 +259,12 @@ if __name__ == "__main__":
     battery_capacity.setAllValues(0.0, 100.0, 0.0)
     battery_capacity.currValue = 50.0
     rpmmeter.setAllValues(0.0, 10.0, 0.0)
+
     avg_speed.setAllValues(0.0)
     od_partial.setAllValues(0.0)
     consumption.setAllValues(0.0)
     driveable.setAllValues(0.0)
-
-
+    miles_driven.setAllValues(0.0)
 
 
 

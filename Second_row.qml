@@ -3,6 +3,16 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
 Rectangle { // This is the main background
+
+    MouseArea {
+        anchors.fill: parent
+            onClicked: {
+            console.log("Button clicked")
+            // Add any actions you want the button to perform here
+            ld.source = ""
+        }
+    }
+
     width: 420
     height: 280 // Adjusted to accommodate 2x2 grid
     color: "black"
