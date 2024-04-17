@@ -166,7 +166,6 @@ Rectangle {
         anchors.bottomMargin: 20
 
     }
-    
 
     // Function to get text representation of car state
     function getStateText(state) {
