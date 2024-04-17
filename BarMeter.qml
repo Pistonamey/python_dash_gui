@@ -49,6 +49,7 @@ Rectangle {
 
 
 
+
     // Main Bar: Border housing the whole bar containing the value
     Rectangle {
         id: mainBar
@@ -113,7 +114,7 @@ Rectangle {
         id: textLabel
         text: label_name
         font.pixelSize: label_size
-        font.bold: true
+        //font.bold: true
 
         anchors.bottom: mainBar.top
         anchors.left: mainBar.left
@@ -177,8 +178,6 @@ Rectangle {
 
 
     }
-
-
 
 
 
