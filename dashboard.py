@@ -9,6 +9,7 @@ from PyQt5.QtQuick import QQuickView
 import datetime
 import time
 import py_obd
+import obd
 
 
 class Speedometer(QObject):
@@ -217,24 +218,32 @@ def to60(speedometer):
     return elapsed_time
 
 
-def receiver(speedometer, temperature, battery_capacity, rpmmeter, avg_speed, od_partial, consumption, driveable):
+def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
 
     # Get data from OBD
-    speed = py_obd.get_speed()
-    rpm = py_obd.get_rpm()
-    temperature = py_obd.get_temperature()
-    battery_level = py_obd.get_battery()
+    speed = py_obd.get_speed(connection)
+    print("TYPE OF SPEED: ", type(speed))
+    rpm = py_obd.get_rpm(connection)
+    print("TYPE OF RPM: ", type(rpm))
+    # temperature = py_obd.get_temperature(connection)
+    # print("TYPE OF TEMPERATURE: ", type(temperature))
+    # battery_level = py_obd.get_battery(connection)
+    # print("TYPE OF FUEL: ", type(battery_level))
 
     # Update PyQT Objects with data
-    speedometer.currSpeed = speed
-    rpmmeter.currRPM = rpm
-    temperature.currValue = temperature
-    battery_capacity.currValue = battery_level
+    speedometer.currSpeed = speed.magnitude
+    rpmmeter.currRPM = rpm.magnitude
+    temperature.currValue = random.randint(0, 300)
+    battery_capacity.currValue = random.randint(0, 100)
+
+    centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
+    centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
 
-def set_timer(timer):
 
-    timer.timeout.connect(receiver)
+def set_timer(connection):
+
+    timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter))
     timer.start(50)
 
 if __name__ == "__main__":
@@ -283,6 +292,10 @@ if __name__ == "__main__":
     view.update()
     view.show()
 
-    receiver()
+    connection = obd.OBD() # auto-connects to USB or RF port
+    print(connection.status())
+    obd.logger.setLevel(obd.logging.DEBUG)
+    set_timer(connection)
+    
 
     sys.exit(app.exec_())

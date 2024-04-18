@@ -1,25 +1,28 @@
 import obd
 
 def get_speed(connection):
+    # global connection
     cmd = obd.commands.SPEED
-    return connection.query(cmd)
+    return connection.query(cmd).value.to("mph")
 
-def get_rpm():
+def get_rpm(connection):
+    # global connection
     cmd = obd.commands.RPM
-    return float(connection.query(cmd).value.to("mph"))
+    return connection.query(cmd).value
 
-def get_temperature():
+def get_temperature(connection):
+    # global connection
     cmd = obd.commands.OIL_TEMP
-    return float(connection.query(cmd).value)
+    return connection.query(cmd).value
 
-def get_battery():
+def get_battery(connection):
+    # global connection
     cmd = obd.commands.FUEL_LEVEL
-    return float(connection.query(cmd).value)
+    return connection.query(cmd).value
 
-connection = obd.OBD() # auto-connects to USB or RF port
+ 
+# connection = obd.OBD() # auto-connects to USB or RF port
 
-cmd = obd.commands.SPEED # select an OBD command (sensor)
+# print(connection.status())
 
-print(connection.status())
-
-obd.logger.setLevel(obd.logging.DEBUG)
+# obd.logger.setLevel(obd.logging.DEBUG)
