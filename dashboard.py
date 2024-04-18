@@ -215,6 +215,10 @@ def to60(speedometer):
     elapsed_time = end_time - start_time
     
     print("0-60: " + elapsed_time)
+
+    with open('output.txt', 'a') as output:
+        output.write(f"0-60 Time: {elapsed_time}.\n")
+
     return elapsed_time
 
 
@@ -222,17 +226,13 @@ def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
 
     # Get data from OBD
     speed = py_obd.get_speed(connection)
-    print("TYPE OF SPEED: ", type(speed))
     rpm = py_obd.get_rpm(connection)
-    print("TYPE OF RPM: ", type(rpm))
     # temperature = py_obd.get_temperature(connection)
-    # print("TYPE OF TEMPERATURE: ", type(temperature))
     # battery_level = py_obd.get_battery(connection)
-    # print("TYPE OF FUEL: ", type(battery_level))
 
     # Update PyQT Objects with data
     speedometer.currSpeed = speed.magnitude
-    rpmmeter.currRPM = rpm.magnitude
+    rpmmeter.currRPM = (rpm.magnitude)/1000
     temperature.currValue = random.randint(0, 300)
     battery_capacity.currValue = random.randint(0, 100)
 
@@ -293,6 +293,15 @@ if __name__ == "__main__":
     view.show()
 
     connection = obd.OBD() # auto-connects to USB or RF port
+
+    with open('output.txt', 'a',) as output:
+        commands = obd.commands
+        for command_name, command in commands.items():  
+            if connection.supports(command):
+                output.write(f"{command_name} is supported.\n")
+            else:
+                output.write(f"{command_name} is NOT supported.\n")
+
     print(connection.status())
     obd.logger.setLevel(obd.logging.DEBUG)
     set_timer(connection)
