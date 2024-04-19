@@ -33,33 +33,6 @@ Rectangle {
         }
     }
 
-    Button {
-        id: switchButton
-        property string color: "black" // Text color
-        Rectangle {
-            property string color: "red" // Button background color
-            border.color: "white" // Button border color
-            border.width: 2 // Button border width
-            radius: 10 // Rounded corners
-        }
-        width: 40 // Adjust the width of the button
-        height: 40 // Adjust the height of the button
-        
-        MouseArea {
-            anchors.fill: parent
-                onClicked: {
-                console.log("Button clicked")
-                // Add any actions you want the button to perform here
-                ld.source = "Second_row.qml"
-            }
-        }
-
-        Loader{
-            id: ld
-            anchors.centerIn: dashboardGUI
-        }
-    }
-
     SpeedometerGauge {
         anchors {
             top: parent.top
@@ -205,6 +178,33 @@ Rectangle {
             bold: true
         }
         color: "white"
+    }
+
+    Button {
+        id: switchButton
+        property string color: "black" // Text color
+        Rectangle {
+            property string color: "red" // Button background color
+            border.color: "white" // Button border color
+            border.width: 2 // Button border width
+            radius: 10 // Rounded corners
+        }
+        width: 40 // Adjust the width of the button
+        height: 40 // Adjust the height of the button
+
+        MouseArea {
+            anchors.fill: parent
+                onClicked: {
+                console.log("Button clicked")
+                // Add any actions you want the button to perform here
+                ld.source = "Second_row.qml"
+            }
+        }
+
+        Loader{
+            id: ld
+            anchors.centerIn: dashboardGUI
+        }
     }
     
 
