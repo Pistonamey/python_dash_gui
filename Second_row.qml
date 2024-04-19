@@ -3,8 +3,8 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 
 Rectangle { // This is the main background
-    width: 420
-    height: 280 // Adjusted to accommodate 2x2 grid
+    width: 1024
+    height: 600 // Adjusted to accommodate 2x2 grid
     color: "black"
 
     property double boost: Math.random() * 40 - 20 // Random number between -20 and 20
