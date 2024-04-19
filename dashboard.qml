@@ -45,9 +45,18 @@ Rectangle {
         width: 40 // Adjust the width of the button
         height: 40 // Adjust the height of the button
         
-        onClicked: {
-            console.log("Button clicked")
-            // Add any actions you want the button to perform here
+        MouseArea {
+            anchors.fill: parent
+                onClicked: {
+                console.log("Button clicked")
+                // Add any actions you want the button to perform here
+                ld.source = "Second_row.qml"
+            }
+        }
+
+        Loader{
+            id: ld
+            anchors.centerIn: dashboardGUI
         }
     }
 
