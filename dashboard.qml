@@ -165,9 +165,12 @@ Rectangle {
 
     }
 
+    property bool messageTextVisible: false
+
     Text {
         id: messageText
         text: "Timer Ready"
+        visible: messageTextVisible // Bind visibility to the property
         anchors {
             horizontalCenter: parent.horizontalCenter
             bottom: parent.bottom
@@ -178,6 +181,22 @@ Rectangle {
             bold: true
         }
         color: "white"
+    }
+
+    Button {
+        id: greenButton
+        text: messageTextVisible ? "Cancel" : "0-60 Timer"
+        width: 100 // Adjust the width of the button
+        height: 40 // Adjust the height of the button
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: messageText.top // Anchor the button to the top of the text
+            bottomMargin: 10 // Adjust this value to control the distance between the button and text
+        }
+        onClicked: {
+            // Toggle the visibility of messageText and change button text accordingly
+            messageTextVisible = !messageTextVisible
+        }
     }
 
     Button {
