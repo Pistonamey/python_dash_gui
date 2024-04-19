@@ -182,6 +182,21 @@ Rectangle {
         anchors.bottomMargin: 20
 
     }
+
+    Text {
+        id: messageText
+        text: "Timer Ready"
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 100 // Adjust margin as needed (e.g. 20% of screen height)
+        }
+        font {
+            pointSize: 20
+            bold: true
+        }
+        color: "white"
+    }
     
 
     // Function to get text representation of car state
