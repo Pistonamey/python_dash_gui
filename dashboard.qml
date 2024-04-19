@@ -153,7 +153,7 @@ Rectangle {
         mainValue: battery_capacity.currValue
         maxValue: battery_capacity.maxSpeed
 
-        label_name: "Battery Capacity"
+        label_name: "Fuel"
         unitValue: "%"
 
         color: "transparent"    // Only changes the background color with the labels
@@ -163,6 +163,67 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 20
 
+    }
+
+    property bool messageTextVisible: false
+
+    Text {
+        id: messageText
+        text: "Timer Ready"
+        visible: messageTextVisible // Bind visibility to the property
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: parent.bottom
+            bottomMargin: 100 // Adjust margin as needed (e.g. 20% of screen height)
+        }
+        font {
+            pointSize: 20
+            bold: true
+        }
+        color: "white"
+    }
+
+    Button {
+        id: greenButton
+        text: messageTextVisible ? "Cancel" : "0-60 Timer"
+        width: 100 // Adjust the width of the button
+        height: 40 // Adjust the height of the button
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            bottom: messageText.top // Anchor the button to the top of the text
+            bottomMargin: 10 // Adjust this value to control the distance between the button and text
+        }
+        onClicked: {
+            // Toggle the visibility of messageText and change button text accordingly
+            messageTextVisible = !messageTextVisible
+        }
+    }
+
+    Button {
+        id: switchButton
+        property string color: "black" // Text color
+        Rectangle {
+            property string color: "red" // Button background color
+            border.color: "white" // Button border color
+            border.width: 2 // Button border width
+            radius: 10 // Rounded corners
+        }
+        width: 40 // Adjust the width of the button
+        height: 40 // Adjust the height of the button
+
+        MouseArea {
+            anchors.fill: parent
+                onClicked: {
+                console.log("Button clicked")
+                // Add any actions you want the button to perform here
+                ld.source = "Second_row.qml"
+            }
+        }
+
+        Loader{
+            id: ld
+            anchors.centerIn: dashboardGUI
+        }
     }
     
 

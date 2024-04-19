@@ -292,19 +292,8 @@ if __name__ == "__main__":
     view.update()
     view.show()
 
-    connection = obd.OBD() # auto-connects to USB or RF port
-
-    with open('output.txt', 'a',) as output:
-        commands = obd.commands
-        for command_name, command in commands.items():  
-            if connection.supports(command):
-                output.write(f"{command_name} is supported.\n")
-            else:
-                output.write(f"{command_name} is NOT supported.\n")
-
-    print(connection.status())
-    obd.logger.setLevel(obd.logging.DEBUG)
-    set_timer(connection)
+    timer.timeout.connect(change_val)
+    timer.start(500)
     
 
     sys.exit(app.exec_())

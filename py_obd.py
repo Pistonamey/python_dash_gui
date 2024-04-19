@@ -1,17 +1,28 @@
 import obd
 
-connection = obd.OBD() # auto-connects to USB or RF port
+def get_speed(connection):
+    # global connection
+    cmd = obd.commands.SPEED
+    return connection.query(cmd).value.to("mph")
 
-cmd = obd.commands.SPEED # select an OBD command (sensor)
+def get_rpm(connection):
+    # global connection
+    cmd = obd.commands.RPM
+    return connection.query(cmd).value
 
-response = connection.query(cmd, force=True) # send the command, and parse the response
+def get_temperature(connection):
+    # global connection
+    cmd = obd.commands.OIL_TEMP
+    return connection.query(cmd).value
 
-print(connection.status())
+def get_battery(connection):
+    # global connection
+    cmd = obd.commands.FUEL_LEVEL
+    return connection.query(cmd).value
 
-print(response.value) # returns unit-bearing values thanks to Pint
-print(response.value.to("mph")) # user-friendly unit conversions
+ 
+# connection = obd.OBD() # auto-connects to USB or RF port
 
+# print(connection.status())
 
-ports = obd.scan_serial()      # return list of valid USB or RF ports
-print(ports)                    # ['/dev/ttyUSB0', '/dev/ttyUSB1']
-connection = obd.OBD(ports[0]) # connect to the first port in the list
+# obd.logger.setLevel(obd.logging.DEBUG)
