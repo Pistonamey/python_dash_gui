@@ -56,8 +56,8 @@ Rectangle {
 
     Labels {
         id: averageSpeedLabel
-        label: "Average Speed"
-        currValue: avg_speed.currValue
+        label: "Tire Pressure"
+        currValue: tire_pressures.currValue
         unit: "mph"
         fontSize: 18
         color: "white"

@@ -27,7 +27,7 @@ Rectangle {
 
     // Customize the text labels how ever you like here:
     property double mainValue: 100.0                // Current Value. Anything will do.
-    property double maxValue: 300.0                 // Max value possible ex: max mph
+    property double maxValue: 100.0                 // Max value possible ex: max mph
     property double minValue: 0.0                   // Min value possible ex: mph=0
     property string unitValue: "F"                // Units for the value ex: mph, mi
 

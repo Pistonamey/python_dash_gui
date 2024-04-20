@@ -227,14 +227,20 @@ def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
     # Get data from OBD
     speed = py_obd.get_speed(connection)
     rpm = py_obd.get_rpm(connection)
+    fuel = py_obd.get_battery(connection)
+    tire_pressures = py_obd.get_tire_pressure(connection)
+    afr_ratio = py_obd.get_afr_ratio(connection)
     # temperature = py_obd.get_temperature(connection)
     # battery_level = py_obd.get_battery(connection)
 
     # Update PyQT Objects with data
-    speedometer.currSpeed = speed.magnitude
-    rpmmeter.currRPM = (rpm.magnitude)/1000
+    speedometer.currSpeed = speed
+    rpmmeter.currRPM = (rpm)/1000
     temperature.currValue = random.randint(0, 300)
-    battery_capacity.currValue = random.randint(0, 100)
+    battery_capacity.currValue = fuel
+
+    afr_ratioLabel.currValue = afr_ratio
+    tire_pressureLabel.currValue = tire_pressures[0] //testing one of the tire pressures
 
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
@@ -264,6 +270,11 @@ if __name__ == "__main__":
     driveable = Labels()
     centerScreen = CenterScreenWidget()
 
+    afr_ratioLabel = Labels()
+    tire_pressureLabel = Labels()
+    barometric_pressureLabel = Labels()
+    
+
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
     engine.rootContext().setContextProperty("manager", manager)
     engine.rootContext().setContextProperty("speedometer", speedometer)
@@ -275,6 +286,10 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("consumption", consumption)
     engine.rootContext().setContextProperty("driveable", driveable)
     engine.rootContext().setContextProperty("centerScreen", centerScreen)
+
+    engine.rootContext().setContextProperty("afr_ratio", afr_ratioLabel)
+    engine.rootContext().setContextProperty("tire_pressures", tire_pressureLabel)
+
 
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)
@@ -289,12 +304,15 @@ if __name__ == "__main__":
     consumption.setAllValues(0.0)
     driveable.setAllValues(0.0)
 
+    afr_ratioLabel.setAllValues(0.0)
+    tire_pressureLabel.setAllValues(0.0)
+
     view.update()
     view.show()
 
     connection = obd.OBD() # auto-connects to USB or RF port
 
-    with open('output.txt', 'a',) as output:
+    with open('output.txt', 'a') as output:
         commands = obd.commands
         for command_name, command in commands.items():  
             if connection.supports(command):

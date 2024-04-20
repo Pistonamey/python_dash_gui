@@ -114,7 +114,7 @@ Rectangle { // This is the main background
                         }
 
                         Text {
-                            text: afr.toFixed(2)
+                            text: afr_ratio.currValue
                             font.pixelSize: 40
                             color: "white"
                             anchors.horizontalCenter: parent.horizontalCenter
