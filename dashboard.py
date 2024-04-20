@@ -265,6 +265,7 @@ if __name__ == "__main__":
     speedometer = Speedometer()
     rpmmeter = RPM_meter()
     avg_speed = Labels()
+    tire_pressure = Labels()
     od_partial = Labels()
     consumption = Labels()
     driveable = Labels()
@@ -282,6 +283,7 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
     engine.rootContext().setContextProperty("RPM_Meter", rpmmeter)
     engine.rootContext().setContextProperty("avg_speed", avg_speed)
+    engine.rootContext().setContextProperty("tire_pressure", tire_pressure)
     engine.rootContext().setContextProperty("od_partial", od_partial)
     engine.rootContext().setContextProperty("consumption", consumption)
     engine.rootContext().setContextProperty("driveable", driveable)
@@ -300,6 +302,7 @@ if __name__ == "__main__":
     battery_capacity.currValue = 50.0
     rpmmeter.setAllValues(0.0, 10.0, 0.0)
     avg_speed.setAllValues(0.0)
+    tire_pressure.setAllValues(0.0)
     od_partial.setAllValues(0.0)
     consumption.setAllValues(0.0)
     driveable.setAllValues(0.0)
