@@ -240,7 +240,7 @@ def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
     battery_capacity.currValue = fuel
 
     afr_ratioLabel.currValue = afr_ratio
-    tire_pressureLabel.currValue = tire_pressures[0] //testing one of the tire pressures
+    tire_pressureLabel.currValue = tire_pressures[0] #testing one of the tire pressures
 
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
