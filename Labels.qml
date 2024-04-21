@@ -7,7 +7,7 @@ Item {
 
     // Default size can be overridden as needed
     width: 170
-    height: 55
+    height: 50
 
     // Customizable properties for the label
     property string label: "Default Label"
@@ -36,7 +36,7 @@ Item {
             id: titleText
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            anchors.topMargin: 5
+            anchors.topMargin: 0
             text: root.label
             font.pixelSize: root.fontSize
             font.bold: true
