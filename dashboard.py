@@ -189,18 +189,18 @@ def change_val():
 
 
 
-def receiver(connection, speedometer, temperaturebar, battery_capacity, rpmmeter):
+def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
 
     # Get data from OBD
     speed = py_obd.get_speed(connection)
     rpm = py_obd.get_rpm(connection)
-    temperature = py_obd.get_temperature(connection)
+    temp = py_obd.get_temperature(connection)
     battery_level = py_obd.get_battery(connection)
 
     # Update PyQT Objects with data
     speedometer.currSpeed = speed
     rpmmeter.currRPM = rpm
-    temperaturebar.currValue = temperature
+    temperature.currValue = temp
     battery_capacity.currValue = battery_level
 
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
@@ -209,22 +209,32 @@ def receiver(connection, speedometer, temperaturebar, battery_capacity, rpmmeter
 def poll_speed(connection):
     speed = py_obd.get_speed(connection)
     speedometer.currSpeed = speed
+    with open('output.txt', 'a') as f:
+        f.write("SPEED UPDATED\n")
 
 def poll_rpm(connection):
     rpm = py_obd.get_rpm(connection)
     rpmmeter.currRPM = rpm
+    with open('output.txt', 'a') as f:
+        f.write("RPM UPDATED\n")
 
 def poll_coolantTemp(connection):
     temp = py_obd.get_temperature(connection)
     temperature.currValue = temp
+    with open('output.txt', 'a') as f:
+        f.write("TEMP UPDATED\n")
 
 def poll_fuel(connection):
     fuel = py_obd.get_battery(connection)
     battery_capacity.currValue = fuel
+    with open('output.txt', 'a') as f:
+        f.write("FUEL UPDATED\n")
 
 def poll_time():
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
+    with open('output.txt', 'a') as f:
+        f.write("TIME UPDATED\n")
 
 
 
@@ -235,11 +245,7 @@ def set_timer(connection):
     temperature_timer = QTimer()
     date_timer = QTimer()
 
-    try:
-        speed_timer.timeout.connect(lambda: poll_speed(connection))
-    except Exception as e:
-        with open('output.txt', 'a') as f:
-            f.write(str(e))
+    speed_timer.timeout.connect(lambda: poll_speed(connection))
     rpm_timer.timeout.connect(lambda: poll_rpm(connection))
     battery_timer.timeout.connect(lambda: poll_fuel(connection))
     temperature_timer.timeout.connect(lambda: poll_coolantTemp(connection))
@@ -266,8 +272,6 @@ if __name__ == "__main__":
     consumption = Labels()
     driveable = Labels()
     centerScreen = CenterScreenWidget()
-    with open('output.txt', 'w') as f:
-        pass
     
 
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
@@ -298,14 +302,16 @@ if __name__ == "__main__":
     view.show()
 
     connection = obd.OBD() # auto-connects to USB or RF port
-    timer = QTimer()
+
     print(connection.status())
-    # obd.logger.setLevel(obd.logging.DEBUG)
+    obd.logger.setLevel(obd.logging.DEBUG)
     py_obd.get_supported_pids_mode01(connection)
     py_obd.get_supported_pids_mode06(connection)
-    timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter))
-    timer.start(500)
-    # set_timer(connection)
+    set_timer(connection)
+    
+    # timer = QTimer()
+    # timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter)
+    # timer.start(500)
     
 
     sys.exit(app.exec_())
