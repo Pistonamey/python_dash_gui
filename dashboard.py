@@ -246,7 +246,6 @@ def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
 
-
 def set_timer(connection):
 
     timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter))
