@@ -1,6 +1,26 @@
 import obd
 
 # Each of these getter functions need to return an integer and/or a float number
+
+def get_supported_pids(connection):
+    cmd = obd.commands.PIDS_A
+    try:
+        response = connection.query(cmd).value
+        pids = response.to01()
+        with open('output.txt', 'a') as f:
+            f.write("Supported PIDs (01-20): " + pids + "\n")
+            # Optionally, list the supported PIDs
+            f.write("The following PIDs are supported:\n")
+            for i in range(20):
+                if pids[i]:
+                    # PID numbers start from 1 (not 0), hence the "+1"
+                    f.write(f"  PID {i+1:02d} is supported\n")
+        return pids
+    except Exception as e:
+        with open('output.txt', 'a') as output:
+            output.write(f"Error receiving supported available PIDs: {str(e)}\n")
+        return 44
+
 def get_speed(connection):
     # global connection
     cmd = obd.commands.SPEED
