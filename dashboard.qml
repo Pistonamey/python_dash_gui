@@ -208,7 +208,7 @@ Rectangle {
         maxValue: 200
 
         label_name: "Temperature"
-        unitValue: "°F"
+        unitValue: "°C"
 
         color: "transparent"    // Only changes the background color with the labels
 

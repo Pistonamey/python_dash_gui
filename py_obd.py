@@ -127,11 +127,11 @@ def get_supported_pids_mode01(connection):
     "FUEL_RATE"                         # PID 5E
     ]
     # Query for PIDs 01-20
-    query_match_pids(connection, cmd1, pid_list1)
+    query_match_pids(connection, pid_list1, cmd1)
     # Query for PIDs 21-40
-    query_match_pids(connection, cmd2, pid_list2)
+    query_match_pids(connection, pid_list2, cmd2)
     # Query for PIDs 41-60
-    query_match_pids(connection, cmd3, pid_list3)
+    query_match_pids(connection, pid_list3, cmd3)
 
 def get_supported_pids_mode06(connection):
     cmd1 = obd.commands.MIDS_A
@@ -240,12 +240,12 @@ def get_supported_pids_mode06(connection):
     "MONITOR_PM_FILTER_B2"           # PID B1
     ]
 
-    query_match_pids(connection, cmd1, mid_list1)
-    query_match_pids(connection, cmd2, mid_list2)
-    query_match_pids(connection, cmd3, mid_list3)
-    query_match_pids(connection, cmd4, mid_list4)
-    query_match_pids(connection, cmd5, mid_list5)
-    query_match_pids(connection, cmd6, mid_list6)
+    query_match_pids(connection, mid_list1, cmd1)
+    query_match_pids(connection, mid_list2, cmd2)
+    query_match_pids(connection, mid_list3, cmd3)
+    query_match_pids(connection, mid_list4, cmd4)
+    query_match_pids(connection, mid_list5, cmd5)
+    query_match_pids(connection, mid_list6, cmd6)
 
 
 def get_speed(connection):
