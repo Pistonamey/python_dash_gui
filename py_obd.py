@@ -2,24 +2,53 @@ import obd
 
 # Each of these getter functions need to return an integer and/or a float number
 
-def get_supported_pids(connection):
+def get_supported_pids_mode01(connection):
     cmd = obd.commands.PIDS_A
     try:
         response = connection.query(cmd).value
-        pids = response.to01()
+        bit_string = ''.join(['1' if bit else '0' for bit in response])
         with open('output.txt', 'a') as f:
-            f.write("Supported PIDs (01-20): " + pids + "\n")
+            f.write("Supported PIDs: " + bit_string + "\n")
             # Optionally, list the supported PIDs
-            f.write("The following PIDs are supported:\n")
-            for i in range(20):
-                if pids[i]:
-                    # PID numbers start from 1 (not 0), hence the "+1"
-                    f.write(f"  PID {i+1:02d} is supported\n")
-        return pids
+            for index, bit in enumerate(response):
+                if bit:
+                    f.write(f"  PID {index + 1} is supported\n")
     except Exception as e:
         with open('output.txt', 'a') as output:
             output.write(f"Error receiving supported available PIDs: {str(e)}\n")
-        return 44
+        return 1
+    
+def get_supported_pids_mode02(connection):
+    cmd = obd.commands.MIDS_A
+    try:
+        response = connection.query(cmd).value
+        bit_string = ''.join(['1' if bit else '0' for bit in response])
+        with open('output.txt', 'a') as f:
+            f.write("Supported MIDs: " + bit_string + "\n")
+            # Optionally, list the supported PIDs
+            for index, bit in enumerate(response):
+                if bit:
+                    f.write(f"  PID {index + 1} is supported\n")
+    except Exception as e:
+        with open('output.txt', 'a') as output:
+            output.write(f"Error receiving supported available PIDs: {str(e)}\n")
+        return 1
+    
+def get_supported_pids_mode09(connection):
+    cmd = obd.commands.PIDS_9A
+    try:
+        response = connection.query(cmd).value
+        bit_string = ''.join(['1' if bit else '0' for bit in response])
+        with open('output.txt', 'a') as f:
+            f.write("Supported PIDS_9A: " + bit_string + "\n")
+            # Optionally, list the supported PIDs
+            for index, bit in enumerate(response):
+                if bit:
+                    f.write(f"  PID {index + 1} is supported\n")
+    except Exception as e:
+        with open('output.txt', 'a') as output:
+            output.write(f"Error receiving supported available PIDs: {str(e)}\n")
+        return 1
 
 def get_speed(connection):
     # global connection
@@ -31,7 +60,6 @@ def get_speed(connection):
             output.write(f"Error receiving speed: {str(e)}\n")
         return 44
 
-
 def get_rpm(connection):
     # global connection
     cmd = obd.commands.RPM
@@ -42,7 +70,6 @@ def get_rpm(connection):
             output.write(f"Error receiving RPM: {str(e)}\n")
         return 4444/1000
 
-
 def get_temperature(connection):
     # global connection
     cmd = obd.commands.COOLANT_TEMP
@@ -52,7 +79,6 @@ def get_temperature(connection):
         with open('output.txt', 'a') as output:
             output.write(f"Error receiving Coolant Temperature: {str(e)}\n")
         return 44
-
 
 def get_battery(connection):
     # global connection
