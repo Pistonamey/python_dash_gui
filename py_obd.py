@@ -59,7 +59,7 @@ def get_supported_pids_mode01(connection):
     "O2_SENSORS_ALT",         # PID 1D
     "AUX_INPUT_STATUS",       # PID 1E
     "RUN_TIME"                # PID 1F
-]
+    ]
     pid_list2 = [ # PID List 21-40
     "DISTANCE_W_MIL",                 # PID 21
     "FUEL_RAIL_PRESSURE_VAC",         # PID 22
@@ -93,7 +93,7 @@ def get_supported_pids_mode01(connection):
     "CATALYST_TEMP_B1S2",             # PID 3E
     "CATALYST_TEMP_B2S2",             # PID 3F
     "PIDS_C",                         # PID 40 (Supported PIDs [41-60])
-]
+    ]
     pid_list3 = [ # PID List 41-60
     "STATUS_DRIVE_CYCLE",               # PID 41
     "CONTROL_MODULE_VOLTAGE",           # PID 42
@@ -125,7 +125,7 @@ def get_supported_pids_mode01(connection):
     "OIL_TEMP",                         # PID 5C
     "FUEL_INJECT_TIMING",               # PID 5D
     "FUEL_RATE"                         # PID 5E
-]
+    ]
     # Query for PIDs 01-20
     query_match_pids(connection, cmd1, pid_list1)
     # Query for PIDs 21-40
