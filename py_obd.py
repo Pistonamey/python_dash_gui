@@ -58,7 +58,8 @@ def get_supported_pids_mode01(connection):
     "OBD_COMPLIANCE",         # PID 1C
     "O2_SENSORS_ALT",         # PID 1D
     "AUX_INPUT_STATUS",       # PID 1E
-    "RUN_TIME"                # PID 1F
+    "RUN_TIME",               # PID 1F
+    "PIDS_B"                  # PID 20
     ]
     pid_list2 = [ # PID List 21-40
     "DISTANCE_W_MIL",                 # PID 21
@@ -94,37 +95,38 @@ def get_supported_pids_mode01(connection):
     "CATALYST_TEMP_B2S2",             # PID 3F
     "PIDS_C",                         # PID 40 (Supported PIDs [41-60])
     ]
-    pid_list3 = [ # PID List 41-60
-    "STATUS_DRIVE_CYCLE",               # PID 41
-    "CONTROL_MODULE_VOLTAGE",           # PID 42
-    "ABSOLUTE_LOAD",                    # PID 43
-    "COMMANDED_EQUIV_RATIO",            # PID 44
-    "RELATIVE_THROTTLE_POS",            # PID 45
-    "AMBIANT_AIR_TEMP",                 # PID 46
-    "THROTTLE_POS_B",                   # PID 47
-    "THROTTLE_POS_C",                   # PID 48
-    "ACCELERATOR_POS_D",                # PID 49
-    "ACCELERATOR_POS_E",                # PID 4A
-    "ACCELERATOR_POS_F",                # PID 4B
-    "THROTTLE_ACTUATOR",                # PID 4C
-    "RUN_TIME_MIL",                     # PID 4D
-    "TIME_SINCE_DTC_CLEARED",           # PID 4E
-    "unsupported",                      # PID 4F (Unsupported PID)
-    "MAX_MAF",                          # PID 50
-    "FUEL_TYPE",                        # PID 51
-    "ETHANOL_PERCENT",                  # PID 52
-    "EVAP_VAPOR_PRESSURE_ABS",          # PID 53
-    "EVAP_VAPOR_PRESSURE_ALT",          # PID 54
-    "SHORT_O2_TRIM_B1",                 # PID 55
-    "LONG_O2_TRIM_B1",                  # PID 56
-    "SHORT_O2_TRIM_B2",                 # PID 57
-    "LONG_O2_TRIM_B2",                  # PID 58
-    "FUEL_RAIL_PRESSURE_ABS",           # PID 59
-    "RELATIVE_ACCEL_POS",               # PID 5A
-    "HYBRID_BATTERY_REMAINING",         # PID 5B
-    "OIL_TEMP",                         # PID 5C
-    "FUEL_INJECT_TIMING",               # PID 5D
-    "FUEL_RATE"                         # PID 5E
+    pid_list3 = [
+    "STATUS_DRIVE_CYCLE",          # PID 41
+    "CONTROL_MODULE_VOLTAGE",      # PID 42
+    "ABSOLUTE_LOAD",               # PID 43
+    "COMMANDED_EQUIV_RATIO",       # PID 44
+    "RELATIVE_THROTTLE_POS",       # PID 45
+    "AMBIANT_AIR_TEMP",            # PID 46
+    "THROTTLE_POS_B",              # PID 47
+    "THROTTLE_POS_C",              # PID 48
+    "ACCELERATOR_POS_D",           # PID 49
+    "ACCELERATOR_POS_E",           # PID 4A
+    "ACCELERATOR_POS_F",           # PID 4B
+    "THROTTLE_ACTUATOR",           # PID 4C
+    "RUN_TIME_MIL",                # PID 4D
+    "TIME_SINCE_DTC_CLEARED",      # PID 4E
+    "unsupported",                 # PID 4F
+    "MAX_MAF",                     # PID 50
+    "FUEL_TYPE",                   # PID 51
+    "ETHANOL_PERCENT",             # PID 52
+    "EVAP_VAPOR_PRESSURE_ABS",     # PID 53
+    "EVAP_VAPOR_PRESSURE_ALT",     # PID 54
+    "SHORT_O2_TRIM_B1",            # PID 55
+    "LONG_O2_TRIM_B1",             # PID 56
+    "SHORT_O2_TRIM_B2",            # PID 57
+    "LONG_O2_TRIM_B2",             # PID 58
+    "FUEL_RAIL_PRESSURE_ABS",      # PID 59
+    "RELATIVE_ACCEL_POS",          # PID 5A
+    "HYBRID_BATTERY_REMAINING",    # PID 5B
+    "OIL_TEMP",                    # PID 5C
+    "FUEL_INJECT_TIMING",          # PID 5D
+    "FUEL_RATE",                   # PID 5E
+    "unsupported"                  # PID 5F
     ]
     # Query for PIDs 01-20
     query_match_pids(connection, pid_list1, cmd1)
@@ -157,27 +159,56 @@ def get_supported_pids_mode06(connection):
     "MONITOR_O2_B4S2",  # PID 0E
     "MONITOR_O2_B4S3",  # PID 0F
     "MONITOR_O2_B4S4",  # PID 10
-    "MIDS_B"            # PID 20 (Supported MIDs [21-40])
+    "unsupported",      # PID 11
+    "unsupported",      # PID 12
+    "unsupported",      # PID 13
+    "unsupported",      # PID 14
+    "unsupported",      # PID 15
+    "unsupported",      # PID 16
+    "unsupported",      # PID 17
+    "unsupported",      # PID 18
+    "unsupported",      # PID 19
+    "unsupported",      # PID 1A
+    "unsupported",      # PID 1B
+    "unsupported",      # PID 1C
+    "unsupported",      # PID 1D
+    "unsupported",      # PID 1E
+    "unsupported",      # PID 1F
+    "MIDS_B"             # PID 20 (Supported MIDs [21-40])
     ]
     mid_list2 = [
-    "MONITOR_CATALYST_B1",   # PID 21
-    "MONITOR_CATALYST_B2",   # PID 22
-    "MONITOR_CATALYST_B3",   # PID 23
-    "MONITOR_CATALYST_B4",   # PID 24
-    "MONITOR_EGR_B1",        # PID 31
-    "MONITOR_EGR_B2",        # PID 32
-    "MONITOR_EGR_B3",        # PID 33
-    "MONITOR_EGR_B4",        # PID 34
-    "MONITOR_VVT_B1",        # PID 35
-    "MONITOR_VVT_B2",        # PID 36
-    "MONITOR_VVT_B3",        # PID 37
-    "MONITOR_VVT_B4",        # PID 38
-    "MONITOR_EVAP_150",      # PID 39 (EVAP Monitor (Cap Off / 0.150"))
-    "MONITOR_EVAP_090",      # PID 3A (EVAP Monitor (0.090"))
-    "MONITOR_EVAP_040",      # PID 3B (EVAP Monitor (0.040"))
-    "MONITOR_EVAP_020",      # PID 3C (EVAP Monitor (0.020"))
-    "MONITOR_PURGE_FLOW",    # PID 3D
-    "MIDS_C"                 # PID 40 (Supported MIDs [41-60])
+    "MONITOR_CATALYST_B1",  # PID 21
+    "MONITOR_CATALYST_B2",  # PID 22
+    "MONITOR_CATALYST_B3",  # PID 23
+    "MONITOR_CATALYST_B4",  # PID 24
+    "unsupported",          # PID 25
+    "unsupported",          # PID 26
+    "unsupported",          # PID 27
+    "unsupported",          # PID 28
+    "unsupported",          # PID 29
+    "unsupported",          # PID 2A
+    "unsupported",          # PID 2B
+    "unsupported",          # PID 2C
+    "unsupported",          # PID 2D
+    "unsupported",          # PID 2E
+    "unsupported",          # PID 2F
+    "unsupported",          # PID 30
+    "MONITOR_EGR_B1",       # PID 31
+    "MONITOR_EGR_B2",       # PID 32
+    "MONITOR_EGR_B3",       # PID 33
+    "MONITOR_EGR_B4",       # PID 34
+    "MONITOR_VVT_B1",       # PID 35
+    "MONITOR_VVT_B2",       # PID 36
+    "MONITOR_VVT_B3",       # PID 37
+    "MONITOR_VVT_B4",       # PID 38
+    "MONITOR_EVAP_150",     # PID 39
+    "MONITOR_EVAP_090",     # PID 3A
+    "MONITOR_EVAP_040",     # PID 3B
+    "MONITOR_EVAP_020",     # PID 3C
+    "MONITOR_PURGE_FLOW",   # PID 3D
+    "unsupported",          # PID 3E
+    "unsupported",          # PID 3F
+    "MIDS_C"                # PID 40 (Supported MIDs [41-60])
     ]
     mid_list3 = [
     "MONITOR_O2_HEATER_B1S1",  # PID 41
@@ -196,48 +227,117 @@ def get_supported_pids_mode06(connection):
     "MONITOR_O2_HEATER_B4S2",  # PID 4E
     "MONITOR_O2_HEATER_B4S3",  # PID 4F
     "MONITOR_O2_HEATER_B4S4",  # PID 50
-    "MIDS_D"                   # PID 60 (Supported MIDs [61-80])
+    "unsupported",             # PID 51
+    "unsupported",             # PID 52
+    "unsupported",             # PID 53
+    "unsupported",             # PID 54
+    "unsupported",             # PID 55
+    "unsupported",             # PID 56
+    "unsupported",             # PID 57
+    "unsupported",             # PID 58
+    "unsupported",             # PID 59
+    "unsupported",             # PID 5A
+    "unsupported",             # PID 5B
+    "unsupported",             # PID 5C
+    "unsupported",             # PID 5D
+    "unsupported",             # PID 5E
+    "unsupported",             # PID 5F
+    "MIDS_D"                    # PID 60 (Supported MIDs [61-80])
     ]
     mid_list4 = [
     "MONITOR_HEATED_CATALYST_B1",  # PID 61
     "MONITOR_HEATED_CATALYST_B2",  # PID 62
     "MONITOR_HEATED_CATALYST_B3",  # PID 63
     "MONITOR_HEATED_CATALYST_B4",  # PID 64
+    "unsupported",                  # PID 65
+    "unsupported",                  # PID 66
+    "unsupported",                  # PID 67
+    "unsupported",                  # PID 68
+    "unsupported",                  # PID 69
+    "unsupported",                  # PID 6A
+    "unsupported",                  # PID 6B
+    "unsupported",                  # PID 6C
+    "unsupported",                  # PID 6D
+    "unsupported",                  # PID 6E
+    "unsupported",                  # PID 6F
     "MONITOR_SECONDARY_AIR_1",     # PID 71
     "MONITOR_SECONDARY_AIR_2",     # PID 72
     "MONITOR_SECONDARY_AIR_3",     # PID 73
     "MONITOR_SECONDARY_AIR_4",     # PID 74
-    "MIDS_E"                       # PID 80 (Supported MIDs [81-A0])
-    ]
+    "unsupported",                  # PID 75
+    "unsupported",                  # PID 76
+    "unsupported",                  # PID 77
+    "unsupported",                  # PID 78
+    "unsupported",                  # PID 79
+    "unsupported",                  # PID 7A
+    "unsupported",                  # PID 7B
+    "unsupported",                  # PID 7C
+    "unsupported",                  # PID 7D
+    "unsupported",                  # PID 7E
+    "unsupported",                  # PID 7F
+    "MIDS_E"                        # PID 80 (Supported MIDs [81-A0])
+    ]  
     mid_list5 = [
-    "MONITOR_FUEL_SYSTEM_B1",       # PID 81
-    "MONITOR_FUEL_SYSTEM_B2",       # PID 82
-    "MONITOR_FUEL_SYSTEM_B3",       # PID 83
-    "MONITOR_FUEL_SYSTEM_B4",       # PID 84
-    "MONITOR_BOOST_PRESSURE_B1",    # PID 85
-    "MONITOR_BOOST_PRESSURE_B2",    # PID 86
-    "MONITOR_NOX_ABSORBER_B1",      # PID 90
-    "MONITOR_NOX_ABSORBER_B2",      # PID 91
-    "MONITOR_NOX_CATALYST_B1",      # PID 98
-    "MONITOR_NOX_CATALYST_B2",      # PID 99
-    "MIDS_F"                        # PID A0 (Supported MIDs [A1-C0])
+    "MONITOR_FUEL_SYSTEM_B1",  # PID 81
+    "MONITOR_FUEL_SYSTEM_B2",  # PID 82
+    "MONITOR_FUEL_SYSTEM_B3",  # PID 83
+    "MONITOR_FUEL_SYSTEM_B4",  # PID 84
+    "MONITOR_BOOST_PRESSURE_B1",  # PID 85
+    "MONITOR_BOOST_PRESSURE_B2",  # PID 86
+    "unsupported",               # PID 87
+    "unsupported",               # PID 88
+    "unsupported",               # PID 89
+    "MONITOR_NOX_ABSORBER_B1",  # PID 90
+    "MONITOR_NOX_ABSORBER_B2",  # PID 91
+    "unsupported",               # PID 92
+    "unsupported",               # PID 93
+    "unsupported",               # PID 94
+    "unsupported",               # PID 95
+    "unsupported",               # PID 96
+    "unsupported",               # PID 97
+    "MONITOR_NOX_CATALYST_B1",  # PID 98
+    "MONITOR_NOX_CATALYST_B2",  # PID 99
+    "unsupported",               # PID 9A
+    "unsupported",               # PID 9B
+    "unsupported",               # PID 9C
+    "unsupported",               # PID 9D
+    "unsupported",               # PID 9E
+    "unsupported",               # PID 9F
+    "unsupported",               # PID A0
+    "MIDS_F"                     # Supported MIDs [A1-C0]
     ]
     mid_list6 = [
-    "MONITOR_MISFIRE_GENERAL",       # PID A1
-    "MONITOR_MISFIRE_CYLINDER_1",    # PID A2
-    "MONITOR_MISFIRE_CYLINDER_2",    # PID A3
-    "MONITOR_MISFIRE_CYLINDER_3",    # PID A4
-    "MONITOR_MISFIRE_CYLINDER_4",    # PID A5
-    "MONITOR_MISFIRE_CYLINDER_5",    # PID A6
-    "MONITOR_MISFIRE_CYLINDER_6",    # PID A7
-    "MONITOR_MISFIRE_CYLINDER_7",    # PID A8
-    "MONITOR_MISFIRE_CYLINDER_8",    # PID A9
-    "MONITOR_MISFIRE_CYLINDER_9",    # PID AA
-    "MONITOR_MISFIRE_CYLINDER_10",   # PID AB
-    "MONITOR_MISFIRE_CYLINDER_11",   # PID AC
-    "MONITOR_MISFIRE_CYLINDER_12",   # PID AD
-    "MONITOR_PM_FILTER_B1",          # PID B0
-    "MONITOR_PM_FILTER_B2"           # PID B1
+    "MONITOR_MISFIRE_GENERAL",          # PID A1
+    "MONITOR_MISFIRE_CYLINDER_1",       # PID A2
+    "MONITOR_MISFIRE_CYLINDER_2",       # PID A3
+    "MONITOR_MISFIRE_CYLINDER_3",       # PID A4
+    "MONITOR_MISFIRE_CYLINDER_4",       # PID A5
+    "MONITOR_MISFIRE_CYLINDER_5",       # PID A6
+    "MONITOR_MISFIRE_CYLINDER_6",       # PID A7
+    "MONITOR_MISFIRE_CYLINDER_7",       # PID A8
+    "MONITOR_MISFIRE_CYLINDER_8",       # PID A9
+    "MONITOR_MISFIRE_CYLINDER_9",       # PID AA
+    "MONITOR_MISFIRE_CYLINDER_10",      # PID AB
+    "MONITOR_MISFIRE_CYLINDER_11",      # PID AC
+    "MONITOR_MISFIRE_CYLINDER_12",      # PID AD
+    "unsupported",                      # PID AE
+    "unsupported",                      # PID AF
+    "MONITOR_PM_FILTER_B1",              # PID B0
+    "MONITOR_PM_FILTER_B2",              # PID B1
+    "unsupported",                      # PID B2
+    "unsupported",                      # PID B3
+    "unsupported",                      # PID B4
+    "unsupported",                      # PID B5
+    "unsupported",                      # PID B6
+    "unsupported",                      # PID B7
+    "unsupported",                      # PID B8
+    "unsupported",                      # PID B9
+    "unsupported",                      # PID BA
+    "unsupported",                      # PID BB
+    "unsupported",                      # PID BC
+    "unsupported",                      # PID BD
+    "unsupported",                      # PID BE
+    "MIDS_G"                            # PID C0 (Supported MIDs [C1-E0])
     ]
 
     query_match_pids(connection, mid_list1, cmd1)
