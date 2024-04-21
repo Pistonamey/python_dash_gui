@@ -164,18 +164,6 @@ class CenterScreenWidget(QObject):
         self._currDate = value
         self.currTimeChanged.emit()
 
-# Class that handles user interactions
-class dashboardManager(QObject):
-    @QtCore.pyqtSlot()
-    def switch_dashboard(self):
-        if view.source().toString() == "dashboard.qml":
-            view.setSource(QUrl('dashboard2.qml'))
-            view.update()
-            view.show()
-        else:
-            view.setSource(QUrl('dashboard.qml'))
-            view.update()
-            view.show()
 
 def change_val():
     random_float = random.uniform(0, 160)
@@ -198,123 +186,100 @@ def change_val():
 
 
 
-def to60(speedometer):
-
-    if speedometer.__currSpeed != 0:
-        print("Please be at a stop\n")
-        return
-    
-    start_time = time.time()
-    print("Ready to time 0-60\n")
-
-    while speedometer.__currSpeed < 60:
-        time.sleep(0.01)
-
-    end_time = time.time()
-
-    elapsed_time = end_time - start_time
-    
-    print("0-60: " + elapsed_time)
-
-    with open('output.txt', 'a') as output:
-        output.write(f"0-60 Time: {elapsed_time}.\n")
-
-    return elapsed_time
 
 
-def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
+
+def receiver(connection, speedometer, temperaturebar, battery_capacity, rpmmeter):
 
     # Get data from OBD
     speed = py_obd.get_speed(connection)
     rpm = py_obd.get_rpm(connection)
-    fuel = py_obd.get_battery(connection)
-    tire_pressures = py_obd.get_tire_pressure(connection)
-    afr_ratio = py_obd.get_afr_ratio(connection)
-    # temperature = py_obd.get_temperature(connection)
-    # battery_level = py_obd.get_battery(connection)
+    temperature = py_obd.get_temperature(connection)
+    battery_level = py_obd.get_battery(connection)
 
     # Update PyQT Objects with data
     speedometer.currSpeed = speed
-    rpmmeter.currRPM = (rpm)/1000
-    temperature.currValue = random.randint(0, 300)
-    battery_capacity.currValue = fuel
-
-    afr_ratioLabel.currValue = afr_ratio
-    tire_pressureLabel.currValue = tire_pressures[0] #testing one of the tire pressures
+    rpmmeter.currRPM = rpm
+    temperaturebar.currValue = temperature
+    battery_capacity.currValue = battery_level
 
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
+def poll_speed(connection):
+    speed = py_obd.get_speed(connection)
+    speedometer.currSpeed = speed
+
+def poll_rpm(connection):
+    rpm = py_obd.get_rpm(connection)
+    rpmmeter.currRPM = rpm
+
+def poll_coolantTemp(connection):
+    temp = py_obd.get_temperature(connection)
+    temperature.currValue = temp
+
+def poll_fuel(connection):
+    fuel = py_obd.get_battery(connection)
+    battery_capacity.currValue = fuel
+
+def poll_time():
+    centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
+    centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
+
+
 
 def set_timer(connection):
+    speed_timer = QTimer()
+    rpm_timer = QTimer()
+    battery_timer = QTimer()
+    temperature_timer = QTimer()
+    date_timer = QTimer()
 
-    timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter))
-    timer.start(50)
+    try:
+        speed_timer.timeout.connect(lambda: poll_speed(connection))
+    except Exception as e:
+        with open('output.txt', 'a') as f:
+            f.write(str(e))
+    rpm_timer.timeout.connect(lambda: poll_rpm(connection))
+    battery_timer.timeout.connect(lambda: poll_fuel(connection))
+    temperature_timer.timeout.connect(lambda: poll_coolantTemp(connection))
+    date_timer.timeout.connect(lambda: poll_time())
+
+    speed_timer.start(200) # Polling rate of speed 200 ms
+    rpm_timer.start(200) # Polling rate of rpm 200 ms
+    battery_timer.start(5000) # Polling rate of speed 5 s
+    temperature_timer.start(5000) # Polling rate of speed 5 s
+    date_timer.start(1000) # Polling rate of date and time 1 s
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     view = QQuickView()
     view.setSource(QUrl('dashboard.qml'))
     engine = view.engine()
-    timer = QTimer()
     # Create classes for each component
-    manager = dashboardManager()
     temperature = BarMeter()
     battery_capacity = BarMeter()
     speedometer = Speedometer()
     rpmmeter = RPM_meter()
     avg_speed = Labels()
-    tire_pressure = Labels()
     od_partial = Labels()
     consumption = Labels()
     driveable = Labels()
     centerScreen = CenterScreenWidget()
-
-    afr_ratioLabel = Labels()
-    tire_pressureLabel = Labels()
-    barometric_pressureLabel = Labels()
-
-    # Top labels from Mode 1
-    engineLoadLabel = Labels()
-    coolantTempLabel = Labels()
-    shortTermFuelTrimLabel = Labels()
-    longTermFuelTrimLabel = Labels()
-    throttlePosLabel = Labels()
-    bankSensorLabel = Labels()
-    distWithMILabel = Labels()
-    distDTCClearLabel = Labels()
-    evapVaporPressureLabel = Labels()
+    with open('output.txt', 'w') as f:
+        pass
     
 
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
-    engine.rootContext().setContextProperty("manager", manager)
     engine.rootContext().setContextProperty("speedometer", speedometer)
     engine.rootContext().setContextProperty("temperature", temperature)
     engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
     engine.rootContext().setContextProperty("RPM_Meter", rpmmeter)
     engine.rootContext().setContextProperty("avg_speed", avg_speed)
-    engine.rootContext().setContextProperty("tire_pressure", tire_pressure)
     engine.rootContext().setContextProperty("od_partial", od_partial)
     engine.rootContext().setContextProperty("consumption", consumption)
     engine.rootContext().setContextProperty("driveable", driveable)
     engine.rootContext().setContextProperty("centerScreen", centerScreen)
-
-    engine.rootContext().setContextProperty("afr_ratio", afr_ratioLabel)
-    engine.rootContext().setContextProperty("tire_pressures", tire_pressureLabel)
-
-    # Top labels from Mode 1, root context
-    engine.rootContext().setContextProperty("engineLoadLabel", engineLoadLabel)
-    engine.rootContext().setContextProperty("coolantTempLabel", coolantTempLabel)
-    engine.rootContext().setContextProperty("shortTermFuelTrimLabel", shortTermFuelTrimLabel)
-    engine.rootContext().setContextProperty("longTermFuelTrimLabel", longTermFuelTrimLabel)
-    engine.rootContext().setContextProperty("throttlePosLabel", throttlePosLabel)
-    engine.rootContext().setContextProperty("bankSensorLabel", bankSensorLabel)
-    engine.rootContext().setContextProperty("distWithMILabel", distWithMILabel)
-    engine.rootContext().setContextProperty("distDTCClearLabel", distDTCClearLabel)
-    engine.rootContext().setContextProperty("evapVaporPressureLabel", evapVaporPressureLabel)
-
-
-
 
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)
@@ -325,41 +290,22 @@ if __name__ == "__main__":
     battery_capacity.currValue = 50.0
     rpmmeter.setAllValues(0.0, 10.0, 0.0)
     avg_speed.setAllValues(0.0)
-    tire_pressure.setAllValues(0.0)
     od_partial.setAllValues(0.0)
     consumption.setAllValues(0.0)
     driveable.setAllValues(0.0)
-
-    afr_ratioLabel.setAllValues(0.0)
-    tire_pressureLabel.setAllValues(0.0)
-
-    # Top labels from Mode 1
-    engineLoadLabel.setAllValues(0.0)
-    coolantTempLabel.setAllValues(0.0)
-    shortTermFuelTrimLabel.setAllValues(0.0)
-    longTermFuelTrimLabel.setAllValues(0.0)
-    throttlePosLabel.setAllValues(0.0)
-    bankSensorLabel.setAllValues(0.0)
-    distWithMILabel.setAllValues(0.0)
-    distDTCClearLabel.setAllValues(0.0)
-    evapVaporPressureLabel.setAllValues(0.0)
 
     view.update()
     view.show()
 
     connection = obd.OBD() # auto-connects to USB or RF port
-
-    with open('output.txt', 'a') as output:
-        commands = obd.commands
-        for command_name, command in commands.items():  
-            if connection.supports(command):
-                output.write(f"{command_name} is supported.\n")
-            else:
-                output.write(f"{command_name} is NOT supported.\n")
-
+    timer = QTimer()
     print(connection.status())
-    obd.logger.setLevel(obd.logging.DEBUG)
-    set_timer(connection)
+    # obd.logger.setLevel(obd.logging.DEBUG)
+    py_obd.get_supported_pids_mode01(connection)
+    py_obd.get_supported_pids_mode06(connection)
+    timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter))
+    timer.start(500)
+    # set_timer(connection)
     
 
     sys.exit(app.exec_())
