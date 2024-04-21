@@ -2,6 +2,27 @@ import obd
 
 # Each of these getter functions need to return an integer and/or a float number
 
+def query_match_pids(connection, pidlist, command):
+    try:
+        response = connection.query(command).value
+        with open('output.txt', 'a') as f:
+            f.write("Length of bit response: " + str(len(response)) + "\n")
+            f.write("Length of pid list: " + str(len(pidlist)) + "\n")
+            bit_string = ''.join(['1' if bit else '0' for bit in response])
+            f.write("Supported MIDs: " + bit_string + "\n")
+            # Optionally, list the supported PIDs
+            for index, bit in enumerate(response):
+                if bit:
+                    pid_index = index + 1  # To get the correct PID number
+                    if pid_index <= len(pidlist):
+                        pid_name = pidlist[pid_index - 1]
+                        f.write(f"  PID {pid_index:02X} ({pid_name}) is supported\n")
+        return bit_string
+    except Exception as e:
+        with open('output.txt', 'a') as output:
+            output.write(f"Error receiving supported available PIDs: {str(e)}\n")
+        return 1
+
 def get_supported_pids_mode01(connection):
     cmd1 = obd.commands.PIDS_A
     cmd2 = obd.commands.PIDS_B
@@ -106,88 +127,126 @@ def get_supported_pids_mode01(connection):
     "FUEL_RATE"                         # PID 5E
 ]
     # Query for PIDs 01-20
-    try:
-        response = connection.query(cmd1).value
-        bit_string = ''.join(['1' if bit else '0' for bit in response])
-        with open('output.txt', 'a') as f:
-            f.write("Supported PIDs: " + bit_string + "\n")
-            # Optionally, list the supported PIDs
-            for index, bit in enumerate(response):
-                if bit:
-                    pid_index = index + 1  # To get the correct PID number
-                    if pid_index <= len(pid_list1):
-                        pid_name = pid_list1[pid_index - 1]
-                        f.write(f"  PID {pid_index:02X} ({pid_name}) is supported\n")
-    except Exception as e:
-        with open('output.txt', 'a') as output:
-            output.write(f"Error receiving supported available PIDs for PIDs 01-20: {str(e)}\n")
-
+    query_match_pids(connection, cmd1, pid_list1)
     # Query for PIDs 21-40
-    try:
-        response = connection.query(cmd2).value
-        bit_string = ''.join(['1' if bit else '0' for bit in response])
-        with open('output.txt', 'a') as f:
-            f.write("Supported PIDs: " + bit_string + "\n")
-            # Optionally, list the supported PIDs
-            for index, bit in enumerate(response):
-                if bit:
-                    pid_index = index + 1  # To get the correct PID number
-                    if pid_index <= len(pid_list2):
-                        pid_name = pid_list2[pid_index - 1]
-                        f.write(f"  PID {pid_index:02X} ({pid_name}) is supported\n")
-    except Exception as e:
-        with open('output.txt', 'a') as output:
-            output.write(f"Error receiving supported available PIDs for PIDs 21-40: {str(e)}\n")
-
+    query_match_pids(connection, cmd2, pid_list2)
     # Query for PIDs 41-60
-    try:
-        response = connection.query(cmd3).value
-        bit_string = ''.join(['1' if bit else '0' for bit in response])
-        with open('output.txt', 'a') as f:
-            f.write("Supported PIDs: " + bit_string + "\n")
-            # Optionally, list the supported PIDs
-            for index, bit in enumerate(response):
-                if bit:
-                    pid_index = index + 1  # To get the correct PID number
-                    if pid_index <= len(pid_list3):
-                        pid_name = pid_list3[pid_index - 1]
-                        f.write(f"  PID {pid_index:02X} ({pid_name}) is supported\n")
-    except Exception as e:
-        with open('output.txt', 'a') as output:
-            output.write(f"Error receiving supported available PIDs for PIDs 41-60: {str(e)}\n")
-    
-    
+    query_match_pids(connection, cmd3, pid_list3)
+
 def get_supported_pids_mode06(connection):
-    cmd = obd.commands.MIDS_A
-    try:
-        response = connection.query(cmd).value
-        bit_string = ''.join(['1' if bit else '0' for bit in response])
-        with open('output.txt', 'a') as f:
-            f.write("Supported MIDs: " + bit_string + "\n")
-            # Optionally, list the supported PIDs
-            for index, bit in enumerate(response):
-                if bit:
-                    f.write(f"  PID {index + 1} is supported\n")
-    except Exception as e:
-        with open('output.txt', 'a') as output:
-            output.write(f"Error receiving supported available PIDs: {str(e)}\n")
-        return 1
-    
-def get_supported_pids_mode09(connection):
-    cmd = obd.commands.PIDS_9A
-    try:
-        response = connection.query(cmd).value
-        bit_string = ''.join(['1' if bit else '0' for bit in response])
-        with open('output.txt', 'a') as f:
-            f.write("Supported PIDS_9A: " + bit_string + "\n")
-            # Optionally, list the supported PIDs
-            for index, bit in enumerate(response):
-                if bit:
-                    f.write(f"  PID {index + 1} is supported\n")
-    except Exception as e:
-        with open('output.txt', 'a') as output:
-            output.write(f"Error receiving supported available PIDs: {str(e)}\n")
-        return 1
+    cmd1 = obd.commands.MIDS_A
+    cmd2 = obd.commands.MIDS_B
+    cmd3 = obd.commands.MIDS_C
+    cmd4 = obd.commands.MIDS_D
+    cmd5 = obd.commands.MIDS_E
+    cmd6 = obd.commands.MIDS_F
+    mid_list1 = [
+    "MONITOR_O2_B1S1",  # PID 01
+    "MONITOR_O2_B1S2",  # PID 02
+    "MONITOR_O2_B1S3",  # PID 03
+    "MONITOR_O2_B1S4",  # PID 04
+    "MONITOR_O2_B2S1",  # PID 05
+    "MONITOR_O2_B2S2",  # PID 06
+    "MONITOR_O2_B2S3",  # PID 07
+    "MONITOR_O2_B2S4",  # PID 08
+    "MONITOR_O2_B3S1",  # PID 09
+    "MONITOR_O2_B3S2",  # PID 0A
+    "MONITOR_O2_B3S3",  # PID 0B
+    "MONITOR_O2_B3S4",  # PID 0C
+    "MONITOR_O2_B4S1",  # PID 0D
+    "MONITOR_O2_B4S2",  # PID 0E
+    "MONITOR_O2_B4S3",  # PID 0F
+    "MONITOR_O2_B4S4",  # PID 10
+    "MIDS_B"            # PID 20 (Supported MIDs [21-40])
+    ]
+    mid_list2 = [
+    "MONITOR_CATALYST_B1",   # PID 21
+    "MONITOR_CATALYST_B2",   # PID 22
+    "MONITOR_CATALYST_B3",   # PID 23
+    "MONITOR_CATALYST_B4",   # PID 24
+    "MONITOR_EGR_B1",        # PID 31
+    "MONITOR_EGR_B2",        # PID 32
+    "MONITOR_EGR_B3",        # PID 33
+    "MONITOR_EGR_B4",        # PID 34
+    "MONITOR_VVT_B1",        # PID 35
+    "MONITOR_VVT_B2",        # PID 36
+    "MONITOR_VVT_B3",        # PID 37
+    "MONITOR_VVT_B4",        # PID 38
+    "MONITOR_EVAP_150",      # PID 39 (EVAP Monitor (Cap Off / 0.150"))
+    "MONITOR_EVAP_090",      # PID 3A (EVAP Monitor (0.090"))
+    "MONITOR_EVAP_040",      # PID 3B (EVAP Monitor (0.040"))
+    "MONITOR_EVAP_020",      # PID 3C (EVAP Monitor (0.020"))
+    "MONITOR_PURGE_FLOW",    # PID 3D
+    "MIDS_C"                 # PID 40 (Supported MIDs [41-60])
+    ]
+    mid_list3 = [
+    "MONITOR_O2_HEATER_B1S1",  # PID 41
+    "MONITOR_O2_HEATER_B1S2",  # PID 42
+    "MONITOR_O2_HEATER_B1S3",  # PID 43
+    "MONITOR_O2_HEATER_B1S4",  # PID 44
+    "MONITOR_O2_HEATER_B2S1",  # PID 45
+    "MONITOR_O2_HEATER_B2S2",  # PID 46
+    "MONITOR_O2_HEATER_B2S3",  # PID 47
+    "MONITOR_O2_HEATER_B2S4",  # PID 48
+    "MONITOR_O2_HEATER_B3S1",  # PID 49
+    "MONITOR_O2_HEATER_B3S2",  # PID 4A
+    "MONITOR_O2_HEATER_B3S3",  # PID 4B
+    "MONITOR_O2_HEATER_B3S4",  # PID 4C
+    "MONITOR_O2_HEATER_B4S1",  # PID 4D
+    "MONITOR_O2_HEATER_B4S2",  # PID 4E
+    "MONITOR_O2_HEATER_B4S3",  # PID 4F
+    "MONITOR_O2_HEATER_B4S4",  # PID 50
+    "MIDS_D"                   # PID 60 (Supported MIDs [61-80])
+    ]
+    mid_list4 = [
+    "MONITOR_HEATED_CATALYST_B1",  # PID 61
+    "MONITOR_HEATED_CATALYST_B2",  # PID 62
+    "MONITOR_HEATED_CATALYST_B3",  # PID 63
+    "MONITOR_HEATED_CATALYST_B4",  # PID 64
+    "MONITOR_SECONDARY_AIR_1",     # PID 71
+    "MONITOR_SECONDARY_AIR_2",     # PID 72
+    "MONITOR_SECONDARY_AIR_3",     # PID 73
+    "MONITOR_SECONDARY_AIR_4",     # PID 74
+    "MIDS_E"                       # PID 80 (Supported MIDs [81-A0])
+    ]
+    mid_list5 = [
+    "MONITOR_FUEL_SYSTEM_B1",       # PID 81
+    "MONITOR_FUEL_SYSTEM_B2",       # PID 82
+    "MONITOR_FUEL_SYSTEM_B3",       # PID 83
+    "MONITOR_FUEL_SYSTEM_B4",       # PID 84
+    "MONITOR_BOOST_PRESSURE_B1",    # PID 85
+    "MONITOR_BOOST_PRESSURE_B2",    # PID 86
+    "MONITOR_NOX_ABSORBER_B1",      # PID 90
+    "MONITOR_NOX_ABSORBER_B2",      # PID 91
+    "MONITOR_NOX_CATALYST_B1",      # PID 98
+    "MONITOR_NOX_CATALYST_B2",      # PID 99
+    "MIDS_F"                        # PID A0 (Supported MIDs [A1-C0])
+    ]
+    mid_list6 = [
+    "MONITOR_MISFIRE_GENERAL",       # PID A1
+    "MONITOR_MISFIRE_CYLINDER_1",    # PID A2
+    "MONITOR_MISFIRE_CYLINDER_2",    # PID A3
+    "MONITOR_MISFIRE_CYLINDER_3",    # PID A4
+    "MONITOR_MISFIRE_CYLINDER_4",    # PID A5
+    "MONITOR_MISFIRE_CYLINDER_5",    # PID A6
+    "MONITOR_MISFIRE_CYLINDER_6",    # PID A7
+    "MONITOR_MISFIRE_CYLINDER_7",    # PID A8
+    "MONITOR_MISFIRE_CYLINDER_8",    # PID A9
+    "MONITOR_MISFIRE_CYLINDER_9",    # PID AA
+    "MONITOR_MISFIRE_CYLINDER_10",   # PID AB
+    "MONITOR_MISFIRE_CYLINDER_11",   # PID AC
+    "MONITOR_MISFIRE_CYLINDER_12",   # PID AD
+    "MONITOR_PM_FILTER_B1",          # PID B0
+    "MONITOR_PM_FILTER_B2"           # PID B1
+    ]
+
+    query_match_pids(connection, cmd1, mid_list1)
+    query_match_pids(connection, cmd2, mid_list2)
+    query_match_pids(connection, cmd3, mid_list3)
+    query_match_pids(connection, cmd4, mid_list4)
+    query_match_pids(connection, cmd5, mid_list5)
+    query_match_pids(connection, cmd6, mid_list6)
+
 
 def get_speed(connection):
     # global connection
