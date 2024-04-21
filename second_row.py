@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
     # Set the path to the QML file
     # Ensure this is the correct path to your QML file
-    qml_file_path = 'Second_row.qml'
+    qml_file_path = 'dashboard.qml'
 
     # Set the QML file as the source for the viewer
     view.setSource(QUrl.fromLocalFile(qml_file_path))

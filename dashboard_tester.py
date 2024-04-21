@@ -193,6 +193,24 @@ def change_val():
     consumption.currValue = random_int
     driveable.currValue = random_int
 
+    engineLoadLabel.currValue = random_int
+    coolantTempLabel.currValue = random_int
+    shortTermFuelTrimLabel.currValue = random_int
+    longTermFuelTrimLabel.currValue = random_int
+    throttlePosLabel.currValue = random_int
+    bankSensorLabel.currValue = random_int
+    distWithMILabel.currValue = random_int
+    distDTCClearLabel.currValue = random_int
+    evapVaporPressureLabel.currValue = random_int
+
+
+
+    afr_ratioLabel.currValue = random_int
+
+
+
+
+
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
@@ -262,7 +280,21 @@ if __name__ == "__main__":
     od_partial = Labels()
     consumption = Labels()
     driveable = Labels()
+
+    # Top labels from Mode 1
+    engineLoadLabel = Labels()
+    coolantTempLabel = Labels()
+    shortTermFuelTrimLabel = Labels()
+    longTermFuelTrimLabel = Labels()
+    throttlePosLabel = Labels()
+    bankSensorLabel = Labels()
+    distWithMILabel = Labels()
+    distDTCClearLabel = Labels()
+    evapVaporPressureLabel = Labels()
+
     centerScreen = CenterScreenWidget()
+
+    afr_ratioLabel = Labels()
 
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
     engine.rootContext().setContextProperty("manager", manager)
@@ -276,6 +308,18 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("driveable", driveable)
     engine.rootContext().setContextProperty("centerScreen", centerScreen)
 
+    engine.rootContext().setContextProperty("engineLoadLabel", engineLoadLabel)
+    engine.rootContext().setContextProperty("coolantTempLabel", coolantTempLabel)
+    engine.rootContext().setContextProperty("shortTermFuelTrimLabel", shortTermFuelTrimLabel)
+    engine.rootContext().setContextProperty("longTermFuelTrimLabel", longTermFuelTrimLabel)
+    engine.rootContext().setContextProperty("throttlePosLabel", throttlePosLabel)
+    engine.rootContext().setContextProperty("bankSensorLabel", bankSensorLabel)
+    engine.rootContext().setContextProperty("distWithMILabel", distWithMILabel)
+    engine.rootContext().setContextProperty("distDTCClearLabel", distDTCClearLabel)
+    engine.rootContext().setContextProperty("evapVaporPressureLabel", evapVaporPressureLabel)
+
+    engine.rootContext().setContextProperty("afr_ratio", afr_ratioLabel)
+
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)
     speedometer.currSpeed = 60.0
@@ -288,6 +332,19 @@ if __name__ == "__main__":
     od_partial.setAllValues(0.0)
     consumption.setAllValues(0.0)
     driveable.setAllValues(0.0)
+
+    engineLoadLabel.setAllValues(0.0)
+    coolantTempLabel.setAllValues(0.0)
+    shortTermFuelTrimLabel.setAllValues(0.0)
+    longTermFuelTrimLabel.setAllValues(0.0)
+    throttlePosLabel.setAllValues(0.0)
+    bankSensorLabel.setAllValues(0.0)
+    distWithMILabel.setAllValues(0.0)
+    distDTCClearLabel.setAllValues(0.0)
+    evapVaporPressureLabel.setAllValues(0.0)
+
+
+    afr_ratioLabel.setAllValues(0.0)
 
     view.update()
     view.show()
