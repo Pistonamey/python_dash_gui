@@ -176,11 +176,6 @@ def change_val():
     battery_capacity.currValue = random_battery
     rpmmeter.currRPM = random_rpm
 
-    avg_speed.currValue = random_int
-    od_partial.currValue = random_int
-    consumption.currValue = random_int
-    driveable.currValue = random_int
-
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
@@ -189,18 +184,18 @@ def change_val():
 
 
 
-def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
+def receiver(connection, speedometer, temperaturebar, battery_capacity, rpmmeter):
 
     # Get data from OBD
     speed = py_obd.get_speed(connection)
     rpm = py_obd.get_rpm(connection)
-    temp = py_obd.get_temperature(connection)
+    temperature = py_obd.get_temperature(connection)
     battery_level = py_obd.get_battery(connection)
 
     # Update PyQT Objects with data
     speedometer.currSpeed = speed
     rpmmeter.currRPM = rpm
-    temperature.currValue = temp
+    temperaturebar.currValue = temperature
     battery_capacity.currValue = battery_level
 
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
@@ -209,32 +204,22 @@ def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
 def poll_speed(connection):
     speed = py_obd.get_speed(connection)
     speedometer.currSpeed = speed
-    with open('output.txt', 'a') as f:
-        f.write("SPEED UPDATED\n")
 
 def poll_rpm(connection):
     rpm = py_obd.get_rpm(connection)
     rpmmeter.currRPM = rpm
-    with open('output.txt', 'a') as f:
-        f.write("RPM UPDATED\n")
 
 def poll_coolantTemp(connection):
     temp = py_obd.get_temperature(connection)
     temperature.currValue = temp
-    with open('output.txt', 'a') as f:
-        f.write("TEMP UPDATED\n")
 
 def poll_fuel(connection):
     fuel = py_obd.get_battery(connection)
     battery_capacity.currValue = fuel
-    with open('output.txt', 'a') as f:
-        f.write("FUEL UPDATED\n")
 
 def poll_time():
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
-    with open('output.txt', 'a') as f:
-        f.write("TIME UPDATED\n")
 
 
 
@@ -245,7 +230,11 @@ def set_timer(connection):
     temperature_timer = QTimer()
     date_timer = QTimer()
 
-    speed_timer.timeout.connect(lambda: poll_speed(connection))
+    try:
+        speed_timer.timeout.connect(lambda: poll_speed(connection))
+    except Exception as e:
+        with open('output.txt', 'a') as f:
+            f.write(str(e))
     rpm_timer.timeout.connect(lambda: poll_rpm(connection))
     battery_timer.timeout.connect(lambda: poll_fuel(connection))
     temperature_timer.timeout.connect(lambda: poll_coolantTemp(connection))
@@ -262,16 +251,30 @@ if __name__ == "__main__":
     view = QQuickView()
     view.setSource(QUrl('dashboard.qml'))
     engine = view.engine()
+
     # Create classes for each component
     temperature = BarMeter()
     battery_capacity = BarMeter()
     speedometer = Speedometer()
     rpmmeter = RPM_meter()
-    avg_speed = Labels()
-    od_partial = Labels()
-    consumption = Labels()
-    driveable = Labels()
     centerScreen = CenterScreenWidget()
+
+    # Top labels, first row
+    intakePressureLabel = Labels()
+    intakeTempLabel = Labels()
+    runtimeLabel = Labels()
+    fuelLevelLabel = Labels()
+    fuelTypeLabel = Labels()
+
+    # Top labels, second row
+    engineLoadLabel = Labels()
+    throttlePosLabel = Labels()
+    barometricPressureLabel = Labels()
+    throttleAcceleratorLabel = Labels()
+    absoluteLoadLabel = Labels()
+
+    with open('output.txt', 'w') as f:
+        pass
     
 
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
@@ -279,11 +282,22 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("temperature", temperature)
     engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
     engine.rootContext().setContextProperty("RPM_Meter", rpmmeter)
-    engine.rootContext().setContextProperty("avg_speed", avg_speed)
-    engine.rootContext().setContextProperty("od_partial", od_partial)
-    engine.rootContext().setContextProperty("consumption", consumption)
-    engine.rootContext().setContextProperty("driveable", driveable)
     engine.rootContext().setContextProperty("centerScreen", centerScreen)
+
+    # Sets context properties for 1st row
+    engine.rootContext().setContextProperty("intakePressureLabel", intakePressureLabel)
+    engine.rootContext().setContextProperty("intakeTempLabel", intakeTempLabel)
+    engine.rootContext().setContextProperty("runtimeLabel", runtimeLabel)
+    engine.rootContext().setContextProperty("fuelLevelLabel", fuelLevelLabel)
+    engine.rootContext().setContextProperty("fuelTypeLabel", fuelTypeLabel)
+
+    # Sets context properties for 2nd row
+    engine.rootContext().setContextProperty("engineLoadLabel", engineLoadLabel)
+    engine.rootContext().setContextProperty("throttlePosLabel", throttlePosLabel)
+    engine.rootContext().setContextProperty("barometricPressureLabel", barometricPressureLabel)
+    engine.rootContext().setContextProperty("throttleAcceleratorLabel", throttleAcceleratorLabel)
+    engine.rootContext().setContextProperty("absoluteLoadLabel", absoluteLoadLabel)
+
 
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)
@@ -293,25 +307,26 @@ if __name__ == "__main__":
     battery_capacity.setAllValues(0.0, 100.0, 0.0)
     battery_capacity.currValue = 50.0
     rpmmeter.setAllValues(0.0, 10.0, 0.0)
-    avg_speed.setAllValues(0.0)
-    od_partial.setAllValues(0.0)
-    consumption.setAllValues(0.0)
-    driveable.setAllValues(0.0)
+
+    # Sets initial values for 1st row
+    intakeTempLabel.setAllValues(0.0)
+    intakePressureLabel.setAllValues(0.0)
+    runtimeLabel.setAllValues(0.0)
+    fuelLevelLabel.setAllValues(0.0)
+    fuelTypeLabel.stringValue = "Gasoline"
 
     view.update()
     view.show()
 
     connection = obd.OBD() # auto-connects to USB or RF port
-
+    timer = QTimer()
     print(connection.status())
-    obd.logger.setLevel(obd.logging.DEBUG)
+    # obd.logger.setLevel(obd.logging.DEBUG)
     py_obd.get_supported_pids_mode01(connection)
     py_obd.get_supported_pids_mode06(connection)
-    set_timer(connection)
-    
-    # timer = QTimer()
-    # timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter)
-    # timer.start(500)
+    timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter))
+    timer.start(500)
+    # set_timer(connection)
     
 
     sys.exit(app.exec_())

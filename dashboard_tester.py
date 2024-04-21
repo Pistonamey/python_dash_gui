@@ -124,6 +124,8 @@ class Labels(QObject):
     def __init__(self, parent=None):
         super(Labels, self).__init__(parent)
         self._currValue = 0.0
+        self._stringValue = ""
+
 
     @pyqtProperty(float, notify=currValueChanged)
     def currValue(self):
@@ -132,6 +134,16 @@ class Labels(QObject):
     @currValue.setter
     def currValue(self, value):
         self._currValue = value
+        self.currValueChanged.emit()
+
+
+    @pyqtProperty(str, notify=currValueChanged)
+    def stringValue(self):
+        return self._stringValue
+
+    @stringValue.setter
+    def stringValue(self, value):
+        self._stringValue = value
         self.currValueChanged.emit()
 
     @QtCore.pyqtSlot(float, float, float)
@@ -188,17 +200,21 @@ def change_val():
     battery_capacity.currValue = random_battery
     rpmmeter.currRPM = random_rpm
 
-    avg_speed.currValue = random_int
-    od_partial.currValue = random_int
-    consumption.currValue = random_int
-    driveable.currValue = random_int
+    intakePressureLabel.currValue = random_int
+    intakeTempLabel.currValue = random_int
+    runtimeLabel.currValue = random_int
+    fuelLevelLabel.currValue = random_int
+    fuelTypeLabel.stringValue = "Gasoline"
 
     engineLoadLabel.currValue = random_int
-    coolantTempLabel.currValue = random_int
+    throttlePosLabel.currValue = random_int
+    barometricPressureLabel.currValue = random_int
+    throttleAcceleratorLabel.currValue = random_int
+    absoluteLoadLabel.currValue = random_int
+
     shortTermFuelTrimLabel.currValue = random_int
     longTermFuelTrimLabel.currValue = random_int
     throttlePosLabel.currValue = random_int
-    bankSensorLabel.currValue = random_int
     distWithMILabel.currValue = random_int
     distDTCClearLabel.currValue = random_int
     evapVaporPressureLabel.currValue = random_int
@@ -276,23 +292,40 @@ if __name__ == "__main__":
     battery_capacity = BarMeter()
     speedometer = Speedometer()
     rpmmeter = RPM_meter()
-    avg_speed = Labels()
-    od_partial = Labels()
-    consumption = Labels()
-    driveable = Labels()
+    centerScreen = CenterScreenWidget()
 
-    # Top labels from Mode 1
+    # Top labels, first row
+    intakePressureLabel = Labels()
+    intakeTempLabel = Labels()
+    runtimeLabel = Labels()
+    fuelLevelLabel = Labels()
+    fuelTypeLabel = Labels()
+
+    # Top labels, second row
     engineLoadLabel = Labels()
-    coolantTempLabel = Labels()
+    throttlePosLabel = Labels()
+    barometricPressureLabel = Labels()
+    throttleAcceleratorLabel = Labels()
+    absoluteLoadLabel = Labels()
+
+    # The rest of them
     shortTermFuelTrimLabel = Labels()
     longTermFuelTrimLabel = Labels()
-    throttlePosLabel = Labels()
-    bankSensorLabel = Labels()
     distWithMILabel = Labels()
     distDTCClearLabel = Labels()
     evapVaporPressureLabel = Labels()
+    timingAdvanceLabel = Labels()
+    O2SensorsPresentLabel = Labels()
+    fuelRailPressureDirectLabel = Labels()
+    evaporativePurgeLabel = Labels()
+    warmupsSinceDTCsClearedLabel = Labels()
+    controlModuleVoltageLabel = Labels()
+    throttlePosBLabel = Labels()
+    acceleratorPosDLabel = Labels()
+    acceleratorPosELabel = Labels()
 
-    centerScreen = CenterScreenWidget()
+    monitor_O2_B1S1_Label = Labels()
+    monitor_O2_B1S2_Label = Labels()
 
     afr_ratioLabel = Labels()
 
@@ -302,21 +335,36 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("temperature", temperature)
     engine.rootContext().setContextProperty("battery_capacity", battery_capacity)
     engine.rootContext().setContextProperty("RPM_Meter", rpmmeter)
-    engine.rootContext().setContextProperty("avg_speed", avg_speed)
-    engine.rootContext().setContextProperty("od_partial", od_partial)
-    engine.rootContext().setContextProperty("consumption", consumption)
-    engine.rootContext().setContextProperty("driveable", driveable)
     engine.rootContext().setContextProperty("centerScreen", centerScreen)
 
+    # Sets context properties for 1st row
+    engine.rootContext().setContextProperty("intakePressureLabel", intakePressureLabel)
+    engine.rootContext().setContextProperty("intakeTempLabel", intakeTempLabel)
+    engine.rootContext().setContextProperty("runtimeLabel", runtimeLabel)
+    engine.rootContext().setContextProperty("fuelLevelLabel", fuelLevelLabel)
+    engine.rootContext().setContextProperty("fuelTypeLabel", fuelTypeLabel)
+
+    # Sets context properties for 2nd row
     engine.rootContext().setContextProperty("engineLoadLabel", engineLoadLabel)
-    engine.rootContext().setContextProperty("coolantTempLabel", coolantTempLabel)
+    engine.rootContext().setContextProperty("throttlePosLabel", throttlePosLabel)
+    engine.rootContext().setContextProperty("barometricPressureLabel", barometricPressureLabel)
+    engine.rootContext().setContextProperty("throttleAcceleratorLabel", throttleAcceleratorLabel)
+    engine.rootContext().setContextProperty("absoluteLoadLabel", absoluteLoadLabel)
+
     engine.rootContext().setContextProperty("shortTermFuelTrimLabel", shortTermFuelTrimLabel)
     engine.rootContext().setContextProperty("longTermFuelTrimLabel", longTermFuelTrimLabel)
-    engine.rootContext().setContextProperty("throttlePosLabel", throttlePosLabel)
-    engine.rootContext().setContextProperty("bankSensorLabel", bankSensorLabel)
     engine.rootContext().setContextProperty("distWithMILabel", distWithMILabel)
     engine.rootContext().setContextProperty("distDTCClearLabel", distDTCClearLabel)
     engine.rootContext().setContextProperty("evapVaporPressureLabel", evapVaporPressureLabel)
+    engine.rootContext().setContextProperty("timingAdvanceLabel", timingAdvanceLabel)
+    engine.rootContext().setContextProperty("O2SensorsPresentLabel", O2SensorsPresentLabel)
+    engine.rootContext().setContextProperty("fuelRailPressureDirectLabel", fuelRailPressureDirectLabel)
+    engine.rootContext().setContextProperty("evaporativePurgeLabel", evaporativePurgeLabel)
+    engine.rootContext().setContextProperty("warmupsSinceDTCsClearedLabel", warmupsSinceDTCsClearedLabel)
+    engine.rootContext().setContextProperty("controlModuleVoltageLabel", controlModuleVoltageLabel)
+    engine.rootContext().setContextProperty("acceleratorPosDLabel", acceleratorPosDLabel)
+    engine.rootContext().setContextProperty("acceleratorPosELabel", acceleratorPosELabel)
+    engine.rootContext().setContextProperty("throttlePosBLabel", throttlePosBLabel)
 
     engine.rootContext().setContextProperty("afr_ratio", afr_ratioLabel)
 
@@ -328,23 +376,7 @@ if __name__ == "__main__":
     battery_capacity.setAllValues(0.0, 100.0, 0.0)
     battery_capacity.currValue = 50.0
     rpmmeter.setAllValues(0.0, 10.0, 0.0)
-    avg_speed.setAllValues(0.0)
-    od_partial.setAllValues(0.0)
-    consumption.setAllValues(0.0)
-    driveable.setAllValues(0.0)
 
-    engineLoadLabel.setAllValues(0.0)
-    coolantTempLabel.setAllValues(0.0)
-    shortTermFuelTrimLabel.setAllValues(0.0)
-    longTermFuelTrimLabel.setAllValues(0.0)
-    throttlePosLabel.setAllValues(0.0)
-    bankSensorLabel.setAllValues(0.0)
-    distWithMILabel.setAllValues(0.0)
-    distDTCClearLabel.setAllValues(0.0)
-    evapVaporPressureLabel.setAllValues(0.0)
-
-
-    afr_ratioLabel.setAllValues(0.0)
 
     view.update()
     view.show()

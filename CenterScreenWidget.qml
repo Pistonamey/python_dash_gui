@@ -91,7 +91,7 @@ Rectangle {
 
     }
 
-    Rectangle {
+/*    Rectangle {
         width: parent
         height: 200
         color: "transparent"
@@ -119,7 +119,7 @@ Rectangle {
                 color: "#7d0101"
             }
         }
-    }
+    }*/
 
 
 }
