@@ -29,51 +29,51 @@ Rectangle { // This is the main background
 
 
         SecondPanels {
-            title: "Boost"
-            currValue: 0
+            title: "Coolant Temperature"
+            currValue: temperature.currValue
             ratio1: 2
             ratio2: 3
-            units: "PSI"
+            units: "°C"
         }
 
         SecondPanels {
-            title: "AF Sens 1 Ratio"
+            title: "Intake Pressure"
             currValue: afr_ratio.currValue
-            ratio1: 2
-            ratio2: 3
-            units: "AFR"
-        }
-
-        SecondPanels {
-            title: "Battery Level"
-            currValue: 0
             ratio1: 2
             ratio2: 3
             units: "%"
         }
 
         SecondPanels {
-            title: "Energy use"
-            currValue: 0
+            title: "Intake Temperature"
+            currValue: intakePressureLabel.currValue
             ratio1: 2
             ratio2: 3
-            units: "kWh"
+            units: "°C"
         }
 
         SecondPanels {
-            title: "Default"
-            currValue: 1
+            title: "Run Time"
+            currValue: runtimeLabel.currValue
             ratio1: 2
             ratio2: 3
-            units: "Unit"
+            units: "sec"
         }
 
         SecondPanels {
-            title: "Default"
+            title: "Fuel Level"
+            currValue: fuelLevelLabel.currValue
+            ratio1: 2
+            ratio2: 3
+            units: "%"
+        }
+
+        SecondPanels {
+            title: "Fuel Type"
             currValue: 1
             ratio1: 2
             ratio2: 3
-            units: "Unit"
+            units: fuelTypeLabel.stringValue
         }
 
         SecondPanels {

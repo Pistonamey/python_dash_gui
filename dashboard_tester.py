@@ -123,8 +123,8 @@ class Labels(QObject):
 
     def __init__(self, parent=None):
         super(Labels, self).__init__(parent)
-        self._currValue = 0.0
-        self._stringValue = ""
+        self._currValue = 0.0   # For any numeric outputs
+        self._stringValue = ""  # For any string outputs
 
 
     @pyqtProperty(float, notify=currValueChanged)
@@ -308,7 +308,9 @@ if __name__ == "__main__":
     throttleAcceleratorLabel = Labels()
     absoluteLoadLabel = Labels()
 
-    # The rest of them
+
+
+    # The rest of them unused
     shortTermFuelTrimLabel = Labels()
     longTermFuelTrimLabel = Labels()
     distWithMILabel = Labels()

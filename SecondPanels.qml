@@ -37,7 +37,7 @@ Rectangle {
         }
 
         Text {
-            text: currValue + " " + units
+            text: currValue + "" + units
             font.pixelSize: 40
             color: "white"
             anchors.horizontalCenter: parent.horizontalCenter
