@@ -123,8 +123,7 @@ class Labels(QObject):
 
     def __init__(self, parent=None):
         super(Labels, self).__init__(parent)
-        self._currValue = 0.0  # For any numeric outputs
-        self._stringValue = ""  # For any string outputs
+        self._currValue = 0.0
 
     @pyqtProperty(float, notify=currValueChanged)
     def currValue(self):
@@ -135,24 +134,13 @@ class Labels(QObject):
         self._currValue = value
         self.currValueChanged.emit()
 
-    @pyqtProperty(str, notify=currValueChanged)
-    def stringValue(self):
-        return self._stringValue
-
-    @stringValue.setter
-    def stringValue(self, value):
-        self._stringValue = value
-        self.currValueChanged.emit()
-
     @QtCore.pyqtSlot(float, float, float)
     def setAllValues(self, currValue):
         self._currValue = currValue
         self.currValueChanged.emit()
 
-
 class CenterScreenWidget(QObject):
     currTimeChanged = QtCore.pyqtSignal()
-
     def __init__(self, parent=None):
         super(CenterScreenWidget, self).__init__(parent)
         self._currTime = datetime.datetime.now().strftime("%I:%M %p")
@@ -192,70 +180,72 @@ def change_val():
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
 
-def receiver(connection, speedometer, temperaturebar, battery_capacity, rpmmeter):
+
+
+
+
+def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
+
     # Get data from OBD
     speed = py_obd.get_speed(connection)
     rpm = py_obd.get_rpm(connection)
-    temperature = py_obd.get_temperature(connection)
+    temp = py_obd.get_temperature(connection)
     battery_level = py_obd.get_battery(connection)
 
     # Update PyQT Objects with data
     speedometer.currSpeed = speed
     rpmmeter.currRPM = rpm
-    temperaturebar.currValue = temperature
+    temperature.currValue = temp
     battery_capacity.currValue = battery_level
 
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
-
 def poll_speed(connection):
     speed = py_obd.get_speed(connection)
     speedometer.currSpeed = speed
-
 
 def poll_rpm(connection):
     rpm = py_obd.get_rpm(connection)
     rpmmeter.currRPM = rpm
 
-
 def poll_coolantTemp(connection):
     temp = py_obd.get_temperature(connection)
     temperature.currValue = temp
 
-
 def poll_fuel(connection):
     fuel = py_obd.get_battery(connection)
     battery_capacity.currValue = fuel
-
+    fuelLevelLabel.currValue = fuel
 
 def poll_time():
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
+def poll_intake_pressure(connection):
+    pressure = py_obd.get_intake_pressure(connection)
+    intakePressureLabel.currValue = pressure
 
-def set_timer(connection):
-    speed_timer = QTimer()
-    rpm_timer = QTimer()
-    battery_timer = QTimer()
-    temperature_timer = QTimer()
-    date_timer = QTimer()
+def poll_intake_temp(connection):
+    temp = py_obd.get_intake_temp(connection)
+    intakeTempLabel.currValue = temp
 
-    try:
-        speed_timer.timeout.connect(lambda: poll_speed(connection))
-    except Exception as e:
-        with open('output.txt', 'a') as f:
-            f.write(str(e))
-    rpm_timer.timeout.connect(lambda: poll_rpm(connection))
-    battery_timer.timeout.connect(lambda: poll_fuel(connection))
-    temperature_timer.timeout.connect(lambda: poll_coolantTemp(connection))
-    date_timer.timeout.connect(lambda: poll_time())
+def poll_runtime(connection):
+    runtime = py_obd.get_runtime(connection)
+    runtimeLabel.currValue = runtime
 
-    speed_timer.start(200)  # Polling rate of speed 200 ms
-    rpm_timer.start(200)  # Polling rate of rpm 200 ms
-    battery_timer.start(5000)  # Polling rate of speed 5 s
-    temperature_timer.start(5000)  # Polling rate of speed 5 s
-    date_timer.start(1000)  # Polling rate of date and time 1 s
+def poll_fuel_type(connection):
+    type = py_obd.get_fuel_type(connection)
+    fuelTypeLabel.stringValue = type
+
+def poll_throttle_pos(connection):
+    pos = py_obd.get_throttle_pos(connection)
+    throttlePosLabel.currValue = pos
+
+def poll_load(connection):
+    load = py_obd.get_absolute_load(connection)
+    absoluteLoadLabel.currValue = load
+
 
 
 if __name__ == "__main__":
@@ -263,7 +253,6 @@ if __name__ == "__main__":
     view = QQuickView()
     view.setSource(QUrl('dashboard.qml'))
     engine = view.engine()
-
     # Create classes for each component
     temperature = BarMeter()
     battery_capacity = BarMeter()
@@ -287,10 +276,9 @@ if __name__ == "__main__":
 
     monitor_Boost_Pressure_B1_Object = object
 
-
-
     with open('output.txt', 'w') as f:
         pass
+    
 
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
     engine.rootContext().setContextProperty("speedometer", speedometer)
@@ -322,7 +310,7 @@ if __name__ == "__main__":
     temperature.currValue = 270.0
     battery_capacity.setAllValues(0.0, 100.0, 0.0)
     battery_capacity.currValue = 50.0
-    rpmmeter.setAllValues(0.0, 10.0, 0.0)
+    rpmmeter.setAllValues(0.0, 8.0, 0.0)
 
     # Sets initial values for 1st row
     intakeTempLabel.setAllValues(0.0)
@@ -334,14 +322,51 @@ if __name__ == "__main__":
     view.update()
     view.show()
 
-    connection = obd.OBD()  # auto-connects to USB or RF port
-    timer = QTimer()
+    connection = obd.OBD() # auto-connects to USB or RF port
+
     print(connection.status())
-    # obd.logger.setLevel(obd.logging.DEBUG)
+    obd.logger.setLevel(obd.logging.DEBUG)
     py_obd.get_supported_pids_mode01(connection)
     py_obd.get_supported_pids_mode06(connection)
-    timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter))
-    timer.start(500)
-    # set_timer(connection)
+
+    speed_timer = QTimer()
+    rpm_timer = QTimer()
+    battery_timer = QTimer()
+    temperature_timer = QTimer()
+    date_timer = QTimer()
+    intpressure_timer = QTimer()
+    inttemp_timer = QTimer()
+    runtime_timer = QTimer()
+    load_timer = QTimer()
+    throttlepos_timer = QTimer()
+
+
+    speed_timer.timeout.connect(lambda: poll_speed(connection))
+    rpm_timer.timeout.connect(lambda: poll_rpm(connection))
+    battery_timer.timeout.connect(lambda: poll_fuel(connection))
+    temperature_timer.timeout.connect(lambda: poll_coolantTemp(connection))
+    date_timer.timeout.connect(lambda: poll_time())
+    intpressure_timer.timeout.connect(lambda: poll_intake_pressure(connection))
+    inttemp_timer.timeout.connect(lambda: poll_intake_temp(connection))
+    runtime_timer.timeout.connect(lambda: poll_runtime(connection))
+    load_timer.timeout.connect(lambda: poll_load(connection))
+    throttlepos_timer.timeout.connect(lambda: poll_throttle_pos(connection))
+
+#    poll_fuel_type(connection)
+    speed_timer.start(200) # Polling rate of speed 200 ms
+    rpm_timer.start(200) # Polling rate of rpm 200 ms
+    battery_timer.start(5000) # Polling rate of speed 5 s
+    temperature_timer.start(5000) # Polling rate of speed 5 s
+    date_timer.start(1000) # Polling rate of date and time 1 s
+    intpressure_timer.start(1000)
+    inttemp_timer.start(1000)
+    runtime_timer.start(500)
+    load_timer.start(1000)
+    throttlepos_timer.start(500)
+    
+    # timer = QTimer()
+    # timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter)
+    # timer.start(500)
+    
 
     sys.exit(app.exec_())
