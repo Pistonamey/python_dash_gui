@@ -53,11 +53,11 @@ Rectangle { // This is the main background
         }
 
         SecondPanels {
+            property var currValue
             title: "Run Time"
             currValue: runtimeLabel.currValue
             ratio1: 2
             ratio2: 3
-            units: "sec"
         }
 
         SecondPanels {
