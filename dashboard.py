@@ -285,6 +285,10 @@ if __name__ == "__main__":
     throttleAcceleratorLabel = Labels()
     absoluteLoadLabel = Labels()
 
+    monitor_Boost_Pressure_B1_Object = object
+
+
+
     with open('output.txt', 'w') as f:
         pass
 
@@ -308,6 +312,8 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("barometricPressureLabel", barometricPressureLabel)
     engine.rootContext().setContextProperty("throttleAcceleratorLabel", throttleAcceleratorLabel)
     engine.rootContext().setContextProperty("absoluteLoadLabel", absoluteLoadLabel)
+
+    engine.rootContext().setContextProperty("monitor_Boost_Pressure_B1", monitor_Boost_Pressure_B1_Object)
 
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)

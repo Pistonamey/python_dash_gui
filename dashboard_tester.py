@@ -219,8 +219,6 @@ def change_val():
     distDTCClearLabel.currValue = random_int
     evapVaporPressureLabel.currValue = random_int
 
-
-
     afr_ratioLabel.currValue = random_int
 
 
@@ -326,8 +324,10 @@ if __name__ == "__main__":
     acceleratorPosDLabel = Labels()
     acceleratorPosELabel = Labels()
 
-    monitor_O2_B1S1_Label = Labels()
-    monitor_O2_B1S2_Label = Labels()
+    monitor_Boost_Pressure_B1_Object = object()
+
+
+
 
     afr_ratioLabel = Labels()
 
@@ -369,6 +369,8 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("throttlePosBLabel", throttlePosBLabel)
 
     engine.rootContext().setContextProperty("afr_ratio", afr_ratioLabel)
+
+    engine.rootContext().setContextProperty("monitor_Boost_Pressure_B1", monitor_Boost_Pressure_B1_Object)
 
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)
