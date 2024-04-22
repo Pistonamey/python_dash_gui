@@ -38,7 +38,7 @@ Rectangle { // This is the main background
 
         SecondPanels {
             title: "Intake Pressure"
-            currValue: afr_ratio.currValue
+            currValue: intakePressureLabel.currValue
             ratio1: 2
             ratio2: 3
             units: "%"
@@ -46,7 +46,7 @@ Rectangle { // This is the main background
 
         SecondPanels {
             title: "Intake Temperature"
-            currValue: intakePressureLabel.currValue
+            currValue: intakeTempLabel.currValue
             ratio1: 2
             ratio2: 3
             units: "°C"

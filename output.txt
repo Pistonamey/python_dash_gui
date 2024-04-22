@@ -1,131 +1,81 @@
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving supported available PIDs: object of type 'NoneType' has no len()
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Pressure: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Temp: 'NoneType' object has no attribute 'magnitude'
-Error receiving absolute load: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Pressure: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Temp: 'NoneType' object has no attribute 'magnitude'
-Error receiving absolute load: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Pressure: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Temp: 'NoneType' object has no attribute 'magnitude'
-Error receiving absolute load: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Pressure: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Temp: 'NoneType' object has no attribute 'magnitude'
-Error receiving absolute load: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving Fuel Levels: 'NoneType' object has no attribute 'magnitude'
-Error receiving Coolant Temperature: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Pressure: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Temp: 'NoneType' object has no attribute 'magnitude'
-Error receiving absolute load: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Pressure: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Temp: 'NoneType' object has no attribute 'magnitude'
-Error receiving absolute load: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Pressure: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Temp: 'NoneType' object has no attribute 'magnitude'
-Error receiving absolute load: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Pressure: 'NoneType' object has no attribute 'magnitude'
-Error receiving Intake Temp: 'NoneType' object has no attribute 'magnitude'
-Error receiving absolute load: 'NoneType' object has no attribute 'magnitude'
-Error receiving engine runtime: 'NoneType' object has no attribute 'magnitude'
-Error receiving throttle position: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
-Error receiving speed: 'NoneType' object has no attribute 'to'
-Error receiving RPM: 'NoneType' object has no attribute 'magnitude'
+Length of bit response: 32
+Length of pid list: 32
+Supported MIDs: 10111110001111101010100000010011
+  PID 01 (STATUS) is supported
+  PID 03 (FUEL_STATUS) is supported
+  PID 04 (ENGINE_LOAD) is supported
+  PID 05 (COOLANT_TEMP) is supported
+  PID 06 (SHORT_FUEL_TRIM_1) is supported
+  PID 07 (LONG_FUEL_TRIM_1) is supported
+  PID 0B (INTAKE_PRESSURE) is supported
+  PID 0C (RPM) is supported
+  PID 0D (SPEED) is supported
+  PID 0E (TIMING_ADVANCE) is supported
+  PID 0F (INTAKE_TEMP) is supported
+  PID 11 (THROTTLE_POS) is supported
+  PID 13 (O2_SENSORS) is supported
+  PID 15 (O2_B1S2) is supported
+  PID 1C (OBD_COMPLIANCE) is supported
+  PID 1F (RUN_TIME) is supported
+  PID 20 (PIDS_B) is supported
+Length of bit response: 32
+Length of pid list: 32
+Supported MIDs: 10100000000001111011000000010001
+  PID 01 (DISTANCE_W_MIL) is supported
+  PID 03 (FUEL_RAIL_PRESSURE_DIRECT) is supported
+  PID 0E (EVAPORATIVE_PURGE) is supported
+  PID 0F (FUEL_LEVEL) is supported
+  PID 10 (WARMUPS_SINCE_DTC_CLEAR) is supported
+  PID 11 (DISTANCE_SINCE_DTC_CLEAR) is supported
+  PID 13 (BAROMETRIC_PRESSURE) is supported
+  PID 14 (O2_S1_WR_CURRENT) is supported
+  PID 1C (CATALYST_TEMP_B1S1) is supported
+  PID 20 (PIDS_C) is supported
+Length of bit response: 32
+Length of pid list: 31
+Supported MIDs: 11111110110100001000010000000001
+  PID 01 (STATUS_DRIVE_CYCLE) is supported
+  PID 02 (CONTROL_MODULE_VOLTAGE) is supported
+  PID 03 (ABSOLUTE_LOAD) is supported
+  PID 04 (COMMANDED_EQUIV_RATIO) is supported
+  PID 05 (RELATIVE_THROTTLE_POS) is supported
+  PID 06 (AMBIANT_AIR_TEMP) is supported
+  PID 07 (THROTTLE_POS_B) is supported
+  PID 09 (ACCELERATOR_POS_D) is supported
+  PID 0A (ACCELERATOR_POS_E) is supported
+  PID 0C (THROTTLE_ACTUATOR) is supported
+  PID 11 (FUEL_TYPE) is supported
+  PID 16 (LONG_O2_TRIM_B1) is supported
+Length of bit response: 32
+Length of pid list: 32
+Supported MIDs: 11000000000000000000000000000001
+  PID 01 (MONITOR_O2_B1S1) is supported
+  PID 02 (MONITOR_O2_B1S2) is supported
+  PID 20 (MIDS_B) is supported
+Length of bit response: 32
+Length of pid list: 32
+Supported MIDs: 10000000000000000000100000011001
+  PID 01 (MONITOR_CATALYST_B1) is supported
+  PID 15 (MONITOR_VVT_B1) is supported
+  PID 1C (MONITOR_EVAP_020) is supported
+  PID 1D (MONITOR_PURGE_FLOW) is supported
+  PID 20 (MIDS_C) is supported
+Length of bit response: 32
+Length of pid list: 32
+Supported MIDs: 11000000000000000000000000000001
+  PID 01 (MONITOR_O2_HEATER_B1S1) is supported
+  PID 02 (MONITOR_O2_HEATER_B1S2) is supported
+  PID 20 (MIDS_D) is supported
+Length of bit response: 32
+Length of pid list: 31
+Supported MIDs: 00000000000000000000000000000001
+Length of bit response: 32
+Length of pid list: 27
+Supported MIDs: 00000000000000000000000000000001
+Length of bit response: 32
+Length of pid list: 31
+Supported MIDs: 01111000000000000000000000000000
+  PID 02 (MONITOR_MISFIRE_CYLINDER_1) is supported
+  PID 03 (MONITOR_MISFIRE_CYLINDER_2) is supported
+  PID 04 (MONITOR_MISFIRE_CYLINDER_3) is supported
+  PID 05 (MONITOR_MISFIRE_CYLINDER_4) is supported
