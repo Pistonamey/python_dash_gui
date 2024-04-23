@@ -164,6 +164,55 @@ class CenterScreenWidget(QObject):
         self._currDate = value
         self.currTimeChanged.emit()
 
+class To60Widget(QObject):
+    textChanged = QtCore.pyqtSignal()
+    def __init__(self, parent=None):
+        super(To60Widget, self).__init__(parent)
+        self._messageText = "Timer Ready"
+        self._buttonText = "0-60"
+        self._messageTextVisible = True
+
+    @pyqtProperty(str, notify=textChanged)
+    def messageText(self):
+        return self._messageText
+    
+    @pyqtProperty(str, notify=textChanged)
+    def buttonText(self):
+        return self._buttonText
+    
+    @pyqtProperty(bool, notify=textChanged)
+    def messageTextVisible(self):
+        return self._messageTextVisible
+    
+    @messageText.setter
+    def messageText(self, value):
+        if self._messageText != value:
+            self._messageText = value
+            self.textChanged.emit()
+
+    @buttonText.setter
+    def buttonText(self, value):
+        if self._buttonText != value:
+            self._buttonText = value
+            self.textChanged.emit()
+        
+    def to60(self):
+        isTiming = False
+        start_time = 0
+        end_time = 0
+        while not self._messageTextVisible:
+            if not isTiming and self._currSpeed > 0:
+                isTiming = True
+                start_time = time.time()
+                self._messageText = "Timing"
+            elif isTiming and self._currSpeed >= 60:
+                isTiming = False
+                end_time = time.time()
+                break
+            else:
+                time.sleep(0.1)
+        self._messageText = f"0-60 Time: {end_time-start_time}"
+        return end_time - start_time
 
 def change_val():
     random_float = random.uniform(0, 160)
@@ -178,8 +227,6 @@ def change_val():
 
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
-
-
 
 
 
@@ -231,8 +278,16 @@ def poll_intake_temp(connection):
     intakeTempLabel.currValue = temp
 
 def poll_runtime(connection):
-    runtime = py_obd.get_runtime(connection)
-    runtimeLabel.currValue = runtime
+    runtime = py_obd.get_runtime(connection) # in seconds
+    # Convert to HH:MM:SS
+    # Calculate hours
+    hours = runtime // 3600
+    # Calculate minutes from the remaining seconds after hours
+    minutes = (runtime % 3600) // 60
+    # The remaining seconds
+    secs = (runtime % 3600) % 60
+    time_elapsed = f"{hours:02}:{minutes:02}:{secs:02}"
+    runtimeLabel.currValue = time_elapsed
 
 def poll_fuel_type(connection):
     type = py_obd.get_fuel_type(connection)
@@ -352,7 +407,7 @@ if __name__ == "__main__":
     load_timer.timeout.connect(lambda: poll_load(connection))
     throttlepos_timer.timeout.connect(lambda: poll_throttle_pos(connection))
 
-#    poll_fuel_type(connection)
+    poll_fuel_type(connection)
     speed_timer.start(200) # Polling rate of speed 200 ms
     rpm_timer.start(200) # Polling rate of rpm 200 ms
     battery_timer.start(5000) # Polling rate of speed 5 s
