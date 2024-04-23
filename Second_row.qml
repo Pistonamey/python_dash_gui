@@ -31,80 +31,64 @@ Rectangle { // This is the main background
         SecondPanels {
             title: "Coolant Temperature"
             currValue: temperature.currValue
-            ratio1: 2
-            ratio2: 3
             units: "°C"
         }
 
         SecondPanels {
             title: "Intake Pressure"
             currValue: intakePressureLabel.currValue
-            ratio1: 2
-            ratio2: 3
             units: "%"
         }
 
         SecondPanels {
             title: "Intake Temperature"
             currValue: intakeTempLabel.currValue
-            ratio1: 2
-            ratio2: 3
             units: "°C"
         }
 
-        SecondPanels {
-            property var currValue
+        StringPanels {
             title: "Run Time"
             currValue: runtimeLabel.currValue
-            ratio1: 2
-            ratio2: 3
         }
 
         SecondPanels {
             title: "Fuel Level"
             currValue: fuelLevelLabel.currValue
-            ratio1: 2
-            ratio2: 3
             units: "%"
         }
 
-        SecondPanels {
+        StringPanels {
             title: "Fuel Type"
-            currValue: 1
-            ratio1: 2
-            ratio2: 3
-            units: fuelTypeLabel.stringValue
+            currValue: fuelTypeLabel.currValue
+        }
+
+        SecondPanels {
+            title: "Speed"
+            currValue: speedometer.currSpeed
+            units: "mph"
+        }
+
+        SecondPanels {
+            title: "Speed"
+            currValue: Math.round(speedometer.currSpeed * 1.60934)
+            units: "kmh"
+        }
+
+        SecondPanels {
+            title: "RPM"
+            currValue: Math.round(RPM_Meter.currRPM)
+            units: " x 1000 revs"
         }
 
         SecondPanels {
             title: "Default"
             currValue: 1
-            ratio1: 2
-            ratio2: 3
             units: "Unit"
         }
 
         SecondPanels {
             title: "Default"
             currValue: 1
-            ratio1: 2
-            ratio2: 3
-            units: "Unit"
-        }
-
-        SecondPanels {
-            title: "Default"
-            currValue: 1
-            ratio1: 2
-            ratio2: 3
-            units: "Unit"
-        }
-
-        SecondPanels {
-            title: "Default"
-            currValue: 1
-            ratio1: 2
-            ratio2: 3
             units: "Unit"
         }
 
@@ -112,8 +96,6 @@ Rectangle { // This is the main background
         SecondPanels {
             title: "Default"
             currValue: 1
-            ratio1: 2
-            ratio2: 3
             units: "Unit"
         }
 
@@ -121,8 +103,6 @@ Rectangle { // This is the main background
         SecondPanels {
             title: "Default"
             currValue: 1
-            ratio1: 2
-            ratio2: 3
             units: "Unit"
         }
 
@@ -130,8 +110,6 @@ Rectangle { // This is the main background
         SecondPanels {
             title: "Default"
             currValue: 1
-            ratio1: 2
-            ratio2: 3
             units: "Unit"
         }
 
@@ -139,27 +117,14 @@ Rectangle { // This is the main background
         SecondPanels {
             title: "Default"
             currValue: 1
-            ratio1: 2
-            ratio2: 3
             units: "Unit"
         }
 
         SecondPanels {
             title: "Default"
             currValue: 1
-            ratio1: 2
-            ratio2: 3
             units: "Unit"
         }
-
-        SecondPanels {
-            title: "Default"
-            currValue: 1
-            ratio1: 2
-            ratio2: 3
-            units: "Unit"
-        }
-
 
     }
 }

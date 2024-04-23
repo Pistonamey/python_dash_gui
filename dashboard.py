@@ -139,6 +139,23 @@ class Labels(QObject):
         self._currValue = currValue
         self.currValueChanged.emit()
 
+class stringLabels(QObject):
+    currValueChanged = QtCore.pyqtSignal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._currValue = "Name"
+
+    @pyqtProperty(str, notify=currValueChanged)
+    def currValue(self):
+        return self._currValue
+
+    @currValue.setter
+    def currValue(self, str):
+        self._currValue = str
+        self.currValueChanged.emit()
+
+
 class CenterScreenWidget(QObject):
     currTimeChanged = QtCore.pyqtSignal()
     def __init__(self, parent=None):
@@ -285,11 +302,11 @@ def poll_runtime(connection):
     # The remaining seconds
     secs = (runtime % 3600) % 60
     time_elapsed = f"{hours:02}:{minutes:02}:{secs:02}"
-    runtimeLabel.currValue = runtime
+    runtimeLabel.currValue = time_elapsed
 
 def poll_fuel_type(connection):
     type = py_obd.get_fuel_type(connection)
-    fuelTypeLabel.stringValue = type
+    fuelTypeLabel.currValue = type
 
 def poll_throttle_pos(connection):
     pos = py_obd.get_throttle_pos(connection)
@@ -320,9 +337,9 @@ if __name__ == "__main__":
     # Top labels, first row
     intakePressureLabel = Labels()
     intakeTempLabel = Labels()
-    runtimeLabel = Labels()
+    runtimeLabel = stringLabels()
     fuelLevelLabel = Labels()
-    fuelTypeLabel = Labels()
+    fuelTypeLabel = stringLabels()
 
     # Top labels, second row
     engineLoadLabel = Labels()
@@ -374,9 +391,9 @@ if __name__ == "__main__":
     # Sets initial values for 1st row
     intakeTempLabel.setAllValues(0.0)
     intakePressureLabel.setAllValues(0.0)
-    runtimeLabel.setAllValues(0.0)
+    runtimeLabel.currValue = "00:00:00"
     fuelLevelLabel.setAllValues(0.0)
-    fuelTypeLabel.stringValue = "Gasoline"
+    fuelTypeLabel.currValue = "Gasoline"
     engineLoadLabel.setAllValues(0.0)
 
     view.update()

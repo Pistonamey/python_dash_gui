@@ -4,9 +4,8 @@ import QtQuick.Controls 2.12
 
 Rectangle {
 
-    property double currValue: 0
+    property string currValue: "Name"
     property string title: "Place holder"
-    property string units: "unit"
 
     color: "black"
     border.color: "white"

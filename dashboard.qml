@@ -89,11 +89,10 @@ Rectangle {
         anchors.verticalCenter: label3.verticalCenter
     }
 
-    Labels {
+    StringLabels {
         id: label3
         label: "Run Time"
         currValue: runtimeLabel.currValue
-        unit: "sec"
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
@@ -119,11 +118,10 @@ Rectangle {
         anchors.verticalCenter: label3.verticalCenter
     }
 
-    Labels {
+    StringLabels {
         id: label5
         label: "Fuel Type"
-        currValue: 1
-        unit: fuelTypeLabel.stringValue
+        currValue: fuelTypeLabel.currValue
         fontSize: 18
         color: "white"
         borderColor: "#FF0000" // Example border color
@@ -264,24 +262,18 @@ Rectangle {
                 onClicked: {
                 console.log("Button clicked")
                 // Add any actions you want the button to perform here
-                ld.source = "Second_row.qml"
+                try {
+                    ld.source = "Second_row.qml"
+                } catch (error) {
+                    console.error(error);
+                }
+                
             }
         }
 
         Loader{
             id: ld
             anchors.centerIn: dashboardGUI
-        }
-    }
-    
-
-    // Function to get text representation of car state
-    function getStateText(state) {
-        switch(state) {
-            case CarState.Drive: return "Drive";
-            case CarState.Reverse: return "Reverse";
-            case CarState.Neutral: return "Neutral";
-            case CarState.Parked: return "Parked";
         }
     }
 

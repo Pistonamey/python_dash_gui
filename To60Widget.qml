@@ -8,7 +8,7 @@ import QtGraphicalEffects 1.0
 
 Rectangle {
     width: 300
-    height: 340
+    height: 300
     color: "black"
     property bool messageTextVisible: false
     property bool isTiming: false
