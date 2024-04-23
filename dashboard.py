@@ -278,7 +278,7 @@ def poll_intake_temp(connection):
     intakeTempLabel.currValue = temp
 
 def poll_runtime(connection):
-    runtime = py_obd.get_runtime(connection) # in seconds
+    runtime = py_obd.get_runtime(connection)
     # Convert to HH:MM:SS
     # Calculate hours
     hours = runtime // 3600
@@ -287,7 +287,7 @@ def poll_runtime(connection):
     # The remaining seconds
     secs = (runtime % 3600) % 60
     time_elapsed = f"{hours:02}:{minutes:02}:{secs:02}"
-    runtimeLabel.currValue = time_elapsed
+    runtimeLabel.currValue = runtime
 
 def poll_fuel_type(connection):
     type = py_obd.get_fuel_type(connection)
@@ -297,9 +297,13 @@ def poll_throttle_pos(connection):
     pos = py_obd.get_throttle_pos(connection)
     throttlePosLabel.currValue = pos
 
-def poll_load(connection):
+def poll_absolute_load(connection):
     load = py_obd.get_absolute_load(connection)
     absoluteLoadLabel.currValue = load
+    
+def poll_engine_load(connection):
+    load = py_obd.get_engine_load(connection)
+    engineLoadLabel.currValue = load
 
 
 
@@ -373,14 +377,15 @@ if __name__ == "__main__":
     runtimeLabel.setAllValues(0.0)
     fuelLevelLabel.setAllValues(0.0)
     fuelTypeLabel.stringValue = "Gasoline"
+    engineLoadLabel.setAllValues(0.0)
 
     view.update()
     view.show()
 
     connection = obd.OBD() # auto-connects to USB or RF port
 
-    print(connection.status())
-    obd.logger.setLevel(obd.logging.DEBUG)
+    # print(connection.status())
+    # obd.logger.setLevel(obd.logging.DEBUG)
     py_obd.get_supported_pids_mode01(connection)
     py_obd.get_supported_pids_mode06(connection)
 
@@ -394,6 +399,7 @@ if __name__ == "__main__":
     runtime_timer = QTimer()
     load_timer = QTimer()
     throttlepos_timer = QTimer()
+    engine_load_timer = QTimer()
 
 
     speed_timer.timeout.connect(lambda: poll_speed(connection))
@@ -404,8 +410,9 @@ if __name__ == "__main__":
     intpressure_timer.timeout.connect(lambda: poll_intake_pressure(connection))
     inttemp_timer.timeout.connect(lambda: poll_intake_temp(connection))
     runtime_timer.timeout.connect(lambda: poll_runtime(connection))
-    load_timer.timeout.connect(lambda: poll_load(connection))
+    load_timer.timeout.connect(lambda: poll_absolute_load(connection))
     throttlepos_timer.timeout.connect(lambda: poll_throttle_pos(connection))
+    engine_load_timer.timeout.connect(lambda: poll_engine_load(connection))
 
     poll_fuel_type(connection)
     speed_timer.start(200) # Polling rate of speed 200 ms
@@ -418,6 +425,7 @@ if __name__ == "__main__":
     runtime_timer.start(500)
     load_timer.start(1000)
     throttlepos_timer.start(500)
+    engine_load_timer.start(1000)
     
     # timer = QTimer()
     # timer.timeout.connect(lambda: receiver(connection, speedometer, temperature, battery_capacity, rpmmeter)
