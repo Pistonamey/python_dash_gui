@@ -164,56 +164,6 @@ class CenterScreenWidget(QObject):
         self._currDate = value
         self.currTimeChanged.emit()
 
-class To60Widget(QObject):
-    textChanged = QtCore.pyqtSignal()
-    def __init__(self, parent=None):
-        super(To60Widget, self).__init__(parent)
-        self._messageText = "Timer Ready"
-        self._buttonText = "0-60"
-        self._messageTextVisible = True
-
-    @pyqtProperty(str, notify=textChanged)
-    def messageText(self):
-        return self._messageText
-    
-    @pyqtProperty(str, notify=textChanged)
-    def buttonText(self):
-        return self._buttonText
-    
-    @pyqtProperty(bool, notify=textChanged)
-    def messageTextVisible(self):
-        return self._messageTextVisible
-    
-    @messageText.setter
-    def messageText(self, value):
-        if self._messageText != value:
-            self._messageText = value
-            self.textChanged.emit()
-
-    @buttonText.setter
-    def buttonText(self, value):
-        if self._buttonText != value:
-            self._buttonText = value
-            self.textChanged.emit()
-        
-    def to60(self):
-        isTiming = False
-        start_time = 0
-        end_time = 0
-        while not self._messageTextVisible:
-            if not isTiming and self._currSpeed > 0:
-                isTiming = True
-                start_time = time.time()
-                self._messageText = "Timing"
-            elif isTiming and self._currSpeed >= 60:
-                isTiming = False
-                end_time = time.time()
-                break
-            else:
-                time.sleep(0.1)
-        self._messageText = f"0-60 Time: {end_time-start_time}"
-        return end_time - start_time
-
 def change_val():
     random_float = random.uniform(0, 160)
     random_rpm = random.uniform(0, 10)
@@ -228,8 +178,56 @@ def change_val():
     centerScreen.currTime = datetime.datetime.now().strftime("%I:%M %p")
     centerScreen.currDate = datetime.datetime.now().strftime("%m/%d/%Y")
 
+class ZeroToSixtyTimer(QtCore.QObject):
+    # Signal to notify QML when the timing is complete
+    timer_finished = QtCore.pyqtSignal(str)
 
+    def __init__(self):
+        super().__init__()
+        self.start_time = None
+        self.is_timing = False
 
+    def start_timer(self):
+        """Start the timer only if it's not already running."""
+        if not self.is_timing:
+            self.start_time = time.time()
+            self.is_timing = True
+
+    def stop_timer(self):
+        """Stop the timer and emit the finished signal."""
+        if self.is_timing:
+            elapsed_time = time.time() - self.start_time
+            self.is_timing = False
+            self.timer_finished.emit(f"{elapsed_time:.2f} seconds")
+    
+    def cancel_timer(self):
+        """Cancel the timer."""
+        self.is_timing = False
+
+    def to60(self, currSpeed_func):
+        """Start timing when car starts moving, stop when it reaches or exceeds 60 mph."""
+        self.start_timer()
+
+        while self.is_timing:
+            curr_speed = currSpeed_func()  # Get the current speed
+            
+            # Start timing when speed transitions from 0 to above 0
+            if curr_speed > 0 and self.start_time is None:
+                self.start_timer()
+            
+            # Stop timing when speed reaches or exceeds 60 mph
+            if curr_speed >= 60:
+                self.stop_timer()
+                break
+            
+            # Sleep briefly to simulate real-time checking
+            time.sleep(0.1)
+
+def start_zero_to_sixty():
+    timer.to60(speedometer.currSpeed)
+
+def on_timer_finished(time):
+    print(f"0-60 Time: {time}")  # Log the time in the console
 
 def receiver(connection, speedometer, temperature, battery_capacity, rpmmeter):
 
@@ -333,12 +331,13 @@ if __name__ == "__main__":
     throttleAcceleratorLabel = Labels()
     absoluteLoadLabel = Labels()
 
+    timer = ZeroToSixtyTimer()
+
     monitor_Boost_Pressure_B1_Object = object
 
     with open('output.txt', 'w') as f:
         pass
     
-
     # Sets the object for the qml to refer to. Only needs to be done once for each object.
     engine.rootContext().setContextProperty("speedometer", speedometer)
     engine.rootContext().setContextProperty("temperature", temperature)
@@ -361,6 +360,7 @@ if __name__ == "__main__":
     engine.rootContext().setContextProperty("absoluteLoadLabel", absoluteLoadLabel)
 
     engine.rootContext().setContextProperty("monitor_Boost_Pressure_B1", monitor_Boost_Pressure_B1_Object)
+    engine.rootContext().setContextProperty("zeroToSixtyTimer", timer)
 
     # Set initial values
     speedometer.setAllValues(0.0, 160.0, 0.0)

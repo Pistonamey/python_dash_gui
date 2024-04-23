@@ -11,6 +11,28 @@ Rectangle {
     height: 340
     color: "black"
     property bool messageTextVisible: false
+    property bool isTiming: false
+    property double elapsedTime: 0
+    property double currentSpeed: 0
+    property double targetSpeed: 60
+
+    Timer {
+        id: accelerationTimer
+        interval: 50  
+        repeat: true
+        running: isTiming
+        onTriggered: {
+            console.log("TIMING")
+            // Simulate speed increase (e.g., from a car accelerating)
+            if (speedometer.currSpeed < targetSpeed && speedometer.currSpeed > 0) {
+                messageText.text = "Timing..."
+            } else if (speedometer.currSpeed >= 60){
+                isTiming = false
+                messageText.text = `0-60 time: ${elapsedTime.toFixed(2)} seconds`
+            }
+            elapsedTime += interval / 1000  // Update elapsed time in seconds
+        }
+    }
 
     Rectangle {
         width: parent.width - 300
@@ -36,7 +58,7 @@ Rectangle {
 
         Text {
             id: messageText
-            text: to60widget.messageText
+            text: isTiming ? "Timing..." : "Timer Ready"
             visible: messageTextVisible // Bind visibility to the property
             anchors {
                 horizontalCenter: parent.horizontalCenter
@@ -50,20 +72,27 @@ Rectangle {
         }
 
         Button {
-            id: greenButton
-            text: to60widget.messageTextVisible ? "Cancel" : "0-60 Timer"
-            width: 100 // Adjust the width of the button
-            height: 40 // Adjust the height of the button
+            id: toggleButton
+            text: messageTextVisible ? "Cancel" : "0-60 Timer"
+            width: 100
+            height: 40
             anchors {
                 horizontalCenter: parent.horizontalCenter
-                bottom: messageText.top // Anchor the button to the top of the text
+                bottom: messageText.top
             }
             onClicked: {
-                // Toggle the visibility of messageText and change button text accordingly
-                if (!messageTextVisible) {
-                    to60timer.time()
-                }
                 messageTextVisible = !messageTextVisible
+                if (isTiming) {
+                    isTiming = false
+                    accelerationTimer.stop()
+                    messageText.text = "Timer Ready"
+                } else {
+                    isTiming = true
+                    elapsedTime = 0
+                    currentSpeed = 0
+                    accelerationTimer.start()
+                    messageText.text = "Timer Ready"
+                }
             }
         }
 
