@@ -34,6 +34,14 @@ def query_obd(connection, command, default_value, error_message):
         with open('output.txt', 'a') as output:
             output.write(f"{error_message}: {str(e)}\n")
         return default_value
+        
+def query_speed(connection, command, default_value, error_message):
+    try:
+        return connection.query(command).value.to("mph").magnitude
+    except Exception as e:
+        with open('output.txt', 'a') as output:
+            output.write(f"{error_message}: {str(e)}\n")
+        return default_value
 
 def get_supported_pids_mode01(connection):
     cmd1 = obd.commands.PIDS_A
@@ -187,7 +195,7 @@ def get_supported_pids_mode06(connection):
 
 # Individual functions to query specific OBD commands
 def get_speed(connection):
-    return query_obd(connection,obd.commands.SPEED, 44, "Error receiving speed")  # Returning speed in mph
+    return query_speed(connection,obd.commands.SPEED, 44, "Error receiving speed")  # Returning speed in mph
 
 def get_rpm(connection):
     return query_obd(connection,obd.commands.RPM, 4.444, "Error receiving RPM")  # RPM in thousands
