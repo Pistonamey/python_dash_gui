@@ -55,7 +55,7 @@ Rectangle {
                     visible: styleData.value < 8000 || styleData.value % 1000 == 0
                     implicitWidth: outerRadius * 0.02
                     antialiasing: true
-                    implicitHeight: outerRadius * 0.06
+                    implicitHeight: outerRadius * 0.08
                     color: styleData.value >= 8000 ? widget_color : widget_color
                 }
 
@@ -79,7 +79,7 @@ Rectangle {
                     y: outerRadius * 0.15
                     implicitWidth: outerRadius * 0.03
                     implicitHeight: outerRadius * 1.1
-                    radius: 10
+                    radius: 5
                     antialiasing: true
                     color: "#ff0000"
                 }
@@ -100,8 +100,8 @@ Rectangle {
 
         // Inter-Circular Gauge for Speedometer in km
         CircularGauge {
-            width: widget_width - 125
-            height: widget_height - 125
+            width: widget_width - 100
+            height: widget_height - 100
             //value: speedometer.currSpeed
             maximumValue: 260
             minimumValue: 0
@@ -135,7 +135,7 @@ Rectangle {
                     y: outerRadius * 0.15
                     implicitWidth: outerRadius * 0.03
                     implicitHeight: outerRadius * 1.1
-                    radius: 20
+                    radius: 5
                     antialiasing: true
                     color: "transparent"
                 }
@@ -160,18 +160,21 @@ Rectangle {
 
         // Value label for Speedometer
         Rectangle {
-            width: 100
-            height: 50
-            color: "transparent"
+            width: 150
+            height: 150
+            color: "black"
 
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottomMargin: 20
+            anchors.centerIn: parent
+
+            border.width: 2
+            border.color: "red"
+            radius: 360
 
             Text {
                 text: Math.round(speedometer.currSpeed)
                 color: "white"
-                font.pixelSize: 24
+                font.pixelSize: 36
+                font.bold: true
 
                 anchors.centerIn: parent
                 Text {

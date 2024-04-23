@@ -100,22 +100,25 @@ Rectangle {
 
         // Value label for RPM
         Rectangle {
-            width: 100
-            height: 50
-            color: "transparent"
+            width: 150
+            height: 150
+            color: "black"
 
-            anchors.bottom: parent.bottom
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottomMargin: 20
+            anchors.centerIn: parent
+
+            border.width: 2
+            border.color: "red"
+            radius: 360
 
             Text {
                 text: Math.round(RPM_Meter.currRPM)
                 color: "white"
-                font.pixelSize: 24
+                font.pixelSize: 36
+                font.bold: true
 
                 anchors.centerIn: parent
                 Text {
-                    text: "rpm"
+                    text: "x1000 rpm"
                     color: "white"
                     font.pixelSize: 12
                     anchors.top: parent.bottom

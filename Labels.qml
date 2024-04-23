@@ -55,7 +55,8 @@ Item {
         // Text item for the value
         Text {
             anchors.top: titleText.bottom
-            anchors.left: titleText.left
+            anchors.left: borderRect.left
+            anchors.leftMargin: 20
             text: currValue
             font.pixelSize: root.fontSize
             font.bold: true
@@ -74,7 +75,8 @@ Item {
         // Text item for the units
         Text {
             anchors.top: titleText.bottom
-            anchors.right: titleText.right
+            anchors.right: borderRect.right
+            anchors.rightMargin: 20
             text: unit
             font.pixelSize: root.fontSize
             color: root.color
