@@ -27,9 +27,9 @@ def query_match_pids(connection, pidlist, command):
         return 1
 
 # Common function to query an OBD command and return a default value in case of an error
-def query_obd(command, default_value, error_message):
+def query_obd(connection, command, default_value, error_message):
     try:
-        return obd.connection.query(command).value.magnitude
+        return connection.query(command).value.magnitude
     except Exception as e:
         with open('output.txt', 'a') as output:
             output.write(f"{error_message}: {str(e)}\n")
@@ -187,35 +187,38 @@ def get_supported_pids_mode06(connection):
 
 # Individual functions to query specific OBD commands
 def get_speed(connection):
-    return query_obd(obd.commands.SPEED, 44, "Error receiving speed")  # Returning speed in mph
+    return query_obd(connection,obd.commands.SPEED, 44, "Error receiving speed")  # Returning speed in mph
 
 def get_rpm(connection):
-    return query_obd(obd.commands.RPM, 4.444, "Error receiving RPM")  # RPM in thousands
+    return query_obd(connection,obd.commands.RPM, 4.444, "Error receiving RPM")  # RPM in thousands
 
 def get_temperature(connection):
-    return query_obd(obd.commands.COOLANT_TEMP, 44, "Error receiving coolant temperature")
+    return query_obd(connection,obd.commands.COOLANT_TEMP, 44, "Error receiving coolant temperature")
 
 def get_battery(connection):
-    return round(query_obd(obd.commands.FUEL_LEVEL, 44, "Error receiving fuel levels"))
+    return round(query_obd(connection,obd.commands.FUEL_LEVEL, 44, "Error receiving fuel levels"))
 
 def get_intake_pressure(connection):
-    return query_obd(obd.commands.INTAKE_PRESSURE, 44, "Error receiving intake pressure")
+    return query_obd(connection,obd.commands.INTAKE_PRESSURE, 44, "Error receiving intake pressure")
 
 def get_intake_temp(connection):
-    return query_obd(obd.commands.INTAKE_TEMP, 44, "Error receiving intake temperature")
+    return query_obd(connection,obd.commands.INTAKE_TEMP, 44, "Error receiving intake temperature")
 
 def get_runtime(connection):
-    return query_obd(obd.commands.RUN_TIME, 44, "Error receiving engine runtime")
+    return query_obd(connection,obd.commands.RUN_TIME, 44, "Error receiving engine runtime")
 
 def get_throttle_pos(connection):
-    return query_obd(obd.commands.THROTTLE_POS, 44, "Error receiving throttle position")
+    return query_obd(connection,obd.commands.THROTTLE_POS, 44, "Error receiving throttle position")
 
 def get_absolute_load(connection):
-    return query_obd(obd.commands.ABSOLUTE_LOAD, 44, "Error receiving absolute load")
+    return query_obd(connection,obd.commands.ABSOLUTE_LOAD, 44, "Error receiving absolute load")
+    
+def get_engine_load(connection):
+    return query_obd(connection,obd.commands.ENGINE_LOAD, 44, "Error receiving absolute load")
 
 def get_fuel_type(connection):
     try:
-        return str(obd.connection.query(obd.commands.FUEL_TYPE).value)
+        return str(connection.query(obd.commands.FUEL_TYPE).value)
     except Exception as e:
         with open('output.txt', 'a') as output:
             output.write(f"Error receiving fuel type: {str(e)}\n")
