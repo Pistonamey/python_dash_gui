@@ -64,7 +64,7 @@ Rectangle { // This is the main background
 
         SecondPanels {
             title: "Speed"
-            currValue: speedometer.currSpeed
+            currValue: Math.round(speedometer.currSpeed)
             units: "mph"
         }
 
