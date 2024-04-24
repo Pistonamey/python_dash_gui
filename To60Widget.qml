@@ -29,6 +29,7 @@ Rectangle {
                 messageText.text = "Timing..."
             } else if (speedometer.currSpeed >= 60){
                 isTiming = false
+                elapsedTime += 0.2
                 messageText.text = `0-60 time: ${elapsedTime.toFixed(2)} seconds`
             }
         }
