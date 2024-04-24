@@ -269,7 +269,7 @@ def poll_speed(connection):
 
 def poll_rpm(connection):
     rpm = py_obd.get_rpm(connection)
-    rpmmeter.currRPM = round(rpm / 1000)
+    rpmmeter.currRPM = rpm / 1000
 
 def poll_coolantTemp(connection):
     temp = py_obd.get_temperature(connection)
