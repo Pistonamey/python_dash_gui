@@ -295,13 +295,16 @@ def poll_intake_temp(connection):
 def poll_runtime(connection):
     runtime = py_obd.get_runtime(connection)
     # Convert to HH:MM:SS
-    # Calculate hours
-    hours = runtime // 3600
-    # Calculate minutes from the remaining seconds after hours
-    minutes = (runtime % 3600) // 60
-    # The remaining seconds
-    secs = (runtime % 3600) % 60
-    time_elapsed = f"{hours:02}:{minutes:02}:{secs:02}"
+    # Calculate hours, minutes, and seconds
+    hours = runtime // 3600  # Integer division to get the hours
+    remaining_seconds = runtime % 3600
+    minutes = remaining_seconds // 60  # Integer division to get the minutes
+    secs = remaining_seconds % 60  # Remainder to get the seconds
+
+    # Format as HH:MM:SS with integer values and zero-padding
+    time_elapsed = f"{int(hours):02}:{int(minutes):02}:{int(secs):02}"
+
+    # Assign the formatted time to the runtimeLabel.currValue
     runtimeLabel.currValue = time_elapsed
 
 def poll_fuel_type(connection):
