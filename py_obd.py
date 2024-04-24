@@ -195,7 +195,7 @@ def get_supported_pids_mode06(connection):
 
 # Individual functions to query specific OBD commands
 def get_speed(connection):
-    return query_speed(connection,obd.commands.SPEED, 44, "Error receiving speed")  # Returning speed in mph
+    return query_speed(connection,obd.commands.SPEED, 0, "Error receiving speed")  # Returning speed in mph
 
 def get_rpm(connection):
     return query_obd(connection,obd.commands.RPM, 4.444, "Error receiving RPM")  # RPM in thousands

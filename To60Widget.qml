@@ -23,7 +23,6 @@ Rectangle {
         running: isTiming
         onTriggered: {
             console.log("TIMING")
-            // Simulate speed increase (e.g., from a car accelerating)
             if (speedometer.currSpeed < targetSpeed && speedometer.currSpeed > 0) {
                 messageText.text = "Timing..."
             } else if (speedometer.currSpeed >= 60){
@@ -85,13 +84,14 @@ Rectangle {
                 if (isTiming) {
                     isTiming = false
                     accelerationTimer.stop()
-                    messageText.text = "Timer Ready"
                 } else {
-                    isTiming = true
-                    elapsedTime = 0
-                    currentSpeed = 0
-                    accelerationTimer.start()
-                    messageText.text = "Timer Ready"
+                    if (speedometer.currSpeed > 0) {
+                        isTiming = true
+                        elapsedTime = 0
+                        accelerationTimer.start()
+                    } else {
+                        messageText.text = "Timer Set"
+                    }
                 }
             }
         }
