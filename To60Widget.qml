@@ -18,18 +18,19 @@ Rectangle {
 
     Timer {
         id: accelerationTimer
-        interval: 50  
+        interval: 10  
         repeat: true
         running: isTiming
         onTriggered: {
             console.log("TIMING")
+            // Simulate speed increase (e.g., from a car accelerating)
             if (speedometer.currSpeed < targetSpeed && speedometer.currSpeed > 0) {
+                elapsedTime += interval / 1000  // Update elapsed time in seconds
                 messageText.text = "Timing..."
             } else if (speedometer.currSpeed >= 60){
                 isTiming = false
                 messageText.text = `0-60 time: ${elapsedTime.toFixed(2)} seconds`
             }
-            elapsedTime += interval / 1000  // Update elapsed time in seconds
         }
     }
 
@@ -84,14 +85,12 @@ Rectangle {
                 if (isTiming) {
                     isTiming = false
                     accelerationTimer.stop()
+                    messageText.text = "Timer Ready"
                 } else {
-                    if (speedometer.currSpeed > 0) {
-                        isTiming = true
-                        elapsedTime = 0
-                        accelerationTimer.start()
-                    } else {
-                        messageText.text = "Timer Set"
-                    }
+                    isTiming = true
+                    elapsedTime = 0
+                    accelerationTimer.start()
+                    messageText.text = "Timer Set"
                 }
             }
         }
