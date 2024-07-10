@@ -3,4 +3,4 @@ S2 - activate the env<br />
 S3 - install libraries using 'pip install -r requirements.txt'<br />
 S4 - run dashboard.py using 'python dashboard.py'<br />
 
-Click [here](./demo/DemoDayVideo.mp4) to watch the project demo video
+Click <a href= "./demo/DemoDayVideo.mp4" download> here </a> to watch the project demo video
