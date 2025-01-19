@@ -9,7 +9,7 @@ import QtGraphicalEffects 1.0
 // Holds all the bar meter and all text labels
 Rectangle {
 
-    // Customize the size and radius of the bar_meter:
+    // Customize the size and radius of the bar_meters:
     property int bar_meter_width: 400     // Width of the entire bar meter
     property int bar_meter_height: 20     // Height of the entire bar meter
     property int bar_meter_radius: 20      // Radius of the entire bar meter. Does affect inner bars.
